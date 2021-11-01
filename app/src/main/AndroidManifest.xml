@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Team404" >
+        <activity android:name=".HabitEventActivity"></activity>
+        <activity android:name=".LocationActivity"></activity>
+        <activity android:name=".PhotoActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true" >

@@ -4,4 +4,7 @@
     <string name="subscribe">Subscribe</string>
     <string name="my_habbit">My Habbit</string>
     <string name="acount">Acount</string>
+    <string name="back_button">back_button</string>
+    <string name="habit_event">Habit event</string>
+    <string name="subscribe_list">Subscribe list</string>
 </resources>
