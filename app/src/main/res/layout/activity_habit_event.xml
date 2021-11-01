@@ -35,7 +35,7 @@
                 android:clickable="true"
                 android:contentDescription="@string/back_button"
                 android:focusable="true"
-                android:src="@drawable/abc_vector_test"
+                android:src="@drawable/ic_baseline_arrow_back_24"
                 android:visibility="visible"
                 app:tint="@color/white" />
 
@@ -60,21 +60,25 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <Button
-        android:id="@+id/get_location_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/locationImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:text="Get location"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.164"
+        android:layout_marginTop="212dp"
+        android:clickable="true"
+        android:contentDescription="@string/back_button"
+        android:focusable="true"
+        android:src="@drawable/ic_baseline_location_on_24"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toStartOf="@+id/get_photo_button"
+        app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.338" />
+        app:layout_constraintVertical_bias="0.027" />
 
     <Button
         android:id="@+id/get_photo_button"
@@ -96,13 +100,12 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="336dp"
         android:text="Get location"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView5"
-        app:layout_constraintHorizontal_bias="0.324"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/get_location_button"
-        app:layout_constraintVertical_bias="0.174" />
+        app:layout_constraintHorizontal_bias="0.402"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView5"
