@@ -85,9 +85,7 @@
     <key name="android.template.1822526487">
       <recent name="com.example.team404" />
     </key>
-=======
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PlacesProject-master/PlacesProject-master" />
->>>>>>> master
+
   </component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
