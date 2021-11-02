@@ -48,10 +48,6 @@ public class HabitEventActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
-    
-
-
         PhotoButton = (Button) findViewById(R.id.get_photo_button);
         PhotoButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, PhotoActivity.class);
@@ -61,9 +57,12 @@ public class HabitEventActivity extends AppCompatActivity {
     }
         private void init(){
             LocationImage = findViewById(R.id.locationImage);
-            LocationImage.setOnClickListener(v -> {
-                Intent intent = new Intent(this, MapsActivity.class);
-                startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
+            LocationImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(HabitEventActivity.this, MapsActivity.class);
+                    startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
+                }
             });
 
     }

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -25,18 +26,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.team404.databinding.ActivityMapsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.util.List;
@@ -54,6 +61,8 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
     private Boolean mLocationPermissionsGranted = false;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+    private Location currentLocation;
+    private LocationCallback locationCallback;
 
 
 
@@ -64,19 +73,62 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
         Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
-        if (mLocationPermissionsGranted) {
-            getDeviceLocation();
+        mMap.setMyLocationEnabled(true);
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            mMap.setMyLocationEnabled(true);
+            LocationRequest locationRequest = LocationRequest.create();
+            locationRequest.setInterval(10000);
+            locationRequest.setFastestInterval(5000);
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        }
+            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
+
+            SettingsClient settingsClient = LocationServices.getSettingsClient(MapsActivity.this);
+            Task<LocationSettingsResponse> task = settingsClient.checkLocationSettings(builder.build());
+
+            task.addOnSuccessListener(MapsActivity.this, new OnSuccessListener<LocationSettingsResponse>() {
+                @Override
+                public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                    getDeviceLocation();
+
+                    mMap.setMyLocationEnabled(true);
+                }
+            });
+
+            task.addOnFailureListener(MapsActivity.this, new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    if (e instanceof ResolvableApiException) {
+                        ResolvableApiException resolvable = (ResolvableApiException) e;
+                        try {
+                            resolvable.startResolutionForResult(MapsActivity.this, 51);
+                        } catch (IntentSender.SendIntentException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+            });
+
 
     }
+
+
+    @SuppressLint("MissingPermission")
+    @Override
+    protected void onActivityResult ( int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 51) {
+            if (resultCode == RESULT_OK) {
+                getDeviceLocation();
+                mMap.setMyLocationEnabled(true);
+            }else{
+                buttonOnClick();
+                Toast.makeText(this, "Please allow GPS", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+
 
 
     @Override
@@ -85,10 +137,13 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
         setContentView(R.layout.activity_maps);
 
         getLocationPermission();
+        //initMap();
+        buttonOnClick();
 
 
 
     }
+    /*
     @SuppressLint("MissingPermission")
     private void getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: getting the devices current location");
@@ -98,64 +153,40 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
         try{
             if(mLocationPermissionsGranted){
 
-                Task location = mFusedLocationProviderClient.getLastLocation();
-                if (location == null){
-                    location = mFusedLocationProviderClient.getLastLocation();
-                }
+                final Task location = mFusedLocationProviderClient.getLastLocation();
+
 
                 location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
                             Log.d(TAG, "onComplete: found location!");
-                            Location currentLocation = (Location) task.getResult();
-
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
-                                    DEFAULT_ZOOM);
-                            Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
-                            try {
-                                List<Address> addresses = geocoder.getFromLocation(
-                                        currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
-                                TextView addressView = findViewById(R.id.address_textView);
-                                Button checkButton = findViewById((R.id.check_button));
-                                Button cancelButton = findViewById((R.id.cancel_button));
-                                addressView.setText(Html.fromHtml("<font color='#6200EE'><b> </b><br></front>"
-                                +addresses.get(0).getAddressLine(0)));
-
-
-                                checkButton.setOnClickListener(new View.OnClickListener() {
+                            currentLocation = (Location) task.getResult();
+                            if (currentLocation!=null){
+                                Log.d(TAG, "onComplete: found location1111!");
+                                moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
+                                        DEFAULT_ZOOM);
+                                getAddress(currentLocation);
+                            }else{
+                                Log.d(TAG, "onComplete: found location22222!");
+                                LocationRequest locationRequest = LocationRequest.create();
+                                locationRequest.setInterval(10000);
+                                locationRequest.setFastestInterval(5000);
+                                locationRequest.setPriority((LocationRequest.PRIORITY_HIGH_ACCURACY));
+                                locationCallback = new LocationCallback(){
                                     @Override
-                                    public void onClick(View v) {
-
-                                        String address = addressView.getText().toString();
-                                        Intent intent = new Intent();
-                                        intent.putExtra("keyName", address);
-                                        setResult(RESULT_OK, intent);
-                                        finish();
-                                        onBackPressed();
-
+                                    public void onLocationResult(@NonNull LocationResult locationResult) {
+                                        super.onLocationResult(locationResult);
+                                        if (locationResult == null){
+                                            return;
+                                        }
+                                        currentLocation = locationResult.getLastLocation();
+                                        moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
+                                                DEFAULT_ZOOM);
+                                        getEmptyAddress(currentLocation);
                                     }
-                                });
-                                cancelButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        String address = " ";
-                                        Intent intent = new Intent();
-                                        intent.putExtra("keyName", address);
-                                        setResult(RESULT_OK, intent);
-                                        finish();
-                                        onBackPressed();
-
-                                    }
-                                });
-
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                                };
                             }
-
-
-
                         }else{
                             Log.d(TAG, "onComplete: current location is null");
                             Toast.makeText(MapsActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();
@@ -167,6 +198,49 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
             Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
         }
     }
+
+     */
+    @SuppressLint("MissingPermission")
+    private void getDeviceLocation() {
+        FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MapsActivity.this);
+        mFusedLocationProviderClient.getLastLocation()
+                .addOnCompleteListener(new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful()) {
+                            currentLocation = task.getResult();
+                            if (currentLocation != null) {
+                                moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                                getAddress(currentLocation);
+                            } else {
+                                final LocationRequest locationRequest = LocationRequest.create();
+                                locationRequest.setInterval(10000);
+                                locationRequest.setFastestInterval(5000);
+                                locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                                locationCallback = new LocationCallback() {
+                                    @Override
+                                    public void onLocationResult(LocationResult locationResult) {
+                                        super.onLocationResult(locationResult);
+                                        if (locationResult == null) {
+                                            return;
+                                        }
+                                        currentLocation = locationResult.getLastLocation();
+                                        moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                                        getAddress(currentLocation);
+                                        mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
+                                    }
+                                };
+                                mFusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
+
+                            }
+                        } else {
+                            Toast.makeText(MapsActivity.this, "unable to get last location", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+
     private void moveCamera(LatLng latLng, float zoom){
         Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude );
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
@@ -190,6 +264,7 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
             if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
                     COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
                 mLocationPermissionsGranted = true;
+                Log.d(TAG, "getLocationPermission: init");
                 initMap();
             }else{
                 ActivityCompat.requestPermissions(this,
@@ -228,6 +303,105 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
             }
         }
     }
+
+
+    public void getAddress(Location currentLocation){
+        Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
+        try {
+
+            List<Address> addresses = geocoder.getFromLocation(
+                    currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
+
+            TextView addressView = findViewById(R.id.address_textView);
+            Button checkButton = findViewById((R.id.check_button));
+            Button cancelButton = findViewById((R.id.cancel_button));
+            addressView.setText(Html.fromHtml("<font color='#6200EE'><b> </b><br></front>"
+                    +addresses.get(0).getAddressLine(0)));
+
+
+            checkButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String address = addressView.getText().toString();
+                    Intent intent = new Intent();
+                    intent.putExtra("keyName", address);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                    onBackPressed();
+
+                }
+            });
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String address = " ";
+                    Intent intent = new Intent();
+                    intent.putExtra("keyName", address);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                    onBackPressed();
+                }
+            });
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void getEmptyAddress(Location currentLocation){
+        Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
+        try {
+
+            List<Address> addresses = geocoder.getFromLocation(
+                    currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
+
+            buttonOnClick();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public  void buttonOnClick(){
+        TextView addressView = findViewById(R.id.address_textView);
+        Button checkButton = findViewById((R.id.check_button));
+        Button cancelButton = findViewById((R.id.cancel_button));
+        addressView.setText("GPS is closed");
+        //addressView.setText(Html.fromHtml("<font color='#6200EE'><b> </b><br></front>"
+        //        +addresses.get(0).getAddressLine(0)));
+
+
+        checkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String address = "address unable";
+                Intent intent = new Intent();
+                intent.putExtra("keyName", address);
+                setResult(RESULT_OK, intent);
+                finish();
+                onBackPressed();
+
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String address = "address unable";
+                Intent intent = new Intent();
+                intent.putExtra("keyName", address);
+                setResult(RESULT_OK, intent);
+                finish();
+                onBackPressed();
+            }
+        });
+
+
+    }
+
 
 
 }
