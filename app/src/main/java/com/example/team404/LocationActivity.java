@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class LocationActivity extends HabitEventActivity{
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class LocationActivity extends AppCompatActivity {
+
     private ImageView backImage;
 
     @Override
