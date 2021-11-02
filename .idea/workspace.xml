@@ -11,6 +11,9 @@
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
@@ -41,6 +44,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[3cc9acf6]" />
+>>>>>>> Stashed changes
 =======
   <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[3cc9acf6]" />
 >>>>>>> Stashed changes
@@ -58,8 +65,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
 =======
+=======
+>>>>>>> Stashed changes
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Android studio/p1/Alexandria/alexandria" />
   </component>
   <component name="RecentsManager">
