@@ -4,18 +4,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class LocationActivity extends AppCompatActivity {
+public class PhotoActivity extends HabitEventActivity{
 
     private ImageView backImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location);
+        setContentView(R.layout.activity_photo);
 
         backImage = findViewById(R.id.backImage);
         backImage.setOnClickListener(new View.OnClickListener() {
