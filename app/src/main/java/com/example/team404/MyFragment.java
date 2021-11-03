@@ -30,17 +30,17 @@ public class MyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_my, container, false);
-        /*
+        
         habitList=(ListView)rootView.findViewById(R.id.habit_list);
         Date date = new Date(2021,11,1);
-        Habit habit = new Habit("play the fucking game","Because no fuking homework",date);
+        Habit habit = new Habit("play game","Because no homework",date);
         habitDataList=new ArrayList<>();
        habitDataList.add(habit);
        habitArrayAdapter = new Content(this.getContext(),habitDataList);
        habitList.setAdapter(habitArrayAdapter);
 
 
-         */
+         
 
 
         return rootView;  }
