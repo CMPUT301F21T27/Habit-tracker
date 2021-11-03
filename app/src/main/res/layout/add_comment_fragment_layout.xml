@@ -21,6 +21,7 @@
         android:layout_weight="1"
         android:ems="10"
         android:hint="Input comment"
+        android:maxLength="20"
         android:inputType="textPersonName" />
 
 </LinearLayout>
