@@ -49,7 +49,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity{
-    private TextView register;
+    private Button reg_btn;
     private EditText password;
     private EditText repassword;
     private EditText phone;
@@ -61,70 +61,42 @@ public class RegisterActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
-        register = findViewById(R.id.reg_btn);
-
+        reg_btn = findViewById(R.id.reg_btn);
         email = findViewById(R.id.reg_email);
         password = findViewById(R.id.password);
         repassword = findViewById(R.id.repassward);
         phone = findViewById(R.id.reg_phone);
         name = findViewById(R.id.reg_phone);
-
-
-    }
-
-    public Boolean isEmail(String str) {
-        boolean isEmail = false;
-        String expr = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-        if (str.matches(expr)) {
-            isEmail = true;
-        }
-        return isEmail;
-    }
-
-
-
-    public void onClick(View view) {
-        String emailAddress = email.getText().toString();
-        String userPassword = password.getText().toString();
-        String userName = name.getText().toString();
-        String userRepassword = repassword.getText().toString();
         final FirebaseFirestore db;
+        db = FirebaseFirestore.getInstance();
+        final CollectionReference collectionReference = db.collection("User");
 
+        reg_btn.setOnClickListener( new View.OnClickListener(){
+        @Override
+            public void onClick(View view) {
+                final String emailAddress = email.getText().toString();
+                final String userPassword = password.getText().toString();
+                final String userName = name.getText().toString();
+                final String userRepassword = repassword.getText().toString();
+                final String userphone = phone.getText().toString();
+                // Get a top level reference to the collection
+                Map<String, Object> city = new HashMap<>();
+                city.put("emailAddress", emailAddress);
+                city.put("userPassword", userPassword);
 
-        if (view.getId() == R.id.reg_btn) {
-            if (TextUtils.isEmpty(emailAddress) || !isEmail(emailAddress)) {
-                Toast.makeText(RegisterActivity.this, " email account error!",
-                        Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (TextUtils.isEmpty(userName)) {
-                name.setError("Name is required!");
-                name.requestFocus();
-                return;
-            }
-            if (TextUtils.isEmpty(phone.getText().toString())) {
-                phone.setError("Phone number is required!");
-                phone.requestFocus();
-                return;
-
-            }
-            // Access a Cloud Firestore instance from your Activity
-            db = FirebaseFirestore.getInstance();
-            // Get a top level reference to the collection
-            Map<String, Object> city = new HashMap<>();
-            city.put("emailAddress", emailAddress);
-            city.put("userPassword", userPassword);
-            city.put("userName", userName);
-            city.put("Habits", "");
-            city.put("Habitsevent", "userName");
-            db.collection("User").document(emailAddress)
-                    .set(city)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "DocumentSnapshot successfully written!");
-                        }
-                    })
+                city.put("userName", userName);
+                city.put("Habits", "");
+                city.put("Habitsevent", "");
+                city.put("phone",userphone);
+                collectionReference
+                        .document(emailAddress)
+                        .set(city)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully written!");
+                            }
+                        })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -133,6 +105,9 @@ public class RegisterActivity extends AppCompatActivity{
                     });
 
 
-        }
+
+            }
+        });
     }
 }
+
