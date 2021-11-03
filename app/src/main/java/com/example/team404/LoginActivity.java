@@ -36,8 +36,6 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-
-
     private Button signup_btn;
     private Button sign_in_btn;
     private EditText user_email;
@@ -74,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
                                             return;
                                         }
                                         else{
-                                            Log.d(TAG, "get failed with "+ real_passward);
                                             Toast.makeText(LoginActivity.this, "they are not match!",
                                             Toast.LENGTH_SHORT).show();}
                                     }
