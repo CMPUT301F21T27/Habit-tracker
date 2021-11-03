@@ -61,25 +61,26 @@ public class LoginActivity extends AppCompatActivity {
                 final String emailAddress = user_email.getText().toString();
                 final String userPassword = user_pass.getText().toString();
                 DocumentReference docRef = db.collection("User").document(emailAddress);
-                CollectionReference citiesRef = db.collection("User");
                         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
-//                                        Query capitalCities = db.collection("User").whereEqualTo("emailAddress", emailAddress);
-//                                        Log.d(TAG, document.getId() + " => " + document.getData()+capitalCities);
-                                        String real_pass=document.getString("userPassword");
-                                        if (userPassword==real_pass){
-
-
-                                        Toast.makeText(LoginActivity.this, "they are match!you are login",
-                                                Toast.LENGTH_SHORT).show();
-                                    }else{Toast.makeText(LoginActivity.this, "they are not match!",
-                                                Toast.LENGTH_SHORT).show();}
-                                    }else {   Toast.makeText(LoginActivity.this, "No this email account!",
+                                        String real_passward=document.getString("userPassword").toString();
+                                        if (real_passward.equals(userPassword)){
+                                            Toast.makeText(LoginActivity.this, "they are match!you are login",
                                             Toast.LENGTH_SHORT).show();
+                                            return;
+                                        }
+                                        else{
+                                            Log.d(TAG, "get failed with "+ real_passward);
+                                            Toast.makeText(LoginActivity.this, "they are not match!",
+                                            Toast.LENGTH_SHORT).show();}
+                                    }
+                                    else {
+                                        Toast.makeText(LoginActivity.this, "No this email account!",
+                                        Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
                                     Log.d(TAG, "get failed with ", task.getException());
