@@ -10,7 +10,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView register;
@@ -32,7 +35,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         repassword = findViewById(R.id.repassward);
         phone = findViewById(R.id.reg_phone);
         name = findViewById(R.id.reg_phone);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
 
@@ -50,10 +52,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        String emailAddress = email.getText().toString().trim();
-        String userPassword = password.getText().toString().trim();
-        String userName = name.getText().toString().trim();
-        String userRepassword = repassword.getText().toString().trim();
+        String emailAddress = email.getText().toString();
+        String userPassword = password.getText().toString();
+        String userName = name.getText().toString();
+        String userRepassword = repassword.getText().toString();
+        final FirebaseFirestore db;
 
 
         if (view.getId() == R.id.reg_btn) {
@@ -73,6 +76,23 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 return;
 
             }
+            // Access a Cloud Firestore instance from your Activity
+            db = FirebaseFirestore.getInstance();
+            final CollectionReference collectionReference = db.collection("Cities");
+            // Get a top level reference to the collection
+            register.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Retrieving the city name and the province name from the EditText fields
+
+
+                    HashMap<String, String> data = new HashMap<>();
+                    data.put("User email", emailAddress);
+
+
+
+
+
         }
 
         switch (view.getId()){

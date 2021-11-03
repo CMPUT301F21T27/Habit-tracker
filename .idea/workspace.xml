@@ -13,8 +13,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bf91b60-b364-4aeb-a9bc-9bc9c6ec9135" name="Default Changelist" comment="11">
+    <list default="true" id="1bf91b60-b364-4aeb-a9bc-9bc9c6ec9135" name="Default Changelist" comment="login">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/team404/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/team404/RegisterActivity.java" afterDir="false" />
     </list>
     <list id="eea8f30f-289c-4e2b-9d2d-a1363819f9b3" name="Uncommitted changes before Merge at 2021-11-02, 4:09 下午 [Default Changelist]" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -148,7 +149,21 @@
       <option name="project" value="LOCAL" />
       <updated>1635894457710</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="login">
+      <created>1635920608443</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1635920608444</updated>
+    </task>
+    <task id="LOCAL-00003" summary="login">
+      <created>1635920624925</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1635920624925</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -165,6 +180,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="11" />
-    <option name="LAST_COMMIT_MESSAGE" value="11" />
+    <MESSAGE value="login" />
+    <option name="LAST_COMMIT_MESSAGE" value="login" />
   </component>
 </project>
