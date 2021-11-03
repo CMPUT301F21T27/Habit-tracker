@@ -15,6 +15,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1bf91b60-b364-4aeb-a9bc-9bc9c6ec9135" name="Default Changelist" comment="login">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/team404/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/team404/RegisterActivity.java" afterDir="false" />
     </list>
     <list id="eea8f30f-289c-4e2b-9d2d-a1363819f9b3" name="Uncommitted changes before Merge at 2021-11-02, 4:09 下午 [Default Changelist]" comment="" />
@@ -41,7 +42,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="5ba3769f23c1ac04cb0c5e99fb3547dc7a6722e7" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

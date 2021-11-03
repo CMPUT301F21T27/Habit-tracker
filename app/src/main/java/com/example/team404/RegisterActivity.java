@@ -1,21 +1,54 @@
 package com.example.team404;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.Map;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView register;
     private EditText password;
     private EditText repassword;
@@ -37,9 +70,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         name = findViewById(R.id.reg_phone);
 
 
-
-
     }
+
     public Boolean isEmail(String str) {
         boolean isEmail = false;
         String expr = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
@@ -78,26 +110,28 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
             // Access a Cloud Firestore instance from your Activity
             db = FirebaseFirestore.getInstance();
-            final CollectionReference collectionReference = db.collection("Cities");
             // Get a top level reference to the collection
-            register.setOnClickListener( new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Retrieving the city name and the province name from the EditText fields
+            Map<String, Object> city = new HashMap<>();
+            city.put("emailAddress", emailAddress);
+            city.put("userPassword", userPassword);
+            city.put("userName", userName);
+            city.put("Habits", "");
+            city.put("Habitsevent", "userName");
+            db.collection("User").document(emailAddress)
+                    .set(city)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error writing document", e);
+                        }
+                    });
 
-
-                    HashMap<String, String> data = new HashMap<>();
-                    data.put("User email", emailAddress);
-
-
-
-
-
-        }
-
-        switch (view.getId()){
-            case R.id.reg_btn:
-                startActivity(new Intent(this,LoginActivity.class));
 
         }
     }
