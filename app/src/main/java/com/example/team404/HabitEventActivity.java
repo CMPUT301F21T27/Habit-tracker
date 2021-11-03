@@ -1,16 +1,20 @@
 package com.example.team404;
 
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
-
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,12 +22,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-public class HabitEventActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class HabitEventActivity extends AppCompatActivity implements AddCommentFragment.onFragmentInteractionListener, EditCommentFragment.onFragmentInteractionListener  {
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
     private Button LocationButton;
     private Button PhotoButton;
     private ImageView backImage;
     private ImageView LocationImage;
+
+    ListView commentList;
+    ArrayAdapter<Comment> commentAdapter;
+    ArrayList<Comment> commentDataList;
+    int position;
+
 
     private TextView locationvIEW;
     private TextView photo;
@@ -36,6 +48,56 @@ public class HabitEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_event);
 
+        commentList = findViewById(R.id.comment_list);
+
+        String []comments ={"user1", "user2", "user3"};
+        String []accounts = {"Nice", "Good habit event", "I pick you"};
+
+        commentDataList = new ArrayList<>();
+        for (int i=0; i<comments.length;i++){
+            commentDataList.add(new Comment(comments[i], accounts[i]));
+        }
+        commentAdapter = new CommentList(this, commentDataList);
+        commentList.setAdapter(commentAdapter);
+        commentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                position = i;
+
+                Comment list_info = (Comment) commentList.getItemAtPosition(i);
+                EditCommentFragment editCommentFragment = EditCommentFragment.newInstance(list_info);
+                editCommentFragment.show(getSupportFragmentManager(), "EDIT COMMENT");
+            }
+        });
+        commentList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int
+                    position, long id) {
+                final int selected_item = position;
+
+                new AlertDialog.Builder(HabitEventActivity.this).
+                        setIcon(android.R.drawable.ic_delete)
+                        .setTitle("Are you sure...")
+                        .setMessage("Do you want to delete the comment?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                commentDataList.remove(selected_item);
+                                commentAdapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("No" , null).show();
+
+                return true;
+            }
+        });
+
+
+        final ImageButton addCommentButton = findViewById(R.id.add_comment);
+        addCommentButton.setOnClickListener(v -> {
+            new AddCommentFragment().show(getSupportFragmentManager(), "ADD COMMENT");
+        });
 
         if(isServicesOK()){
             init();
@@ -104,6 +166,17 @@ public class HabitEventActivity extends AppCompatActivity {
         return false;
 
     }
+    @Override
+    public void onOkPressed(Comment newCity){
+        commentAdapter.add(newCity);}
+
+    @Override
+    public void onEditOkPressed(Comment newCity){
+        commentDataList.remove(position);
+        commentAdapter.insert(newCity, position);
+    }
+    @Override
+    public void onCancelPressed(){}
 
 
 }
