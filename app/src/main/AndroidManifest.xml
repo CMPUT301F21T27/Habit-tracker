@@ -36,17 +36,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
+
+
+
         <activity
             android:name=".RegisterActivity"
-            android:exported="true"
-            android:label="@string/title_activity_maps" />
-
-        <activity android:name=".HabitEventActivity"></activity>
-        <activity android:name=".LocationActivity"></activity>
-        <activity android:name=".PhotoActivity"></activity>
-
-        <activity
-            android:name=".MainActivityforiris"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

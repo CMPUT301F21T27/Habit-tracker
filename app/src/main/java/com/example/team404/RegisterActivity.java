@@ -48,7 +48,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity{
     private TextView register;
     private EditText password;
     private EditText repassword;
@@ -59,10 +59,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.register);
 
         register = findViewById(R.id.reg_btn);
-        register.setOnClickListener(this);
+
         email = findViewById(R.id.reg_email);
         password = findViewById(R.id.password);
         repassword = findViewById(R.id.repassward);
@@ -82,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    @Override
+
     public void onClick(View view) {
         String emailAddress = email.getText().toString();
         String userPassword = password.getText().toString();
