@@ -81,8 +81,9 @@ public class RegisterActivity extends AppCompatActivity{
                 final String userphone = phone.getText().toString();
                 // Get a top level reference to the collection
                 Map<String, Object> city = new HashMap<>();
-                city.put("emailAddress", emailAddress);
                 city.put("userPassword", userPassword);
+                city.put("emailAddress", emailAddress);
+
 
                 city.put("userName", userName);
                 city.put("Habits", "");
