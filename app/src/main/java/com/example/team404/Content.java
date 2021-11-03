@@ -22,7 +22,7 @@ public Content(Context context, ArrayList<Habit> habits){
     this.context=context;
 
 }
-public View GetView(int position, View convertView, ViewGroup parent){
+public View getView(int position, View convertView, ViewGroup parent){
     View view = convertView;
     if(view == null){
         view = LayoutInflater.from(context).inflate((R.layout.habit_content),parent,false);
