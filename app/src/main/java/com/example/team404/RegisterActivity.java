@@ -83,8 +83,6 @@ public class RegisterActivity extends AppCompatActivity{
                 Map<String, Object> city = new HashMap<>();
                 city.put("userPassword", userPassword);
                 city.put("emailAddress", emailAddress);
-
-
                 city.put("userName", userName);
                 city.put("Habits", "");
                 city.put("Habitsevent", "");
@@ -96,6 +94,7 @@ public class RegisterActivity extends AppCompatActivity{
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d(TAG, "DocumentSnapshot successfully written!");
+                                setContentView(R.layout.login);
                             }
                         })
                     .addOnFailureListener(new OnFailureListener() {

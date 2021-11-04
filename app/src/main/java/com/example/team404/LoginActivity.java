@@ -50,7 +50,12 @@ public class LoginActivity extends AppCompatActivity {
         sign_in_btn = findViewById(R.id.sign_in_btn);
         user_email = findViewById(R.id.user_email);
         user_pass = findViewById(R.id.user_pass);
-
+        signup_btn.setOnClickListener( new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                setContentView(R.layout.register);
+            }
+        });
         final FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
         sign_in_btn.setOnClickListener( new View.OnClickListener(){
@@ -58,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final String emailAddress = user_email.getText().toString();
                 final String userPassword = user_pass.getText().toString();
+                //check length for email
                 DocumentReference docRef = db.collection("User").document(emailAddress);
                         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
@@ -69,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                                         if (real_passward.equals(userPassword)){
                                             Toast.makeText(LoginActivity.this, "they are match!you are login",
                                             Toast.LENGTH_SHORT).show();
+                                            setContentView(R.layout.activity_main);
                                             return;
                                         }
                                         else{
