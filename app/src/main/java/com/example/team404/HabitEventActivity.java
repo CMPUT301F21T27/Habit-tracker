@@ -1,11 +1,15 @@
 package com.example.team404;
 
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,7 +21,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -30,6 +37,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
     private Button PhotoButton;
     private ImageView backImage;
     private ImageView LocationImage;
+    private ImageView imageView;
 
     ListView commentList;
     ArrayAdapter<Comment> commentAdapter;
@@ -110,11 +118,21 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
                 onBackPressed();
             }
         });
-        PhotoButton = (Button) findViewById(R.id.get_photo_button);
-        PhotoButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, PhotoActivity.class);
-            startActivity(intent);
+        imageView = findViewById(R.id.imageView);
+        imageView.setOnClickListener(v -> {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, 123);
         });
+        if (ContextCompat.checkSelfPermission(HabitEventActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(HabitEventActivity.this,
+                    new String[]{
+                            Manifest.permission.CAMERA
+                    },
+
+                    123);
+        }
+
+
 
     }
         private void init(){
@@ -128,6 +146,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
             });
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -143,6 +162,11 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
                 TextView textView = (TextView) findViewById(R.id.textView4);
                 textView.setText(returnString);
             }
+        }
+
+        if (requestCode == 123) {
+            Bitmap captureImage = (Bitmap) data.getExtras().get("data");
+            imageView.setImageBitmap(captureImage);
         }
     }
     public boolean isServicesOK(){
