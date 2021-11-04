@@ -45,6 +45,11 @@
         <activity android:name=".HabitEventActivity"></activity>
         <activity android:name=".LocationActivity"></activity>
 
+
+        <activity android:name=".PhotoActivity"></activity>
+        <activity android:name=".TodayActivity"></activity>
+
+
         <activity
             android:name=".LoginActivity"
             android:exported="true">

@@ -16,10 +16,10 @@ public class Content extends ArrayAdapter<Habit> {
 private ArrayList<Habit> habits;
 private Context context;
 
-public Content(Context context, ArrayList<Habit> habits){
-    super(context,0,habits);
-    this.habits = habits;
-    this.context=context;
+public Content(Context c, ArrayList<Habit> h){
+    super(c,0,h);
+    this.habits =h;
+    this.context=c;
 
 }
 public View getView(int position, View convertView, ViewGroup parent){
@@ -35,7 +35,7 @@ public View getView(int position, View convertView, ViewGroup parent){
     TextView habitDate = view.findViewById(R.id.dateTextView);
 
     habitTitle.setText(habit.getTitle());
-    SimpleDateFormat formatter = new SimpleDateFormat(("dd.MM.yyyy"));
+    SimpleDateFormat formatter = new SimpleDateFormat(("dd/MM/yyyy"));
     String date = formatter.format(habit.getStartDate());
     habitDate.setText(date);
     habitReason.setText(habit.getReason());
