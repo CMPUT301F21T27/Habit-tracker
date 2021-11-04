@@ -11,7 +11,7 @@ import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class MainActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity  {
 
 
 
@@ -48,15 +48,4 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                     return true;
                 }
             };
-
-
-    @Override
-    public void OnOKPressed(Habit newHabit, Habit habit) {
-
-    }
-
-    @Override
-    public void OnDlPressed(Habit habit) {
-
-    }
 }
