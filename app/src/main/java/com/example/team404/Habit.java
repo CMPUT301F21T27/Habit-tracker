@@ -2,7 +2,7 @@ package com.example.team404;
 
 import java.util.Date;
 
-public class Habit {
+public class Habit implements java.io.Serializable {
     private String title;
     private String reason;
     private Date startDate;
