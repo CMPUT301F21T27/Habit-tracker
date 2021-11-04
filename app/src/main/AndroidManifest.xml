@@ -44,7 +44,6 @@
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".HabitEventActivity"></activity>
         <activity android:name=".LocationActivity"></activity>
-        <activity android:name=".PhotoActivity"></activity>
 
         <activity
             android:name=".LoginActivity"
