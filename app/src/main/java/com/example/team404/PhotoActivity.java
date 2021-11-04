@@ -11,7 +11,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-
+import android.widget.Toast;
 
 
 import androidx.annotation.Nullable;
@@ -31,6 +31,7 @@ public class PhotoActivity<requestCode> extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
 
@@ -63,9 +64,12 @@ public class PhotoActivity<requestCode> extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
+        Toast.makeText(this, "0000", Toast.LENGTH_SHORT);
+        if (requestCode == 123) {
             Bitmap captureImage = (Bitmap) data.getExtras().get("data");
+            Toast.makeText(this, "1111", Toast.LENGTH_SHORT);
             photo_view.setImageBitmap(captureImage);
+            Toast.makeText(this, "222", Toast.LENGTH_SHORT);
         }
     }
 }
