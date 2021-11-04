@@ -11,7 +11,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
+
 
 
 import androidx.annotation.Nullable;
@@ -24,8 +24,8 @@ import androidx.core.content.ContextCompat;
 public class PhotoActivity<requestCode> extends AppCompatActivity {
 
     private ImageView backImage;
-    private ImageView photo_view;
-    Button take_photo_button;
+    private ImageView imageView;
+    Button get_photo_button;
 
 
 
@@ -33,10 +33,10 @@ public class PhotoActivity<requestCode> extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo);
+        setContentView(R.layout.activity_habit_event);
 
-        photo_view = findViewById(R.id.photo_view);
-        take_photo_button = findViewById(R.id.take_photo_button);
+        imageView = findViewById(R.id.imageView);
+        get_photo_button = findViewById(R.id.get_photo_button);
         if (ContextCompat.checkSelfPermission(PhotoActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(PhotoActivity.this,
                     new String[]{
@@ -45,7 +45,7 @@ public class PhotoActivity<requestCode> extends AppCompatActivity {
 
                     123);
         }
-        take_photo_button.setOnClickListener(new View.OnClickListener() {
+        get_photo_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -64,12 +64,9 @@ public class PhotoActivity<requestCode> extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(this, "0000", Toast.LENGTH_SHORT);
         if (requestCode == 123) {
             Bitmap captureImage = (Bitmap) data.getExtras().get("data");
-            Toast.makeText(this, "1111", Toast.LENGTH_SHORT);
-            photo_view.setImageBitmap(captureImage);
-            Toast.makeText(this, "222", Toast.LENGTH_SHORT);
+            imageView.setImageBitmap(captureImage);
         }
     }
 }
