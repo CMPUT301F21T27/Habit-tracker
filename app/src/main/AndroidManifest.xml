@@ -40,18 +40,15 @@
             android:name=".MapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".MainActivity"></activity>
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".HabitEventActivity"></activity>
         <activity android:name=".LocationActivity"></activity>
 
-
-        <activity android:name=".PhotoActivity"></activity>
         <activity android:name=".TodayActivity"></activity>
 
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
