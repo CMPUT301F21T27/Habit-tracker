@@ -135,7 +135,7 @@
 
     <TextView
         android:id="@+id/phone"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:text="780-123-1234"
         android:textSize="20sp"
