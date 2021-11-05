@@ -6,20 +6,6 @@
     android:layout_height="match_parent">
 
 
-    <ImageView
-        android:id="@+id/account_photo"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:contentDescription="@string/add_account_photo"
-        app:srcCompat="@drawable/ic_baseline_account_circle_24" />
-
-    <TextView
-        android:id="@+id/account_text"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:hint="User" />
-
     <TextView
         android:id="@+id/comment_text"
         android:layout_width="match_parent"

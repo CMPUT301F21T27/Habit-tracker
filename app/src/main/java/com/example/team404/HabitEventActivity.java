@@ -58,7 +58,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
         commentList = findViewById(R.id.comment_list);
 
 
-        String []accounts = {"Nice", "Good habit event", "I pick you"};
+        String []accounts = {"Good habit event"};
 
         commentDataList = new ArrayList<>();
         for (int i=0; i<accounts.length;i++){
