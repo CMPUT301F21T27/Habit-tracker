@@ -17,6 +17,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.Calendar;
+
 import javax.xml.transform.SourceLocator;
 
 public class MyActivityIntentTest {
@@ -115,11 +117,57 @@ public class MyActivityIntentTest {
 
 
 
-
-
     }
+    /**
+     * Test today function
+     */
+    @Test
+    public void testTodayHabit() throws Exception{
+        //add
+        solo.assertCurrentActivity("",MyActivity.class);
+        solo.clickOnView(solo.getView(R.id.add_habit_button));
+        solo.enterText((EditText) solo.getView(R.id.title_editText),"play");
+        solo.enterText((EditText) solo.getView(R.id.reason_editText),"no homework");
+        solo.clickOnView(solo.getView(R.id.date_Start_edit_button));
+        solo.setDatePicker(0,2021,11,15);
+        solo.clickOnText("OK");
+        //get the current day of the week
+        Calendar c = Calendar.getInstance();
+        int day = c.get(Calendar.DAY_OF_WEEK);
+
+                switch (day) {
+                    case Calendar.SUNDAY:
+                        solo.clickOnView(solo.getView(R.id.sunday_check));
+
+                        break;
+                    case Calendar.MONDAY:
+                        solo.clickOnView(solo.getView(R.id.monday_check));
+
+                        break;
+                    case Calendar.TUESDAY:
+                        solo.clickOnView(solo.getView(R.id.tuesday_check));
+                        break;
+                    case Calendar.WEDNESDAY:
+                        solo.clickOnView(solo.getView(R.id.wednesday_check));
+                        break;
+                    case Calendar.THURSDAY:
+                        solo.clickOnView(solo.getView(R.id.thursday_check));
+                        break;
+                    case Calendar.FRIDAY:
+                        solo.clickOnView(solo.getView(R.id.friday_check));
+                        break;
+                    case Calendar.SATURDAY:
+                        solo.clickOnView(solo.getView(R.id.saturday_check));
+                        break;
+
+                }
+             solo.clickOnButton("Confirm");
+                solo.clickOnButton("TODAY");
+                assertTrue(solo.searchText("play"));
 
 
 
 
-}
+
+
+}}
