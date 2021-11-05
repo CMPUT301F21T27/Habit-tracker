@@ -1,29 +1,48 @@
 package com.example.team404;
 
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
-
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
-
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-public class HabitEventActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class HabitEventActivity extends AppCompatActivity implements AddCommentFragment.onFragmentInteractionListener, EditCommentFragment.onFragmentInteractionListener  {
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
     private Button LocationButton;
     private Button PhotoButton;
     private ImageView backImage;
     private ImageView LocationImage;
+    private ImageView imageView;
+    private ImageView saveImage;
+    ListView commentList;
+    ArrayAdapter<Comment> commentAdapter;
+    ArrayList<Comment> commentDataList;
+    int position;
+
 
     private TextView locationvIEW;
     private TextView photo;
@@ -36,6 +55,62 @@ public class HabitEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_event);
 
+        commentList = findViewById(R.id.comment_list);
+
+
+        String []comments = {"Good habit event"};
+
+        commentDataList = new ArrayList<>();
+        for (int i=0; i<comments.length;i++){
+            commentDataList.add(new Comment(comments[i]));
+        }
+        commentAdapter = new CommentList(this, commentDataList);
+        commentList.setAdapter(commentAdapter);
+        commentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                position = i;
+                Comment list_info = (Comment) commentList.getItemAtPosition(i);
+                EditCommentFragment editCommentFragment = EditCommentFragment.newInstance(list_info);
+                editCommentFragment.show(getSupportFragmentManager(), "EDIT COMMENT");
+            }
+        });
+        commentList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int
+                    position, long id) {
+                final int selected_item = position;
+
+                new AlertDialog.Builder(HabitEventActivity.this).
+                        setIcon(android.R.drawable.ic_delete)
+                        .setTitle("Are you sure...")
+                        .setMessage("Do you want to delete the comment?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                commentDataList.remove(selected_item);
+                                commentAdapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("No" , null).show();
+
+                return true;
+            }
+        });
+
+
+        final ImageButton addCommentButton = findViewById(R.id.add_comment);
+        addCommentButton.setOnClickListener(v -> {
+            if (commentDataList.size() == 1){
+                Toast.makeText(this, "Please long press to delete last one.", Toast.LENGTH_SHORT).show();
+
+            }else if (commentDataList.size() == 0){
+                new AddCommentFragment().show(getSupportFragmentManager(), "ADD COMMENT");
+            }
+
+        });
 
         if(isServicesOK()){
             init();
@@ -48,11 +123,29 @@ public class HabitEventActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        PhotoButton = (Button) findViewById(R.id.get_photo_button);
-        PhotoButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, PhotoActivity.class);
-            startActivity(intent);
+        saveImage = findViewById(R.id.saveImage);
+        saveImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do it later
+                onBackPressed();
+            }
         });
+        imageView = findViewById(R.id.imageView);
+        imageView.setOnClickListener(v -> {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, 123);
+        });
+        if (ContextCompat.checkSelfPermission(HabitEventActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(HabitEventActivity.this,
+                    new String[]{
+                            Manifest.permission.CAMERA
+                    },
+
+                    123);
+        }
+
+
 
     }
         private void init(){
@@ -66,6 +159,7 @@ public class HabitEventActivity extends AppCompatActivity {
             });
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -81,6 +175,11 @@ public class HabitEventActivity extends AppCompatActivity {
                 TextView textView = (TextView) findViewById(R.id.textView4);
                 textView.setText(returnString);
             }
+        }
+
+        if (requestCode == 123) {
+            Bitmap captureImage = (Bitmap) data.getExtras().get("data");
+            imageView.setImageBitmap(captureImage);
         }
     }
     public boolean isServicesOK(){
@@ -104,6 +203,17 @@ public class HabitEventActivity extends AppCompatActivity {
         return false;
 
     }
+    @Override
+    public void onOkPressed(Comment newCity){
+        commentAdapter.add(newCity);}
+
+    @Override
+    public void onEditOkPressed(Comment newCity){
+        commentDataList.remove(position);
+        commentAdapter.insert(newCity, position);
+    }
+    @Override
+    public void onCancelPressed(){}
 
 
 }

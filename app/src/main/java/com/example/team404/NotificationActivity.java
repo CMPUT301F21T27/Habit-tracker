@@ -4,16 +4,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class PhotoActivity extends HabitEventActivity{
-
+public class NotificationActivity extends AppCompatActivity {
     private ImageView backImage;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo);
+
+        setContentView(R.layout.activity_notification);
 
         backImage = findViewById(R.id.backImage);
         backImage.setOnClickListener(new View.OnClickListener() {
@@ -22,6 +23,5 @@ public class PhotoActivity extends HabitEventActivity{
                 onBackPressed();
             }
         });
-
     }
 }

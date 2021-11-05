@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <?xml version="1.0" encoding="utf-8"?>
+
     <LinearLayout
         android:layout_width="match_parent"
 
@@ -56,6 +56,7 @@
 
 
             <EditText
+                android:inputType="textEmailAddress"
                 android:textSize="16sp"
                 android:id="@+id/reg_email"
                 android:textColor="#000"
@@ -69,7 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"/>
             <EditText
-                android:inputType="phone"
+
+                android:inputType="number"
                 android:textSize="16sp"
                 android:id="@+id/reg_phone"
                 android:textColor="#000"
@@ -129,7 +131,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"/>
 
-            <TextView
+
+            <Button
                 android:id="@+id/reg_btn"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

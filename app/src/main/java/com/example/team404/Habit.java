@@ -2,16 +2,110 @@ package com.example.team404;
 
 import java.util.Date;
 
-public class Habit {
+public class Habit implements java.io.Serializable {
     private String title;
     private String reason;
-    private Date startDate;
 
-    Habit(String t, String r, Date d){
+    private String year;
+    private String month;
+    private String day;
+
+
+    private Boolean monday ;
+    private Boolean tuesday ;
+    private Boolean wednesday ;
+    private Boolean thursday ;
+    private Boolean friday ;
+    private Boolean saturday;
+    private Boolean sunday;
+
+
+
+
+
+
+    Habit(String t, String r,String year, String month, String day){
         setTitle(t);
         setReason(r);
-        setStartDate(d);
+
+
+        setYear(year);
+        setMonth(month);
+        setDay(day);
+        monday=false;
+        tuesday=false;
+        wednesday=false;
+        thursday=false;
+        friday=false;
+        saturday=false;
+        sunday=false;
+
+
+
+
+
     }
+    /**
+     * Set is habit occur on Monday
+     * @param m
+     *
+     */
+    public void setMonday(Boolean m) {
+        this.monday=m;
+
+    }
+
+    /**
+     * Set is habit occur on Tuesday
+     * @param t
+     *
+     */
+    public void setTuesday(Boolean t) {
+        this.tuesday=t;
+    }
+    /**
+     * Set is habit occur on Wednesday
+     * @param w
+     *
+     */
+    public void setWednesday(Boolean w) {
+        this.wednesday=w;
+    }
+    /**
+     * Set is habit occur on Thursday
+     * @param t
+     *
+     */
+    public void setThursday(Boolean t) {
+        this.thursday=t;
+    }
+    /**
+     * Set is habit occur on Friday
+     * @param f
+     *
+     */
+    public void setFriday(Boolean f) {
+        this.friday=f;
+    }
+    /**
+     * Set is habit occur on Saturday
+     * @param s
+     *
+     */
+    public void setSaturday(Boolean s) {
+        this.saturday=s;
+    }
+    /**
+     * Set is habit occur on Sunday
+     * @param s
+     *
+     */
+    public void setSunday(Boolean s) {
+        this.sunday=s;
+    }
+
+
+
 
     /**
      * Sets habit title with a character limit of 20
@@ -28,7 +122,7 @@ public class Habit {
     }
 
     /**
-     * Sets habit reason with a character limit of 20
+     * Sets habit reason with a character limit of 30
      * @param r
      * Habit reason
      */
@@ -43,10 +137,23 @@ public class Habit {
 
     /**
      * Sets habit date
-     * @param d
-     * Habit start date
+     * @param year
+     * Habit start year
      */
-    public void setStartDate(Date d){this.startDate = d;}
+    public void setYear(String year){this.year = year;}
+    /**
+     * Sets habit date
+     * @param month
+     * Habit start month
+     */
+    public void setMonth(String month){this.month = month;}
+    /**
+     * Sets habit date
+     * @param day
+     * Habit start year
+     */
+    public void setDay(String day){this.day = day;}
+
 
     /**
      * Returns the title of the habit
@@ -62,7 +169,59 @@ public class Habit {
 
     /**
      * Returns the start Date of the habit
-     * @return date
+     * @return Year
      */
-    public Date getStartDate(){return startDate;}
+    public String getYear(){return year;}
+    /**
+     * Returns the start Date of the habit
+     * @return Month
+     */
+    public String getMonth(){return month;}
+    /**
+     * Returns the start Date of the habit
+     * @return Day
+     */
+
+
+
+
+    public String getDay(){return day;}
+    /**
+     * Returns is the habit occur on Monday
+     * @return monday
+     */
+    public Boolean getMonday() {return monday;}
+    /**
+     * Returns is the habit occur on Tuesday
+     * @return tuesday
+     */
+    public Boolean getTuesday() {return tuesday;}
+    /**
+     * Returns is the habit occur on Wednesday
+     * @return wednesday
+     */
+    public Boolean getWednesday() {return wednesday;}
+    /**
+     * Returns is the habit occur on Thursday
+     * @return thursday
+     */
+    public Boolean getThursday() {return thursday;}
+    /**
+     * Returns is the habit occur on Friday
+     * @return friday
+     */
+    public Boolean getFriday() {return friday;}
+    /**
+     * Returns is the habit occur on Saturday
+     * @return saturday
+     */
+    public Boolean getSaturday() {return saturday;}
+    /**
+     * Returns is the habit occur on Sunday
+     * @return sunday
+     */
+    public Boolean getSunday() {return sunday;}
+
+
+
 }

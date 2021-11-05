@@ -36,9 +36,9 @@
             android:layout_height="1dp"/>
 
         <EditText
-            android:inputType="number"
+
             android:textSize="16sp"
-            android:id="@+id/reg_email"
+            android:id="@+id/user_email"
             android:textColor="#000"
             android:textColorHint="#707070"
             android:maxLines="1"
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
         <EditText
-            android:inputType="number"
+
             android:textSize="16sp"
             android:id="@+id/user_pass"
             android:textColor="#000"
@@ -63,8 +63,8 @@
             android:background="#ffffff"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
-        <TextView
-            android:id="@+id/reg_signup"
+        <Button
+            android:id="@+id/signup_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -73,8 +73,8 @@
             android:textColor="#49558A"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/reg_btn"
+        <Button
+            android:id="@+id/sign_in_btn"
             android:layout_marginBottom="20dp"
             android:gravity="center"
             android:text="Sign In"

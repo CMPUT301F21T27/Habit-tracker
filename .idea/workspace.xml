@@ -13,12 +13,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bf91b60-b364-4aeb-a9bc-9bc9c6ec9135" name="Default Changelist" comment="login">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/team404/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/team404/RegisterActivity.java" afterDir="false" />
-    </list>
-    <list id="eea8f30f-289c-4e2b-9d2d-a1363819f9b3" name="Uncommitted changes before Merge at 2021-11-02, 4:09 下午 [Default Changelist]" comment="" />
+    <list default="true" id="1bf91b60-b364-4aeb-a9bc-9bc9c6ec9135" name="Default Changelist" comment="i am ok" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,7 +28,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="resourceFile" />
         <option value="Class" />
         <option value="layoutResourceFile" />
       </list>
@@ -58,19 +52,13 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable-v24" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.example.team404" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/src/main/res/drawable-v24" />
-    </key>
     <key name="android.template.1822526487">
-      <recent name="com.example.team404" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.team404" />
     </key>
   </component>
@@ -143,28 +131,6 @@
       <option name="presentableId" value="Default" />
       <updated>1634788640139</updated>
     </task>
-    <task id="LOCAL-00001" summary="11">
-      <created>1635894457710</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1635894457710</updated>
-    </task>
-    <task id="LOCAL-00002" summary="login">
-      <created>1635920608443</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1635920608444</updated>
-    </task>
-    <task id="LOCAL-00003" summary="login">
-      <created>1635920624925</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1635920624925</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -180,8 +146,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="11" />
-    <MESSAGE value="login" />
-    <option name="LAST_COMMIT_MESSAGE" value="login" />
+    <MESSAGE value="i am ok" />
+    <option name="LAST_COMMIT_MESSAGE" value="i am ok" />
   </component>
 </project>
