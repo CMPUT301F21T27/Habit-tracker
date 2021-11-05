@@ -36,4 +36,45 @@
         android:inputType="textPersonName"
         android:maxLength="30"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Days of a week habit occur"></TextView>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Monday"
+        android:id="@+id/monday_check"></CheckBox>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Tuesday"
+        android:id="@+id/tuesday_check"></CheckBox>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Wednesday"
+        android:id="@+id/wednesday_check"></CheckBox>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Thursday"
+        android:id="@+id/thursday_check"></CheckBox>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Friday"
+        android:id="@+id/friday_check"></CheckBox>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Saturday"
+        android:id="@+id/saturday_check"></CheckBox>
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Sunday"
+        android:id="@+id/sunday_check"></CheckBox>
+
+
 </LinearLayout>

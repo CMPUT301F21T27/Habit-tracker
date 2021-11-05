@@ -44,6 +44,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
 
         habitList=(ListView) findViewById(R.id.habit_list);
+
         /**prefill habit for testing */
         String year ="2021";
         String month ="11";
@@ -56,6 +57,16 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
         habitArrayAdapter = new Content(this,habitDataList);
         habitList.setAdapter(habitArrayAdapter);
+
+
+
+
+
+        habitDataList=new ArrayList<>();
+
+
+        habitArrayAdapter = new Content(this,habitDataList);
+
 
         final FloatingActionButton addHabitButton = findViewById(R.id.add_habit_button);
         addHabitButton.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +91,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
        today=(Button) findViewById(R.id.today_button);
 
         Calendar c = Calendar.getInstance();
+
         String dayToday = valueOf(c.get(Calendar.DAY_OF_MONTH));
         String monthToday =valueOf(c.get(Calendar.MONTH+1));
         String yearToday = valueOf(c.get(Calendar.YEAR));
@@ -94,10 +106,62 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
             }
         }
         intent.putExtra("habitsToday",habitsToday);
+
+        int day = c.get(Calendar.DAY_OF_WEEK);
+
+
+        Intent intent = new Intent (this,TodayActivity.class);
+
        today.setOnClickListener(new View.OnClickListener(){
 
            @Override
            public void onClick(View v) {
+
+
+    ArrayList<Habit> habitsToday = new ArrayList<Habit>();
+               for(Habit i :habitDataList){
+                    if (!(habitDataList.contains(i.getTitle()))) {
+                        switch (day) {
+                            case Calendar.SUNDAY:
+                                if (i.getSunday()) {
+                                    habitsToday.add(i);
+                                }
+                                break;
+                            case Calendar.MONDAY:
+                                if (i.getMonday()) {
+                                    habitsToday.add(i);
+                                }
+                                break;
+                            case Calendar.TUESDAY:
+                                if (i.getTuesday()) {
+                                    habitsToday.add(i);
+                                }
+                                break;
+                            case Calendar.WEDNESDAY:
+                                if (i.getWednesday()) {
+                                    habitsToday.add(i);
+                                }
+                                break;
+                            case Calendar.THURSDAY:
+                                if (i.getThursday()) {
+                                    habitsToday.add(i);
+                                }
+                                break;
+                            case Calendar.FRIDAY:
+                                if (i.getFriday()) {
+                                    habitsToday.add(i);
+                                }
+                                break;
+                            case Calendar.SATURDAY:
+                                if (i.getSaturday()) {
+                                    habitsToday.add(i);
+                                }
+                                break;
+
+                        }
+                    }
+               }
+               intent.putExtra("habitsToday",habitsToday);
 
                 startActivity(intent);
            }
@@ -117,14 +181,27 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         else {
             int index = habitDataList.indexOf(habit);
             habitDataList.get(index).setTitle(newHabit.getTitle());
+
             /**Check when ok pressed
             if user did not edit date
             * we still use previous date
             * else we use new date */
+
+            habitDataList.get(index).setMonday(newHabit.getMonday());
+            habitDataList.get(index).setTuesday(newHabit.getTuesday());
+            habitDataList.get(index).setWednesday(newHabit.getWednesday());
+            habitDataList.get(index).setThursday(newHabit.getThursday());
+            habitDataList.get(index).setFriday(newHabit.getFriday());
+            habitDataList.get(index).setSaturday(newHabit.getSaturday());
+            habitDataList.get(index).setSunday(newHabit.getSunday());
+
+
             if((Integer.valueOf(newHabit.getMonth())>0)){
             habitDataList.get(index).setYear(newHabit.getYear());
             habitDataList.get(index).setMonth(newHabit.getMonth());
             habitDataList.get(index).setDay(newHabit.getDay());}
+
+
 
             else{
                 habitDataList.get(index).setYear(habit.getYear());
@@ -201,4 +278,8 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
     }
 
+
 }
+
+}
+
