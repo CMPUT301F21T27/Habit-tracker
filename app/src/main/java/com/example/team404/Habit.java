@@ -10,19 +10,7 @@ public class Habit implements java.io.Serializable {
     private String month;
     private String day;
 
-    Habit(String t, String r, String year, String month, String day){
-        setTitle(t);
-        setReason(r);
-        setYear(year);
-        setMonth(month);
-        setDay(day);
 
-
-    private Date startDate;
-
-    private String year;
-    private String month;
-    private String day;
     private Boolean monday ;
     private Boolean tuesday ;
     private Boolean wednesday ;
@@ -36,11 +24,10 @@ public class Habit implements java.io.Serializable {
 
 
 
-    Habit(String t, String r, Date d){
+    Habit(String t, String r,String year, String month, String day){
         setTitle(t);
         setReason(r);
 
-        setStartDate(d);
 
         setYear(year);
         setMonth(month);
@@ -195,10 +182,8 @@ public class Habit implements java.io.Serializable {
      * @return Day
      */
 
-    public String getDay(){return day;}
 
 
-    public Date getStartDate(){return startDate;}
 
     public String getDay(){return day;}
     /**

@@ -45,20 +45,6 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
         habitList=(ListView) findViewById(R.id.habit_list);
 
-        /**prefill habit for testing */
-        String year ="2021";
-        String month ="11";
-        String day = "05";
-        Habit habit = new Habit("play the video game","Because no homework",year,month,day);
-
-
-        habitDataList=new ArrayList<>();
-        habitDataList.add(habit);
-
-        habitArrayAdapter = new Content(this,habitDataList);
-        habitList.setAdapter(habitArrayAdapter);
-
-
 
 
 
@@ -66,7 +52,6 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
 
         habitArrayAdapter = new Content(this,habitDataList);
-
 
         final FloatingActionButton addHabitButton = findViewById(R.id.add_habit_button);
         addHabitButton.setOnClickListener(new View.OnClickListener() {
@@ -91,22 +76,6 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
        today=(Button) findViewById(R.id.today_button);
 
         Calendar c = Calendar.getInstance();
-
-        String dayToday = valueOf(c.get(Calendar.DAY_OF_MONTH));
-        String monthToday =valueOf(c.get(Calendar.MONTH+1));
-        String yearToday = valueOf(c.get(Calendar.YEAR));
-
-
-        Intent intent = new Intent (this,TodayActivity.class);
-        ArrayList<Habit> habitsToday = new ArrayList<Habit>();
-        for(Habit i :habitDataList){
-
-            if ((habit.getDay().equals(dayToday))&&(habit.getMonth().equals(monthToday)&&(habit.getYear().equals(yearToday)))){
-                habitsToday.add(i);
-            }
-        }
-        intent.putExtra("habitsToday",habitsToday);
-
         int day = c.get(Calendar.DAY_OF_WEEK);
 
 
@@ -116,9 +85,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
            @Override
            public void onClick(View v) {
-
-
-    ArrayList<Habit> habitsToday = new ArrayList<Habit>();
+               ArrayList<Habit> habitsToday = new ArrayList<Habit>();
                for(Habit i :habitDataList){
                     if (!(habitDataList.contains(i.getTitle()))) {
                         switch (day) {
@@ -162,7 +129,6 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                     }
                }
                intent.putExtra("habitsToday",habitsToday);
-
                 startActivity(intent);
            }
        });
@@ -181,12 +147,6 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         else {
             int index = habitDataList.indexOf(habit);
             habitDataList.get(index).setTitle(newHabit.getTitle());
-
-            /**Check when ok pressed
-            if user did not edit date
-            * we still use previous date
-            * else we use new date */
-
             habitDataList.get(index).setMonday(newHabit.getMonday());
             habitDataList.get(index).setTuesday(newHabit.getTuesday());
             habitDataList.get(index).setWednesday(newHabit.getWednesday());
@@ -195,14 +155,10 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
             habitDataList.get(index).setSaturday(newHabit.getSaturday());
             habitDataList.get(index).setSunday(newHabit.getSunday());
 
-
             if((Integer.valueOf(newHabit.getMonth())>0)){
             habitDataList.get(index).setYear(newHabit.getYear());
             habitDataList.get(index).setMonth(newHabit.getMonth());
             habitDataList.get(index).setDay(newHabit.getDay());}
-
-
-
             else{
                 habitDataList.get(index).setYear(habit.getYear());
                 habitDataList.get(index).setMonth(habit.getMonth());
@@ -278,8 +234,4 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
     }
 
-
 }
-
-}
-

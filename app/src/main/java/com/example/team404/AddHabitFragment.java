@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,6 +33,15 @@ public class AddHabitFragment extends DialogFragment {
     private OnFragmentInteractionListener listener;
     private Habit habit_selected;
     private DatePickerDialog.OnDateSetListener DateStartSetListener;
+    private CheckBox mondayCheck;
+    private CheckBox tuesdayCheck;
+    private CheckBox wednesdayCheck;
+    private CheckBox thursdayCheck;
+    private CheckBox fridayCheck;
+    private CheckBox saturdayCheck;
+    private CheckBox sundayCheck;
+
+
     private int year;
     private int month;
     private int day;
@@ -73,11 +83,26 @@ public class AddHabitFragment extends DialogFragment {
         date_start = view.findViewById(R.id.date_Start_Text);
         edit_date_start = view.findViewById(R.id.date_Start_edit_button);
         reason = view.findViewById(R.id.reason_editText);
+        mondayCheck=view.findViewById(R.id.monday_check);
+        tuesdayCheck=view.findViewById(R.id.tuesday_check);
+        wednesdayCheck=view.findViewById(R.id.wednesday_check);
+        thursdayCheck=view.findViewById(R.id.thursday_check);
+        fridayCheck=view.findViewById(R.id.friday_check);
+        saturdayCheck=view.findViewById(R.id.saturday_check);
+        sundayCheck=view.findViewById(R.id.sunday_check);
         if (habit_selected != null) {
             title.setText(habit_selected.getTitle());
 
-            date_start.setText(habit_selected.getYear() +"-"+habit_selected.getMonth()+"-"+habit_selected.getDay());
-            reason.setText(habit_selected.getReason()); }
+            date_start.setText(habit_selected.getYear() +"-"+habit_selected.getMonth()+"-"+habit_selected.getDay()+"-");
+            reason.setText(habit_selected.getReason());
+            mondayCheck.setChecked(habit_selected.getMonday());
+            tuesdayCheck.setChecked(habit_selected.getTuesday());
+            wednesdayCheck.setChecked(habit_selected.getWednesday());
+            thursdayCheck.setChecked(habit_selected.getThursday());
+            fridayCheck.setChecked(habit_selected.getFriday());
+            saturdayCheck.setChecked(habit_selected.getSaturday());
+            sundayCheck.setChecked(habit_selected.getSunday());
+            }
             edit_date_start.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -123,7 +148,19 @@ public class AddHabitFragment extends DialogFragment {
                             String habit_month =  Integer.toString(month);
                             String habit_day =  Integer.toString(day);
                             String habit_reason = reason.getText().toString();
-                            listener.OnOKPressed(new Habit(habit_title, habit_reason, habit_year,habit_month,habit_day), habit_selected);
+                            Habit habit = new Habit(habit_title, habit_reason, habit_year,habit_month,habit_day);
+
+                            habit.setMonday(mondayCheck.isChecked());
+                            habit.setTuesday(tuesdayCheck.isChecked());
+                            habit.setWednesday(wednesdayCheck.isChecked());
+                            habit.setThursday(thursdayCheck.isChecked());
+                            habit.setFriday(fridayCheck.isChecked());
+                            habit.setSaturday(saturdayCheck.isChecked());
+                            habit.setSunday(sundayCheck.isChecked());
+
+
+                            listener.OnOKPressed(habit, habit_selected);
+
                         }
                     }).create();
 
