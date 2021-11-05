@@ -5,9 +5,9 @@ import java.util.Date;
 public class Habit implements java.io.Serializable {
     private String title;
     private String reason;
-<<<<<<< Updated upstream
+
     private Date startDate;
-=======
+
     private String year;
     private String month;
     private String day;
@@ -22,14 +22,14 @@ public class Habit implements java.io.Serializable {
 
 
 
->>>>>>> Stashed changes
+
 
     Habit(String t, String r, Date d){
         setTitle(t);
         setReason(r);
-<<<<<<< Updated upstream
+
         setStartDate(d);
-=======
+
         setYear(year);
         setMonth(month);
         setDay(day);
@@ -44,7 +44,7 @@ public class Habit implements java.io.Serializable {
 
 
 
->>>>>>> Stashed changes
+
     }
     /**
      * Set is habit occur on Monday
@@ -158,9 +158,9 @@ public class Habit implements java.io.Serializable {
      * Returns the start Date of the habit
      * @return date
      */
-<<<<<<< Updated upstream
+
     public Date getStartDate(){return startDate;}
-=======
+
     public String getDay(){return day;}
     /**
      * Returns is the habit occur on Monday
@@ -198,5 +198,5 @@ public class Habit implements java.io.Serializable {
      */
     public Boolean getSunday() {return sunday;}
 
->>>>>>> Stashed changes
+
 }
