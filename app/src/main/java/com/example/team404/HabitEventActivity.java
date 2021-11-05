@@ -58,19 +58,19 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
         commentList = findViewById(R.id.comment_list);
 
 
-        String []accounts = {"Good habit event"};
+        String []comments = {"Good habit event"};
 
         commentDataList = new ArrayList<>();
-        for (int i=0; i<accounts.length;i++){
-            commentDataList.add(new Comment(accounts[i]));
+        for (int i=0; i<comments.length;i++){
+            commentDataList.add(new Comment(comments[i]));
         }
         commentAdapter = new CommentList(this, commentDataList);
         commentList.setAdapter(commentAdapter);
         commentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 position = i;
-
                 Comment list_info = (Comment) commentList.getItemAtPosition(i);
                 EditCommentFragment editCommentFragment = EditCommentFragment.newInstance(list_info);
                 editCommentFragment.show(getSupportFragmentManager(), "EDIT COMMENT");
@@ -103,7 +103,13 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
 
         final ImageButton addCommentButton = findViewById(R.id.add_comment);
         addCommentButton.setOnClickListener(v -> {
-            new AddCommentFragment().show(getSupportFragmentManager(), "ADD COMMENT");
+            if (commentDataList.size() == 1){
+                Toast.makeText(this, "Please long press to delete last one.", Toast.LENGTH_SHORT).show();
+
+            }else if (commentDataList.size() == 0){
+                new AddCommentFragment().show(getSupportFragmentManager(), "ADD COMMENT");
+            }
+
         });
 
         if(isServicesOK()){
