@@ -33,7 +33,7 @@ public class Habit implements java.io.Serializable {
     }
 
     /**
-     * Sets habit reason with a character limit of 20
+     * Sets habit reason with a character limit of 30
      * @param r
      * Habit reason
      */
