@@ -117,7 +117,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         else {
             int index = habitDataList.indexOf(habit);
             habitDataList.get(index).setTitle(newHabit.getTitle());
-            /*Check when ok pressed
+            /**Check when ok pressed
             if user did not edit date
             * we still use previous date
             * else we use new date */
