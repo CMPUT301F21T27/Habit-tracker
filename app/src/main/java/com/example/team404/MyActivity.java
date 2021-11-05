@@ -25,17 +25,28 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+/**
+ * This activity is use to display user's Habits. That user can view, edit, delete habits through here. User can also
+ * access the habits to do today through here
+ */
 
 public class MyActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
+    // declare layout variables
     ListView habitList;
     ArrayAdapter<Habit> habitArrayAdapter;
     ArrayList<Habit> habitDataList;
     Button today;
 
+    /**
+     * The main process of MyActivity class.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
+
+        //initialize the layout variables and connect to the layouts
 
         setContentView(R.layout.activity_my);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
@@ -53,7 +64,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
         habitDataList=new ArrayList<>();
         //habitDataList.add(habit);
-
+        /** using Content class as adpter**/
         habitArrayAdapter = new Content(this,habitDataList);
         habitList.setAdapter(habitArrayAdapter);
 
@@ -78,11 +89,11 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
 
        today=(Button) findViewById(R.id.today_button);
-
+    /** get current date by using calender **/
         Calendar c = Calendar.getInstance();
         int day = c.get(Calendar.DAY_OF_WEEK);
 
-
+    /** go to Today Activity class (showing up the habits to do today) by using intent **/
         Intent intent = new Intent (this,TodayActivity.class);
 
        today.setOnClickListener(new View.OnClickListener(){
@@ -143,11 +154,19 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
     }
 
 
+    /**
+     * After pressing positive button on the dialog. Which will add a habit on to the fragment
+     * Or Editing one exist habit
+     * @param newHabit
+     * @param habit
+     */
     @Override
     public void OnOKPressed(Habit newHabit, Habit habit) {
+        /** if no previous habit selected, it will add a new habit onto the list**/
         if (habit == null) {
             habitArrayAdapter.add(newHabit);
         }
+        /** otherwise, it will edit a existing habit**/
         else {
             int index = habitDataList.indexOf(habit);
             habitDataList.get(index).setTitle(newHabit.getTitle());
@@ -172,6 +191,11 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         }
         habitList.setAdapter(habitArrayAdapter);
     }
+
+    /**
+     * Delete a habit from the list by pressing the negative button on the dialog
+     * @param habit
+     */
     @Override
     public void OnDlPressed(Habit habit) {
             habitDataList.remove(habit);
@@ -218,6 +242,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
     private int count = 0;
     @Override
+
     public void onBackPressed() {
         count++;
         if (count >1){

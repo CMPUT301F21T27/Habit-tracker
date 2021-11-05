@@ -26,7 +26,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * This class is use to set up the add, edit, and delete Habit from the list
+ */
 public class AddHabitFragment extends DialogFragment {
+    /** declare variables **/
     private EditText title;
     private TextView date_start;
     private Button edit_date_start;
@@ -47,13 +51,24 @@ public class AddHabitFragment extends DialogFragment {
     private int month;
     private int day;
 
+    /**
+     * constructor
+     */
     public AddHabitFragment() {
         habit_selected = null;
     }
 
+    /**
+     * constructor
+     * @param habit_selected
+     */
     public AddHabitFragment(Habit habit_selected) {
         this.habit_selected = habit_selected;
     }
+
+    /**
+     * Fragment Interaction Listener interface
+     */
 
     public interface OnFragmentInteractionListener {
         void OnOKPressed(Habit newHabit, Habit habit);
@@ -76,6 +91,11 @@ public class AddHabitFragment extends DialogFragment {
 
     }
 
+    /**
+     * main process of the class, to create dialog for user to add,edit,delete habits.
+     * @param savedInstanceState
+     * @return
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -91,6 +111,7 @@ public class AddHabitFragment extends DialogFragment {
         fridayCheck=view.findViewById(R.id.friday_check);
         saturdayCheck=view.findViewById(R.id.saturday_check);
         sundayCheck=view.findViewById(R.id.sunday_check);
+        /** User is editing an exist habit, then the editText will show the information of the previous habit **/
         if (habit_selected != null) {
             title.setText(habit_selected.getTitle());
 
@@ -118,6 +139,7 @@ public class AddHabitFragment extends DialogFragment {
 
 
             });
+        /** using date picker to set up the Start date of the habit **/
             DateStartSetListener = new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker datePicker, int y, int m, int d) {
@@ -133,7 +155,7 @@ public class AddHabitFragment extends DialogFragment {
                 Intent intent = new Intent(getActivity(), HabitEventListActivity.class);
                 startActivity(intent);
             });
-
+        /** set up the Positive, neutral, Negative Button of the dialog for add, cancel, delete **/
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             return builder
                     .setView(view)

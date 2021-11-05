@@ -13,18 +13,34 @@ import org.w3c.dom.Text;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+ * This class is an adapter class
+ */
 public class Content extends ArrayAdapter<Habit> {
 private ArrayList<Habit> habits;
 private Context context;
 
-public Content(Context c, ArrayList<Habit> h){
+    /**
+     * constructor
+     * @param c
+     * @param h
+     */
+    public Content(Context c, ArrayList<Habit> h){
     super(c,0,h);
     this.habits =h;
     this.context=c;
 
 
 }
-public View getView(int position, View convertView, ViewGroup parent){
+
+    /**
+     * Connects to the layout and format the habits as item in the list
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
+    public View getView(int position, View convertView, ViewGroup parent){
     View view = convertView;
     if(view == null){
         view = LayoutInflater.from(context).inflate((R.layout.habit_content),parent,false);

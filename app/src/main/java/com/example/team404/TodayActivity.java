@@ -13,26 +13,39 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+/**
+ * This class is use to show user that the habit has to do today
+ */
 public class TodayActivity extends AppCompatActivity {
+    /** declare variables **/
     ListView today_habit;
     ImageView back;
     ArrayAdapter<Habit> habitArrayAdapter;
 
+    /**
+     * main process of this class, to show user the habits has to do today
+     * @param savedInstanceState
+     */
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
+        /** initialize vairables**/
         setContentView(R.layout.activity_today);
 
         today_habit=(ListView) findViewById(R.id.today_habit_list);
         back= findViewById(R.id.backImage);
+        /**get the habits arraylist from My Activity**/
         Intent intent = getIntent();
         ArrayList<Habit> habitsToday = new ArrayList<Habit>();
         habitsToday = (ArrayList<Habit>)getIntent().getSerializableExtra("habitsToday");
         habitArrayAdapter = new Content(this,habitsToday);
         today_habit.setAdapter(habitArrayAdapter);
 
-
+/**
+ * after click the back button, it will take user back to the My Activity page
+ */
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
