@@ -76,7 +76,7 @@ public class AddHabitFragment extends DialogFragment {
         if (habit_selected != null) {
             title.setText(habit_selected.getTitle());
 
-            date_start.setText(habit_selected.getYear() +"-"+habit_selected.getMonth()+"-"+habit_selected.getDay()+"-");
+            date_start.setText(habit_selected.getYear() +"-"+habit_selected.getMonth()+"-"+habit_selected.getDay());
             reason.setText(habit_selected.getReason()); }
             edit_date_start.setOnClickListener(new View.OnClickListener() {
                 @Override
