@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -40,7 +41,7 @@ public class AddHabitFragment extends DialogFragment {
     private CheckBox fridayCheck;
     private CheckBox saturdayCheck;
     private CheckBox sundayCheck;
-
+    private  Button habitEventListButton;
 
     private int year;
     private int month;
@@ -127,6 +128,12 @@ public class AddHabitFragment extends DialogFragment {
 
                 }
             };
+            habitEventListButton = view.findViewById(R.id.habit_event_list_button);
+            habitEventListButton.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), HabitEventListActivity.class);
+                startActivity(intent);
+            });
+
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             return builder
                     .setView(view)

@@ -33,9 +33,9 @@ public class CommentList extends ArrayAdapter<Comment> {
         }
         Comment comment = comments.get(position);
         //ImageView account_photo = view.findViewById(R.id.account_photo);
-        TextView account = view.findViewById(R.id.account_text);
+        //TextView account = view.findViewById(R.id.account_text);
         TextView commentName = view.findViewById(R.id.comment_text);
-        account.setText(comment.getAccount_photo());
+        //.setText(comment.getAccount_photo());
         commentName.setText(comment.getComment());
         return view;
     }

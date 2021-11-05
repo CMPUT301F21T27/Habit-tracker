@@ -44,14 +44,18 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
 
         habitList=(ListView) findViewById(R.id.habit_list);
-
-
+        /**prefill habit for testing */
+        String year ="2021";
+        String month ="11";
+        String day1 = "05";
+        Habit habit = new Habit("play the video game","Because no homework",year,month,day1);
 
 
         habitDataList=new ArrayList<>();
-
+        habitDataList.add(habit);
 
         habitArrayAdapter = new Content(this,habitDataList);
+        habitList.setAdapter(habitArrayAdapter);
 
         final FloatingActionButton addHabitButton = findViewById(R.id.add_habit_button);
         addHabitButton.setOnClickListener(new View.OnClickListener() {

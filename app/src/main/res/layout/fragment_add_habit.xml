@@ -76,5 +76,15 @@
         android:text="Sunday"
         android:id="@+id/sunday_check"></CheckBox>
 
+    <Button
+        android:id="@+id/habit_event_list_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="habit event" />
 
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="public" />
 </LinearLayout>

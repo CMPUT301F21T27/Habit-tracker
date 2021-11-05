@@ -21,7 +21,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -38,7 +37,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
     private ImageView backImage;
     private ImageView LocationImage;
     private ImageView imageView;
-
+    private ImageView saveImage;
     ListView commentList;
     ArrayAdapter<Comment> commentAdapter;
     ArrayList<Comment> commentDataList;
@@ -58,12 +57,12 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
 
         commentList = findViewById(R.id.comment_list);
 
-        String []comments ={"user1", "user2", "user3"};
+
         String []accounts = {"Nice", "Good habit event", "I pick you"};
 
         commentDataList = new ArrayList<>();
-        for (int i=0; i<comments.length;i++){
-            commentDataList.add(new Comment(comments[i], accounts[i]));
+        for (int i=0; i<accounts.length;i++){
+            commentDataList.add(new Comment(accounts[i]));
         }
         commentAdapter = new CommentList(this, commentDataList);
         commentList.setAdapter(commentAdapter);
@@ -115,6 +114,14 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        saveImage = findViewById(R.id.saveImage);
+        saveImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do it later
                 onBackPressed();
             }
         });
