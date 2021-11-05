@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if (document.exists()) {
                                         String real_passward=document.getString("userPassword").toString();
                                         if (real_passward.equals(userPassword)){
-                                            Toast.makeText(LoginActivity.this, "they are match!you are login",
+                                            Toast.makeText(LoginActivity.this, "welcome!",
                                             Toast.LENGTH_SHORT).show();
                                             //setContentView(R.layout.activity_main);
                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -85,11 +85,11 @@ public class LoginActivity extends AppCompatActivity {
                                             return;
                                         }
                                         else{
-                                            Toast.makeText(LoginActivity.this, "they are not match!",
+                                            Toast.makeText(LoginActivity.this, "password is incorrect!",
                                             Toast.LENGTH_SHORT).show();}
                                     }
                                     else {
-                                        Toast.makeText(LoginActivity.this, "No this email account!",
+                                        Toast.makeText(LoginActivity.this, "Not find this account!",
                                         Toast.LENGTH_SHORT).show();
                                     }
                                 } else {

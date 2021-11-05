@@ -69,7 +69,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"/>
             <EditText
-                android:inputType="phone"
+
+                android:inputType=""
                 android:textSize="16sp"
                 android:id="@+id/reg_phone"
                 android:textColor="#000"

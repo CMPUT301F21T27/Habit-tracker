@@ -24,7 +24,24 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/notificationImage"
+                android:id="@+id/backImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="3dp"
+                android:clickable="true"
+                android:contentDescription="@string/back_button"
+                android:focusable="true"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:visibility="visible"
+                app:tint="@color/white" />
+
+            <ImageView
+                android:id="@+id/saveImage"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_alignParentStart="true"
@@ -36,24 +53,7 @@
                 android:clickable="true"
                 android:contentDescription="@string/back_button"
                 android:focusable="true"
-                android:src="@drawable/ic_baseline_notifications_24"
-                android:visibility="visible"
-                app:tint="@color/white" />
-
-            <ImageView
-                android:id="@+id/EditImage"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="293dp"
-                android:layout_marginLeft="293dp"
-                android:layout_marginTop="1dp"
-                android:clickable="true"
-                android:contentDescription="@string/back_button"
-                android:focusable="true"
-                android:src="@drawable/ic_baseline_edit_24"
+                android:src="@drawable/ic_baseline_check_circle_24"
                 android:visibility="visible"
                 app:tint="@color/white" />
 
@@ -76,18 +76,7 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        app:itemBackground="@color/white"
-        app:itemIconTint="@drawable/selector"
-        app:itemTextColor="@drawable/selector"
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -105,16 +94,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="52dp"
         android:text="Name:"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-    <TextView
-        android:id="@+id/name"
+    <EditText
+        android:id="@+id/nameEditText"
         android:layout_width="120dp"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:text="Doer 1"
         android:textSize="20sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
@@ -127,16 +116,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
         android:text="Photo"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <TextView
-        android:id="@+id/phone"
+    <EditText
+        android:id="@+id/phoneEditText"
         android:layout_width="120dp"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:text="780-123-1234"
         android:textSize="20sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
@@ -149,14 +138,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="44dp"
         android:text="Email"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-    <TextView
-        android:id="@+id/email"
+    <EditText
+        android:id="@+id/emailEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="doer1@ualberta.ca"

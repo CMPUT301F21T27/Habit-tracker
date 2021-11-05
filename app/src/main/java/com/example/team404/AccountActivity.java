@@ -3,8 +3,13 @@ package com.example.team404;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +19,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class AccountActivity extends AppCompatActivity {
+
+    private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
+    private  ImageView backImage;
+    private ImageView notifcationImage;
+    private ImageView editImage;
+
+    private TextView username;
+    private TextView email;
+    private TextView phone;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getSupportActionBar().hide();
@@ -23,7 +39,58 @@ public class AccountActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setSelectedItemId(R.id.nav_account);
         bottomNav.setOnItemSelectedListener(navListener);
+
+        username = (TextView) findViewById(R.id.name);
+        email = (TextView) findViewById(R.id.email);
+        phone = (TextView) findViewById(R.id.phone);
+
+
+
+
+
+        notifcationImage = findViewById(R.id.notificationImage);
+        notifcationImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AccountActivity.this, NotificationActivity.class);
+                startActivity(intent);
+            }
+
+        });
+        editImage = findViewById(R.id.EditImage);
+        editImage.setOnClickListener(v -> {
+
+            String name = username.getText().toString();
+
+            Intent intent = new Intent(AccountActivity.this, AccountEditActivity.class);
+            intent.putExtra("name", name);
+            startActivityForResult(intent, 333);
+        });
+
+
+
     }
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+
+
+            if (requestCode == 333) {
+                // Get String data from Intent
+                String returnString = data.getStringExtra("editName");
+
+                // Set text view with string
+                TextView textView = (TextView) findViewById(R.id.name);
+                textView.setText(returnString);
+            }
+        }
+
+
+
+
+
+
+
     private NavigationBarView.OnItemSelectedListener navListener =
             new NavigationBarView.OnItemSelectedListener() {
                 @Override
