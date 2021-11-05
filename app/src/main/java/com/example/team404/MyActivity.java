@@ -117,9 +117,15 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         else {
             int index = habitDataList.indexOf(habit);
             habitDataList.get(index).setTitle(newHabit.getTitle());
+            if((Integer.valueOf(newHabit.getMonth())>0)){
             habitDataList.get(index).setYear(newHabit.getYear());
             habitDataList.get(index).setMonth(newHabit.getMonth());
-            habitDataList.get(index).setDay(newHabit.getDay());
+            habitDataList.get(index).setDay(newHabit.getDay());}
+            else{
+                habitDataList.get(index).setYear(habit.getYear());
+                habitDataList.get(index).setMonth(habit.getMonth());
+                habitDataList.get(index).setDay(habit.getDay());
+            }
             habitDataList.get(index).setReason(newHabit.getReason());
         }
         habitList.setAdapter(habitArrayAdapter);
