@@ -53,7 +53,11 @@ public class LoginActivity extends AppCompatActivity {
         signup_btn.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.register);
+
+                //setContentView(R.layout.register);
+
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
         final FirebaseFirestore db;
@@ -75,7 +79,9 @@ public class LoginActivity extends AppCompatActivity {
                                         if (real_passward.equals(userPassword)){
                                             Toast.makeText(LoginActivity.this, "they are match!you are login",
                                             Toast.LENGTH_SHORT).show();
-                                            setContentView(R.layout.activity_main);
+                                            //setContentView(R.layout.activity_main);
+                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                            startActivity(intent);
                                             return;
                                         }
                                         else{

@@ -48,9 +48,10 @@
         <activity android:name=".SubscribeActivity"></activity>
         <activity android:name=".AccountActivity"></activity>
         <activity android:name=".MyActivity"></activity>
+        <activity android:name=".MainActivity"></activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

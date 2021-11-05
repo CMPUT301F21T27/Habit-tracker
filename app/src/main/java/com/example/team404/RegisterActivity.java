@@ -94,7 +94,9 @@ public class RegisterActivity extends AppCompatActivity{
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d(TAG, "DocumentSnapshot successfully written!");
-                                setContentView(R.layout.login);
+                                //setContentView(R.layout.login);
+                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                startActivity(intent);
                             }
                         })
                     .addOnFailureListener(new OnFailureListener() {
