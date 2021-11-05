@@ -9,6 +9,7 @@
     <string name="habit_event">Habit event</string>
     <string name="subscribe_list">Subscribe list</string>
     <string name="title_activity_maps">MapsActivity</string>
+
     <string name="add_account_photo">add account photo</string>
     <string name="account_photo_name">account_photo_name</string>
     <string name="comment_name">comment_name</string>
