@@ -70,6 +70,10 @@ public class AccountActivity extends AppCompatActivity {
 
 
     }
+    //https://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android
+    // author: Suragch (answered) GabrielBB(edited)
+    //date: 11-5-2021; 12-13-2021
+    // protected void onActivityResult(int requestCode, int resultCode, Intent data) is created by Suragch
         @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
             super.onActivityResult(requestCode, resultCode, data);

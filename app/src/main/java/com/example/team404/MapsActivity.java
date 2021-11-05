@@ -143,7 +143,10 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
 
 
     }
-
+    // https://www.youtube.com/watch?v=ifoVBdtXsv0
+    // author: Abbas Hassan
+    //date: 2019-4-8
+    //private void getDeviceLocation() is created by Abbas Hassan
     @SuppressLint("MissingPermission")
     private void getDeviceLocation() {
         FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MapsActivity.this);
@@ -184,7 +187,14 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
                 });
     }
 
-
+    //https://www.youtube.com/watch?v=fPFr0So1LmI&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt&index=6
+    //Author: CodingWithMitch
+    //date: 2017-10-6
+    //the follow 4 method is cited from CodingWithMitch
+    //private void moveCamera
+    //private void initMap()
+    //private void getLocationPermission()
+    //public void onRequestPermissionsResult()
     private void moveCamera(LatLng latLng, float zoom){
         Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude );
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
@@ -293,20 +303,7 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
             e.printStackTrace();
         }
     }
-    public void getEmptyAddress(Location currentLocation){
-        Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
-        try {
 
-            List<Address> addresses = geocoder.getFromLocation(
-                    currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
-
-            buttonOnClick();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     public  void buttonOnClick(){
@@ -314,8 +311,6 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
         Button checkButton = findViewById((R.id.check_button));
         Button cancelButton = findViewById((R.id.cancel_button));
         addressView.setText("GPS is closed");
-        //addressView.setText(Html.fromHtml("<font color='#6200EE'><b> </b><br></front>"
-        //        +addresses.get(0).getAddressLine(0)));
 
 
         checkButton.setOnClickListener(new View.OnClickListener() {

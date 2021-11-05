@@ -178,7 +178,12 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
             imageView.setImageBitmap(captureImage);
         }
     }
-
+    //https://www.youtube.com/watch?v=fPFr0So1LmI&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt&index=6
+    //Author: CodingWithMitch
+    //date: 2017-10-6
+    //the follow 2 method is cited from CodingWithMitch
+    //private void moveCamera
+    //public boolean isServicesOK()
     public boolean isServicesOK(){
         Log.d(TAG, "isServicesOK: checking google services version");
 
