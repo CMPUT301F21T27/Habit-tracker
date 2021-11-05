@@ -102,7 +102,7 @@ public class AddHabitFragment extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_add_habit, null);
         title = view.findViewById(R.id.title_editText);
         date_start = view.findViewById(R.id.date_Start_Text);
-        edit_date_start = view.findViewById(R.id.date_Start_edit_button);
+        //edit_date_start = view.findViewById(R.id.date_Start_edit_button);
         reason = view.findViewById(R.id.reason_editText);
         mondayCheck=view.findViewById(R.id.monday_check);
         tuesdayCheck=view.findViewById(R.id.tuesday_check);
@@ -125,7 +125,7 @@ public class AddHabitFragment extends DialogFragment {
             saturdayCheck.setChecked(habit_selected.getSaturday());
             sundayCheck.setChecked(habit_selected.getSunday());
             }
-            edit_date_start.setOnClickListener(new View.OnClickListener() {
+            date_start.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Calendar calendar = Calendar.getInstance();

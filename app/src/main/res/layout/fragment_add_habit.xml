@@ -18,14 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:clickable="true"
         android:hint="Date_Start"
         android:inputType="date"
         android:textSize="24sp" />
-    <Button
-        android:id="@+id/date_Start_edit_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Edit Start Date" />
 
     <EditText
         android:layout_width="match_parent"
