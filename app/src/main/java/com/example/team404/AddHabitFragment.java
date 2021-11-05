@@ -123,7 +123,7 @@ public class AddHabitFragment extends DialogFragment {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             String habit_title = title.getText().toString();
-                            Date habit_date = (Date) date_start.getText();
+                            Date habit_date = (Date) new Date();
                             String habit_reason = reason.getText().toString();
                             listener.OnOKPressed(new Habit(habit_title, habit_reason, habit_date), habit_selected);
                         }

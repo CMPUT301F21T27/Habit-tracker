@@ -7,23 +7,22 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class MainActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
-
-
-
+public class AccountActivity extends AppCompatActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
-        bottomNav.setSelectedItemId(R.id.nav_home);
-        bottomNav.setOnItemSelectedListener(navListener);
 
+        setContentView(R.layout.activity_account);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.setSelectedItemId(R.id.nav_account);
+        bottomNav.setOnItemSelectedListener(navListener);
     }
     private NavigationBarView.OnItemSelectedListener navListener =
             new NavigationBarView.OnItemSelectedListener() {
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                     switch (item.getItemId()) {
                         case R.id.nav_home:
                             intent = new Intent(getApplicationContext(), MainActivity.class);
-                           //startActivity(intent);
+                            //startActivity(intent);
                             //overridePendingTransition(0, 0);
                             //return true;
                             break;
@@ -63,18 +62,6 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                     return true;
                 }
             };
-
-
-    @Override
-    public void OnOKPressed(Habit newHabit, Habit habit) {
-
-    }
-
-    @Override
-    public void OnDlPressed(Habit habit) {
-
-    }
-
     private int count = 0;
     @Override
     public void onBackPressed() {
@@ -87,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
-                            MainActivity.super.onBackPressed();
+                            AccountActivity.super.onBackPressed();
                             finishAffinity();
                         }
                     }).create().show();
