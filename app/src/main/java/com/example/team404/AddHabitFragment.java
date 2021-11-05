@@ -75,9 +75,8 @@ public class AddHabitFragment extends DialogFragment {
         reason = view.findViewById(R.id.reason_editText);
         if (habit_selected != null) {
             title.setText(habit_selected.getTitle());
-            SimpleDateFormat formatter = new SimpleDateFormat(("dd.MM.yyyy"));
-            String date = formatter.format(habit_selected.getStartDate());
-            date_start.setText(date);
+
+            date_start.setText(habit_selected.getYear() +"-"+habit_selected.getMonth()+"-"+habit_selected.getDay()+"-");
             reason.setText(habit_selected.getReason()); }
             edit_date_start.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -97,12 +96,9 @@ public class AddHabitFragment extends DialogFragment {
                 @Override
                 public void onDateSet(DatePicker datePicker, int y, int m, int d) {
                     year = y;
-                    month = m;
+                    month = m+1;
                     day = d;
-                    Date dateDate = new Date(year, month, day);
-                    SimpleDateFormat formatter = new SimpleDateFormat(("dd.MM.yyyy"));
-                    String date = formatter.format(dateDate);
-                    date_start.setText(date);
+                    date_start.setText(year+"-"+month+"-"+day);
 
                 }
             };
@@ -123,9 +119,11 @@ public class AddHabitFragment extends DialogFragment {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             String habit_title = title.getText().toString();
-                            Date habit_date = (Date) new Date();
+                            String habit_year =  Integer.toString(year);
+                            String habit_month =  Integer.toString(month);
+                            String habit_day =  Integer.toString(day);
                             String habit_reason = reason.getText().toString();
-                            listener.OnOKPressed(new Habit(habit_title, habit_reason, habit_date), habit_selected);
+                            listener.OnOKPressed(new Habit(habit_title, habit_reason, habit_year,habit_month,habit_day), habit_selected);
                         }
                     }).create();
 

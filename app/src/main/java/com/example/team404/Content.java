@@ -35,9 +35,7 @@ public View getView(int position, View convertView, ViewGroup parent){
     TextView habitDate = view.findViewById(R.id.dateTextView);
 
     habitTitle.setText(habit.getTitle());
-    SimpleDateFormat formatter = new SimpleDateFormat(("dd/MM/yyyy"));
-    String date = formatter.format(habit.getStartDate());
-    habitDate.setText(date);
+    habitDate.setText(habit.getYear() + "-" +habit.getMonth()+ "-" +habit.getDay());
     habitReason.setText(habit.getReason());
     return view;
 

@@ -1,5 +1,7 @@
 package com.example.team404;
 
+import static java.lang.String.valueOf;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,14 +45,15 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
         habitList=(ListView) findViewById(R.id.habit_list);
 
-        Date date = new Date(2021-1900,11-1,3);
-        Habit habit = new Habit("play the video game","Because no homework",date);
-        Date date2 = new Date(2022-1900,11-1,3);
-        Habit habit1 = new Habit("play the game","Because no homework",date2);
-        System.out.print(date);
+        String year ="2021";
+        String month ="11";
+        String day = "05";
+        Habit habit = new Habit("play the video game","Because no homework",year,month,day);
+
+
         habitDataList=new ArrayList<>();
         habitDataList.add(habit);
-        habitDataList.add(habit1);
+
         habitArrayAdapter = new Content(this,habitDataList);
         habitList.setAdapter(habitArrayAdapter);
 
@@ -75,16 +78,18 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
 
        today=(Button) findViewById(R.id.today_button);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
         Calendar c = Calendar.getInstance();
-        String today_date = sdf.format(c.getTime());
+        String dayToday = valueOf(c.get(Calendar.DAY_OF_MONTH));
+        String monthToday =valueOf(c.get(Calendar.MONTH+1));
+        String yearToday = valueOf(c.get(Calendar.YEAR));
 
 
         Intent intent = new Intent (this,TodayActivity.class);
         ArrayList<Habit> habitsToday = new ArrayList<Habit>();
         for(Habit i :habitDataList){
-            String date1 = sdf.format(i.getStartDate());
-            if (date1.equals(today_date)){
+
+            if ((habit.getDay().equals(dayToday))&&(habit.getMonth().equals(monthToday)&&(habit.getYear().equals(yearToday)))){
                 habitsToday.add(i);
             }
         }
@@ -112,7 +117,9 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         else {
             int index = habitDataList.indexOf(habit);
             habitDataList.get(index).setTitle(newHabit.getTitle());
-            habitDataList.get(index).setStartDate(newHabit.getStartDate());
+            habitDataList.get(index).setYear(newHabit.getYear());
+            habitDataList.get(index).setMonth(newHabit.getMonth());
+            habitDataList.get(index).setDay(newHabit.getDay());
             habitDataList.get(index).setReason(newHabit.getReason());
         }
         habitList.setAdapter(habitArrayAdapter);

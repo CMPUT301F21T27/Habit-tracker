@@ -5,12 +5,17 @@ import java.util.Date;
 public class Habit implements java.io.Serializable {
     private String title;
     private String reason;
-    private Date startDate;
+    private String year;
+    private String month;
+    private String day;
 
-    Habit(String t, String r, Date d){
+    Habit(String t, String r, String year, String month, String day){
         setTitle(t);
         setReason(r);
-        setStartDate(d);
+        setYear(year);
+        setMonth(month);
+        setDay(day);
+
     }
 
     /**
@@ -43,10 +48,23 @@ public class Habit implements java.io.Serializable {
 
     /**
      * Sets habit date
-     * @param d
-     * Habit start date
+     * @param year
+     * Habit start year
      */
-    public void setStartDate(Date d){this.startDate = d;}
+    public void setYear(String year){this.year = year;}
+    /**
+     * Sets habit date
+     * @param month
+     * Habit start month
+     */
+    public void setMonth(String month){this.month = month;}
+    /**
+     * Sets habit date
+     * @param day
+     * Habit start year
+     */
+    public void setDay(String day){this.day = day;}
+
 
     /**
      * Returns the title of the habit
@@ -62,7 +80,17 @@ public class Habit implements java.io.Serializable {
 
     /**
      * Returns the start Date of the habit
-     * @return date
+     * @return Year
      */
-    public Date getStartDate(){return startDate;}
+    public String getYear(){return year;}
+    /**
+     * Returns the start Date of the habit
+     * @return Month
+     */
+    public String getMonth(){return month;}
+    /**
+     * Returns the start Date of the habit
+     * @return Day
+     */
+    public String getDay(){return day;}
 }
