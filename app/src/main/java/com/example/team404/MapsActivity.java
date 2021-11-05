@@ -66,7 +66,7 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
 
 
 
-
+    //initial map data
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -258,7 +258,8 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
         }
     }
 
-
+    //get string address by Latitude and Longitude
+    //pass string to the last activity
     public void getAddress(Location currentLocation){
         Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
         try {
@@ -305,6 +306,8 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
     }
 
 
+    // press check image button to to back last activty
+    // save information
 
     public  void buttonOnClick(){
         TextView addressView = findViewById(R.id.address_textView);

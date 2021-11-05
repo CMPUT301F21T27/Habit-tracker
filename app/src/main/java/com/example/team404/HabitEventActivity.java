@@ -100,7 +100,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
             }
         });
 
-
+        // press button to add comment
         final ImageButton addCommentButton = findViewById(R.id.add_comment);
         addCommentButton.setOnClickListener(v -> {
             if (commentDataList.size() == 1){
@@ -123,6 +123,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
                 onBackPressed();
             }
         });
+        //save habitevent after press save button
         saveImage = findViewById(R.id.saveImage);
         saveImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +132,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
                 onBackPressed();
             }
         });
+        // to call Camera to get a photo
         imageView = findViewById(R.id.imageView);
         imageView.setOnClickListener(v -> {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -148,18 +150,20 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
 
 
     }
-        private void init(){
-            LocationImage = findViewById(R.id.locationImage);
-            LocationImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(HabitEventActivity.this, MapsActivity.class);
-                    startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
-                }
-            });
+    //initial location image button
+    //make the location button is valid
+    private void init(){
+        LocationImage = findViewById(R.id.locationImage);
+        LocationImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HabitEventActivity.this, MapsActivity.class);
+                startActivityForResult(intent, SECOND_ACTIVITY_REQUEST_CODE);
+            }
+        });
 
     }
-
+    //Waiting for next activity to pass string back in to the current activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -184,6 +188,8 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
     //the follow 2 method is cited from CodingWithMitch
     //private void moveCamera
     //public boolean isServicesOK()
+
+    //check permission is valid or gps is valid.
     public boolean isServicesOK(){
         Log.d(TAG, "isServicesOK: checking google services version");
 

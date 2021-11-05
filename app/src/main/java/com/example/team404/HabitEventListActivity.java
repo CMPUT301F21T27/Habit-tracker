@@ -19,6 +19,12 @@ public class HabitEventListActivity extends AppCompatActivity {
     ArrayList<HabitEvent> habitEventDataList;
     private ImageView backImage;
     private ImageView addImage;
+    //--------------------------------------------------------------------//
+    //I will do later after add firesbase daabase.
+    // Once I get habit id and habit event Id, I can pass all varable to the another activty after firebase
+    // local change is much more diffcult
+    //So it is not response after you add a habit event to habit event
+    // --------------------------------------------------------------------//
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getSupportActionBar().hide();
