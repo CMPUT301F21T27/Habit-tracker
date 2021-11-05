@@ -147,7 +147,7 @@ public class AddHabitFragment extends DialogFragment {
                             }
                         }
                     })
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             String habit_title = title.getText().toString();
