@@ -143,63 +143,7 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
 
 
     }
-    /*
-    @SuppressLint("MissingPermission")
-    private void getDeviceLocation(){
-        Log.d(TAG, "getDeviceLocation: getting the devices current location");
 
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        try{
-            if(mLocationPermissionsGranted){
-
-                final Task location = mFusedLocationProviderClient.getLastLocation();
-
-
-                location.addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if(task.isSuccessful()){
-                            Log.d(TAG, "onComplete: found location!");
-                            currentLocation = (Location) task.getResult();
-                            if (currentLocation!=null){
-                                Log.d(TAG, "onComplete: found location1111!");
-                                moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
-                                        DEFAULT_ZOOM);
-                                getAddress(currentLocation);
-                            }else{
-                                Log.d(TAG, "onComplete: found location22222!");
-                                LocationRequest locationRequest = LocationRequest.create();
-                                locationRequest.setInterval(10000);
-                                locationRequest.setFastestInterval(5000);
-                                locationRequest.setPriority((LocationRequest.PRIORITY_HIGH_ACCURACY));
-                                locationCallback = new LocationCallback(){
-                                    @Override
-                                    public void onLocationResult(@NonNull LocationResult locationResult) {
-                                        super.onLocationResult(locationResult);
-                                        if (locationResult == null){
-                                            return;
-                                        }
-                                        currentLocation = locationResult.getLastLocation();
-                                        moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
-                                                DEFAULT_ZOOM);
-                                        getEmptyAddress(currentLocation);
-                                    }
-                                };
-                            }
-                        }else{
-                            Log.d(TAG, "onComplete: current location is null");
-                            Toast.makeText(MapsActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        }catch (SecurityException e){
-            Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
-        }
-    }
-
-     */
     @SuppressLint("MissingPermission")
     private void getDeviceLocation() {
         FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MapsActivity.this);

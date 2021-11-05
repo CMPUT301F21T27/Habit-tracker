@@ -84,7 +84,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
 
                 new AlertDialog.Builder(HabitEventActivity.this).
                         setIcon(android.R.drawable.ic_delete)
-                        .setTitle("Are you sure...")
+                        .setTitle("Are you sure?")
                         .setMessage("Do you want to delete the comment?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
@@ -164,14 +164,10 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Check that it is the SecondActivity with an OK result
         if (requestCode == SECOND_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-
-                // Get String data from Intent
                 String returnString = data.getStringExtra("keyName");
 
-                // Set text view with string
                 TextView textView = (TextView) findViewById(R.id.textView4);
                 textView.setText(returnString);
             }
@@ -182,6 +178,7 @@ public class HabitEventActivity extends AppCompatActivity implements AddCommentF
             imageView.setImageBitmap(captureImage);
         }
     }
+
     public boolean isServicesOK(){
         Log.d(TAG, "isServicesOK: checking google services version");
 
