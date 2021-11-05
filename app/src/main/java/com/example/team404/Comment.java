@@ -11,6 +11,6 @@ public class Comment implements Serializable {
 
 
     public String getComment() {
-        return this.comment;
+        return comment;
     }
 }

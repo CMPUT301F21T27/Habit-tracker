@@ -41,9 +41,12 @@ public class EditCommentFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        Bundle bundle = getArguments();
+        Comment c = ( Comment) bundle.getSerializable("comment");
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_comment_fragment_layout, null);
         //account_photoName = view.findViewById(R.id.account_photo_name_editText);
         commentName = view.findViewById((R.id.comment_editText));
+        commentName.setText(c.getComment());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
