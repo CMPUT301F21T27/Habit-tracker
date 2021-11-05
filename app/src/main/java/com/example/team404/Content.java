@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -21,6 +22,7 @@ public Content(Context c, ArrayList<Habit> h){
     this.habits =h;
     this.context=c;
 
+
 }
 public View getView(int position, View convertView, ViewGroup parent){
     View view = convertView;
@@ -34,11 +36,14 @@ public View getView(int position, View convertView, ViewGroup parent){
     TextView habitReason = view.findViewById(R.id.reasonTextView);
     TextView habitDate = view.findViewById(R.id.dateTextView);
 
+
     habitTitle.setText(habit.getTitle());
     SimpleDateFormat formatter = new SimpleDateFormat(("dd/MM/yyyy"));
     String date = formatter.format(habit.getStartDate());
     habitDate.setText(date);
     habitReason.setText(habit.getReason());
+
+
     return view;
 
 }
