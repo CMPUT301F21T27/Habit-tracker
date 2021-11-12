@@ -10,10 +10,18 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
 public class AccountEditActivity extends AppCompatActivity {
 
     private EditText usernameEditText;
-    private EditText emailEditText;
+    private TextView emailEditText;
     private EditText phoneEditText;
     private ImageView backImage;
     private ImageView saveImage;
@@ -23,20 +31,36 @@ public class AccountEditActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
 
+
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userEmail = user.getEmail();
+        //String userPhone = user.getPhoneNumber();
+        String userName = userEmail.substring(0, userEmail.indexOf("@"));
+
+
         setContentView(R.layout.activity_change_account);
         usernameEditText = findViewById(R.id.nameEditText);
         emailEditText = findViewById(R.id.emailEditText);
         phoneEditText = findViewById(R.id.phoneEditText);
         backImage = findViewById(R.id.backImage);
 
-        Bundle extar = getIntent().getExtras();
-        String name = extar.getString("name");
+        Bundle extras = getIntent().getExtras();
+        String phone = extras.getString("phone");
+        String name = extras.getString("name");
         usernameEditText.setText(name);
+        phoneEditText.setText(phone);
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.putExtra("editName", name);
+
+                Bundle extras = new Bundle();
+                extras.putString("editPhone", phone);
+
+                extras.putString("editName", name);
+                intent.putExtras(extras);
                 setResult(333, intent);
                 onBackPressed();
 
@@ -47,13 +71,39 @@ public class AccountEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String newName = usernameEditText.getText().toString();
+                String newPhone = phoneEditText.getText().toString();
                 Intent intent = new Intent();
-                intent.putExtra("editName", newName);
+                Bundle extras = new Bundle();
+                extras.putString("editPhone", newPhone);
+
+                extras.putString("editName", newName);
+                intent.putExtras(extras);
+
+
+                final FirebaseFirestore db;
+                db= FirebaseFirestore.getInstance();
+                DocumentReference userDocRef = db.collection("User").document(userEmail);
+                userDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value != null && value.exists()){
+
+                            userDocRef.update("userName", newName);
+                            userDocRef.update("phone", newPhone);
+                        }else{
+                            return;
+                        }
+
+                    }
+                });
+
+
                 setResult(333, intent);
 
                 onBackPressed();
             }
         });
+
 
 
 
