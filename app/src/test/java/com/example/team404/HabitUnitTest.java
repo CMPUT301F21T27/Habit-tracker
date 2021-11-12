@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class HabitUnitTest {
-    private Habit habit = new Habit("title","reason","1999","11","15");
+    private Habit habit = new Habit("id","title","reason","1999","11","15");
 
     /**
      * Test title getter is working

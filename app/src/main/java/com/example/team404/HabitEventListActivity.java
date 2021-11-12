@@ -23,7 +23,7 @@ public class HabitEventListActivity extends AppCompatActivity {
     //I will do later after add firesbase daabase.
     // Once I get habit id and habit event Id, I can pass all varable to the another activty after firebase
     // local change is much more diffcult
-    //So it is not response after you add a habit event to habit event
+    //So it is not response after you add a habit event to habit event list
     // --------------------------------------------------------------------//
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class HabitEventListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_habit_event_list);
         habitEventList=(ListView) findViewById(R.id.habit_event_list);
         habitEventDataList=new ArrayList<>();
-        HabitEvent habitEvent1 = new HabitEvent("Uof A" );
+        HabitEvent habitEvent1 = new HabitEvent("Uof A" ,"This is a agood habit", "2021-12-12");
         //HabitEvent habitEvent2 = "2021-12-13";
         habitEventDataList.add(habitEvent1);
         //habitEventDataList.add(habitEvent2);
@@ -57,7 +57,7 @@ public class HabitEventListActivity extends AppCompatActivity {
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HabitEventListActivity.this, HabitEventActivity.class);
+                Intent intent = new Intent(HabitEventListActivity.this, AddHabitEventActivity.class);
                 startActivity(intent);
             }
         });

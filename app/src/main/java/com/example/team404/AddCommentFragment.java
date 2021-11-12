@@ -24,7 +24,7 @@ public class AddCommentFragment extends DialogFragment {
 
 
     public interface onFragmentInteractionListener{
-        void onOkPressed(Comment newComment);
+        void onOkPressed(String newComment);
 
         void onCancelPressed();
     }
@@ -60,7 +60,7 @@ public class AddCommentFragment extends DialogFragment {
                             Toast.makeText(getActivity(), "Please input valid words", Toast.LENGTH_LONG).show();
                             listener.onCancelPressed();
                         }else{
-                            listener.onOkPressed(new Comment(comment));
+                            listener.onOkPressed(comment);
                         }
 
 

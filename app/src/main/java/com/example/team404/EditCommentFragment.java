@@ -23,7 +23,7 @@ public class EditCommentFragment extends DialogFragment {
 
 
     public interface onFragmentInteractionListener{
-        void onEditOkPressed(Comment newComment);
+        void onEditOkPressed(String newComment);
 
         void onCancelPressed();
     }
@@ -42,11 +42,11 @@ public class EditCommentFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        Comment c = ( Comment) bundle.getSerializable("comment");
+        String c = ( String) bundle.getSerializable("comment");
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_comment_fragment_layout, null);
         //account_photoName = view.findViewById(R.id.account_photo_name_editText);
         commentName = view.findViewById((R.id.comment_editText));
-        commentName.setText(c.getComment());
+        commentName.setText(c);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -62,7 +62,7 @@ public class EditCommentFragment extends DialogFragment {
                             Toast.makeText(getActivity(), "Please input valid words", Toast.LENGTH_LONG).show();
                             listener.onCancelPressed();
                         }else{
-                            listener.onEditOkPressed(new Comment(comment));
+                            listener.onEditOkPressed(comment);
                         }
 
 
@@ -72,7 +72,7 @@ public class EditCommentFragment extends DialogFragment {
 
 
     }
-    static  EditCommentFragment newInstance (Comment comment) {
+    static  EditCommentFragment newInstance (String comment) {
         Bundle args = new Bundle();
         args.putSerializable("comment", comment);
         EditCommentFragment fragment = new EditCommentFragment();
