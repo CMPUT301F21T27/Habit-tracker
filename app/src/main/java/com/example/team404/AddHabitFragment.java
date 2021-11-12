@@ -172,12 +172,14 @@ public class AddHabitFragment extends DialogFragment {
                     .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            Date date= new Date();
+                            String habit_id = String.valueOf(date);
                             String habit_title = title.getText().toString();
                             String habit_year =  Integer.toString(year);
                             String habit_month =  Integer.toString(month);
                             String habit_day =  Integer.toString(day);
                             String habit_reason = reason.getText().toString();
-                            Habit habit = new Habit(habit_title, habit_reason, habit_year,habit_month,habit_day);
+                            Habit habit = new Habit(habit_id, habit_title, habit_reason, habit_year,habit_month,habit_day);
 
                             habit.setMonday(mondayCheck.isChecked());
                             habit.setTuesday(tuesdayCheck.isChecked());

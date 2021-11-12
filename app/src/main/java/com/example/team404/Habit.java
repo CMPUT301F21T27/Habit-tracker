@@ -3,6 +3,7 @@ package com.example.team404;
 import java.util.Date;
 
 public class Habit implements java.io.Serializable {
+    private String id;
     private String title;
     private String reason;
 
@@ -24,7 +25,8 @@ public class Habit implements java.io.Serializable {
 
 
 
-    Habit(String t, String r,String year, String month, String day){
+    Habit(String id, String t, String r,String year, String month, String day){
+        setId(id);
         setTitle(t);
         setReason(r);
 
@@ -104,7 +106,14 @@ public class Habit implements java.io.Serializable {
         this.sunday=s;
     }
 
-
+    /**
+     * Sets habit title with a character limit of 20
+     * @param i
+     * Habit title
+     */
+    public void setId(String i) {
+        this.id=i;
+    }
 
 
     /**
@@ -154,7 +163,11 @@ public class Habit implements java.io.Serializable {
      */
     public void setDay(String day){this.day = day;}
 
-
+    /**
+     * Returns the title of the habit
+     * @return title
+     */
+    public String getId(){return id;}
     /**
      * Returns the title of the habit
      * @return title

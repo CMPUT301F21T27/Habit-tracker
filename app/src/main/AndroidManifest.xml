@@ -53,6 +53,8 @@
         <activity android:name=".AccountEditActivity"></activity>
         <activity android:name=".HabitEventListActivity"></activity>
         <activity android:name=".HabitEventActivity"></activity>
+        <activity android:name=".EditHabitEventActivity"></activity>
+        <activity android:name=".AddHabitEventActivity"></activity>
 
         <activity
             android:name=".LoginActivity"

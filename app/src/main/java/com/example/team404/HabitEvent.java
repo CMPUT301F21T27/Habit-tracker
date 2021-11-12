@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 public class HabitEvent implements java.io.Serializable{
     private String location;
-    private ArrayList<Comment> comments;
+    private String comments;
+    private String date;
 
-    public HabitEvent(String location) {
+    public HabitEvent(String location, String  comments, String date) {
         this.location = location;
         this.comments = comments;
+        this.date = date;
     }
 
     public String getLocation() {
@@ -19,11 +21,19 @@ public class HabitEvent implements java.io.Serializable{
         this.location = location;
     }
 
-    public ArrayList<Comment> getComments() {
+    public String getComments() {
         return comments;
     }
 
-    public void setComments(ArrayList<Comment> comments) {
+    public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
