@@ -48,8 +48,6 @@ public class AccountActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         String userEmail = user.getEmail();
-        //String userPhone = user.getPhoneNumber();
-        String userName = userEmail.substring(0, userEmail.indexOf("@"));
 
 
 
@@ -61,7 +59,7 @@ public class AccountActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.name);
         email = (TextView) findViewById(R.id.email);
         phone = (TextView) findViewById(R.id.phone);
-        username.setText(userName);
+
         email.setText(userEmail);
 
         db= FirebaseFirestore.getInstance();
@@ -71,6 +69,8 @@ public class AccountActivity extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (value != null && value.exists()){
                     String userPhone = value.getData().get("phone").toString();
+                    String userName = value.getData().get("userName").toString();
+                    username.setText(userName);
                     phone.setText(userPhone);
                 }else{
                     String userPhone = "Empty phone number";

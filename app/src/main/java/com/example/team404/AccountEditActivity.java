@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 public class AccountEditActivity extends AppCompatActivity {
 
     private EditText usernameEditText;
-    private TextView emailEditText;
+    private TextView emailTextView;
     private EditText phoneEditText;
     private ImageView backImage;
     private ImageView saveImage;
@@ -36,21 +36,21 @@ public class AccountEditActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         String userEmail = user.getEmail();
-        //String userPhone = user.getPhoneNumber();
-        String userName = userEmail.substring(0, userEmail.indexOf("@"));
 
 
         setContentView(R.layout.activity_change_account);
         usernameEditText = findViewById(R.id.nameEditText);
-        emailEditText = findViewById(R.id.emailEditText);
+        emailTextView = findViewById(R.id.emailEditText);
         phoneEditText = findViewById(R.id.phoneEditText);
         backImage = findViewById(R.id.backImage);
 
+        emailTextView.setText(userEmail);
         Bundle extras = getIntent().getExtras();
         String phone = extras.getString("phone");
         String name = extras.getString("name");
         usernameEditText.setText(name);
         phoneEditText.setText(phone);
+
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
