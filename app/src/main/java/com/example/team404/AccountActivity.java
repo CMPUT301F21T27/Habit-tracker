@@ -17,6 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -35,6 +43,16 @@ public class AccountActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
 
+        final FirebaseFirestore db;
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userEmail = user.getEmail();
+        //String userPhone = user.getPhoneNumber();
+        String userName = userEmail.substring(0, userEmail.indexOf("@"));
+
+
+
         setContentView(R.layout.activity_account);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setSelectedItemId(R.id.nav_account);
@@ -43,6 +61,26 @@ public class AccountActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.name);
         email = (TextView) findViewById(R.id.email);
         phone = (TextView) findViewById(R.id.phone);
+        username.setText(userName);
+        email.setText(userEmail);
+
+        db= FirebaseFirestore.getInstance();
+        DocumentReference userDocRef = db.collection("User").document(userEmail);
+        userDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()){
+                    String userPhone = value.getData().get("phone").toString();
+                    phone.setText(userPhone);
+                }else{
+                    String userPhone = "Empty phone number";
+                    phone.setText(userPhone);
+                }
+
+            }
+        });
+
+
 
 
 
@@ -61,9 +99,13 @@ public class AccountActivity extends AppCompatActivity {
         editImage.setOnClickListener(v -> {
 
             String name = username.getText().toString();
+            String  phone_ = phone.getText().toString();
 
             Intent intent = new Intent(AccountActivity.this, AccountEditActivity.class);
-            intent.putExtra("name", name);
+            Bundle extras = new Bundle();
+            extras.putString("phone", phone_);
+            extras.putString("name", name);
+            intent.putExtras(extras);
             startActivityForResult(intent, 333);
         });
 
@@ -82,10 +124,13 @@ public class AccountActivity extends AppCompatActivity {
             if (requestCode == 333) {
                 // Get String data from Intent
                 String returnString = data.getStringExtra("editName");
+                String returnphone = data.getStringExtra("editPhone");
 
                 // Set text view with string
                 TextView textView = (TextView) findViewById(R.id.name);
                 textView.setText(returnString);
+                TextView textView1 = (TextView) findViewById(R.id.phone);
+                textView1.setText(returnphone);
             }
         }
 
