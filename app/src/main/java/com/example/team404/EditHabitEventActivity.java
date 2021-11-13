@@ -40,7 +40,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
     private TextView locationvIEW;
     private TextView photo;
-    private static final String TAG = "HabitEventActivity";
+    private static final String TAG = "EditHabitEventActivity";
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
     @Override

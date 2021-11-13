@@ -30,11 +30,11 @@ public class SubscribeActivity extends AppCompatActivity {
 
 
 
-        HabitEventButton = (Button) findViewById(R.id.habit_event_button);
-        HabitEventButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, HabitEventActivity.class);
-            startActivity(intent);
-        });
+        //HabitEventButton = (Button) findViewById(R.id.habit_event_button);
+        //HabitEventButton.setOnClickListener(v -> {
+        //     Intent intent = new Intent(this, HabitEventActivity.class);
+        //    startActivity(intent);
+        //});
     }
     private NavigationBarView.OnItemSelectedListener navListener =
             new NavigationBarView.OnItemSelectedListener() {

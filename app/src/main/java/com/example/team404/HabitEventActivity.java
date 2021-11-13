@@ -30,6 +30,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HabitEventActivity extends AppCompatActivity {
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
@@ -58,8 +59,12 @@ public class HabitEventActivity extends AppCompatActivity {
 
         commentTextView= findViewById(R.id.comment_textView);
         locationTextView = findViewById(R.id.locationTextView);
-        commentTextView.setText("Test 1");
-        locationTextView.setText("U of A ");
+
+        Bundle extras = getIntent().getExtras();
+        String location = extras.getString("location");
+        String comment = extras.getString("comment");
+        commentTextView.setText(comment);
+        locationTextView.setText(location);
 
 
         if(isServicesOK()){
@@ -70,6 +75,15 @@ public class HabitEventActivity extends AppCompatActivity {
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent();
+
+                Bundle extras = new Bundle();
+                extras.putString("editTitle", locationTextView.getText().toString());
+                Date date = new Date();
+                extras.putString("editDate", date.toString());
+                extras.putString("editComment", commentTextView.getText().toString());
+                intent.putExtras(extras);
+                setResult(111, intent);
                 onBackPressed();
             }
         });

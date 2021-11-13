@@ -28,6 +28,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AddHabitEventActivity extends AppCompatActivity implements AddCommentFragment.onFragmentInteractionListener, EditCommentFragment.onFragmentInteractionListener  {
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
@@ -48,7 +49,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
 
     private TextView locationvIEW;
     private TextView photo;
-    private static final String TAG = "HabitEventActivity";
+    private static final String TAG = "AddHabitEventActivity";
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
     @Override
@@ -123,14 +124,15 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
             @Override
             public void onClick(View v) {
 
-                //Intent intent = new Intent();
+                Intent intent = new Intent();
 
-                //Bundle extras = new Bundle();
-                //extras.putString("locationString", location);
+                Bundle extras = new Bundle();
+                extras.putString("editTitle", "");
 
-                //extras.putString("commentString", comment);
-                //intent.putExtras(extras);
-                //setResult(333, intent);
+                extras.putString("editDate", "");
+                extras.putString("editComment", "");
+                intent.putExtras(extras);
+                setResult(000, intent);
                 onBackPressed();
             }
         });
@@ -139,9 +141,15 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
         saveImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // I will do it later to updated habit event list by habit id and habit event id
-                Toast.makeText(AddHabitEventActivity.this, "do it later", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
 
+                Bundle extras = new Bundle();
+                extras.putString("editTitle", locationTextView.getText().toString());
+                Date date = new Date();
+                extras.putString("editDate", date.toString());
+                extras.putString("editComment", commentTextView.getText().toString());
+                intent.putExtras(extras);
+                setResult(000, intent);
                 onBackPressed();
             }
         });
