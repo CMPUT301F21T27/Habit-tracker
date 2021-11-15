@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -107,6 +108,17 @@ public class AccountActivity extends AppCompatActivity {
             extras.putString("name", name);
             intent.putExtras(extras);
             startActivityForResult(intent, 333);
+        });
+
+        Button logoutButton = findViewById(R.id.log_out_button);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //finishAffinity();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+
+            }
         });
 
 
