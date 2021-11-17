@@ -40,6 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -141,6 +142,8 @@ public class RegisterActivity extends AppCompatActivity{
                                     city.put("Habits", "");
                                     city.put("Habitsevent", "");
                                     city.put("phone",userphone);
+                                    city.put("requestedList", Collections.emptyList());
+                                    city.put("followingList", Collections.emptyList());
 
                                     FirebaseFirestore db= FirebaseFirestore.getInstance();
                                     final CollectionReference collectionReference = db.collection("User");
