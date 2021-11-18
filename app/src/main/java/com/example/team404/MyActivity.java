@@ -1,13 +1,11 @@
 package com.example.team404;
 
-import static android.content.ContentValues.TAG;
 import static java.lang.String.valueOf;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,27 +17,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-
 /**
  * This activity is use to display user's Habits. That user can view, edit, delete habits through here. User can also
  * access the habits to do today through here
@@ -60,19 +45,6 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        final FirebaseFirestore db;
-        FirebaseAuth mAuth;
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userEmail = user.getEmail();
-        db=FirebaseFirestore.getInstance();
-        DocumentReference userDoc = FirebaseFirestore.getInstance().collection("User").document(userEmail);
-        habitDataList = new ArrayList<>();
-
-
-
-
-
 
         //initialize the layout variables and connect to the layouts
 
@@ -91,40 +63,10 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
 
         habitDataList=new ArrayList<>();
-        habitArrayAdapter = new Content(this,habitDataList);
         //habitDataList.add(habit);
         /** using Content class as adpter**/
-
-        //habitList.setAdapter(habitArrayAdapter);
-        db.collection("Habit")
-                .whereEqualTo("OwnerReference",userDoc)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String id =  document.getData().get("id").toString();
-                                String title = document.getData().get("Title").toString();
-                                String reason = document.getData().get("Reason").toString();
-                                String year = document.getData().get("Year").toString();
-                                String month = document.getData().get("Month").toString();
-                                String day = document.getData().get("Day").toString();
-                                Habit habit = new Habit(id,title,reason,year,month,day);
-                                habitDataList.add(habit);
-                                habitList.setAdapter(habitArrayAdapter);
-
-
-
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-
-                    }
-
-                });
-
+        habitArrayAdapter = new Content(this,habitDataList);
+        habitList.setAdapter(habitArrayAdapter);
 
         final FloatingActionButton addHabitButton = findViewById(R.id.add_habit_button);
         addHabitButton.setOnClickListener(new View.OnClickListener() {
