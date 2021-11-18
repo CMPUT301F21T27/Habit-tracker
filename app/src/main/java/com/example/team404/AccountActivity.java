@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,10 +34,12 @@ public class AccountActivity extends AppCompatActivity {
     private  ImageView backImage;
     private ImageView notifcationImage;
     private ImageView editImage;
+    private ImageView changePwdImage;
 
     private TextView username;
     private TextView email;
     private TextView phone;
+    private int log_out_count=0;
 
 
     @Override
@@ -96,6 +99,14 @@ public class AccountActivity extends AppCompatActivity {
             }
 
         });
+        changePwdImage = findViewById(R.id.change_password_Image);
+        changePwdImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AccountActivity.this, AccountPwdEditActivity.class);
+                startActivity(intent);
+            }
+        });
         editImage = findViewById(R.id.EditImage);
         editImage.setOnClickListener(v -> {
 
@@ -115,8 +126,25 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //finishAffinity();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
+                log_out_count++;
+                if (log_out_count >1){
+                    new AlertDialog.Builder(AccountActivity.this)
+                            .setTitle("Really Logout?")
+                            .setMessage("Are you sure you want to logout?")
+                            .setNegativeButton(android.R.string.no, null)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                            }).create().show();
+                }else{
+                    Toast.makeText(AccountActivity.this, "Please press again", Toast.LENGTH_SHORT).show();
+
+                }
+
+
 
             }
         });
