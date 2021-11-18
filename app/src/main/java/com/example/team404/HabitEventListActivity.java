@@ -1,5 +1,7 @@
 package com.example.team404;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -59,6 +61,29 @@ public class HabitEventListActivity extends AppCompatActivity {
                 intent.putExtras(extras);
 
                 startActivityForResult(intent, 111);
+            }
+        });
+        habitEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int
+                    position, long id) {
+                final int selected_item = position;
+
+                new AlertDialog.Builder(HabitEventListActivity.this).
+                        setIcon(android.R.drawable.ic_delete)
+                        .setTitle("Are you sure?")
+                        .setMessage("Do you want to delete this event?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                habitEventDataList.remove(selected_item);
+                                habitEventArrayAdapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("No" , null).show();
+
+                return true;
             }
         });
         backImage = findViewById(R.id.backImage);
