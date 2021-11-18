@@ -13,6 +13,12 @@
         <entry key="..\:/Cmput 301/TEAM404/app/src/main/res/layout/fragment_subscribe.xml" value="0.1757852077001013" />
         <entry key="..\:/Cmput 301/TEAM404/app/src/main/res/layout/habit_content.xml" value="0.2015625" />
         <entry key="..\:/Cmput 301/TEAM404/app/src/main/res/layout/habit_event_activity.xml" value="0.1381340579710145" />
+<<<<<<< Updated upstream
+=======
+        <entry key="..\:/Users/Cody Le/Desktop/301 Project/TEAM404/app/src/main/res/layout/activity_edit_habit_event.xml" value="0.20989583333333334" />
+        <entry key="..\:/Users/Cody Le/Desktop/301 Project/TEAM404/app/src/main/res/layout/activity_habit_event.xml" value="0.20989583333333334" />
+        <entry key="..\:/Users/Cody Le/Desktop/301 Project/TEAM404/app/src/main/res/layout/login.xml" value="0.20989583333333334" />
+>>>>>>> Stashed changes
         <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/activity_habit_event.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/activity_photo.xml" value="0.25" />
         <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/add_comment_fragment_layout.xml" value="0.36666666666666664" />
