@@ -40,6 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -92,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity{
                 //author:Jason Buberel;
                 //check email form
                 if ( emailAddress != null && Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(emailAddress).find()){
-                    //emailAddress.matches("[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}")
+
                 }else{
                     Toast.makeText(RegisterActivity.this, "Invalid email", Toast.LENGTH_SHORT).show();
                     return;
@@ -141,6 +142,8 @@ public class RegisterActivity extends AppCompatActivity{
                                     city.put("Habits", "");
                                     city.put("Habitsevent", "");
                                     city.put("phone",userphone);
+                                    city.put("requestedList", Collections.emptyList());
+                                    city.put("followingList", Collections.emptyList());
 
                                     FirebaseFirestore db= FirebaseFirestore.getInstance();
                                     final CollectionReference collectionReference = db.collection("User");
@@ -167,7 +170,8 @@ public class RegisterActivity extends AppCompatActivity{
                                             });
 
                                 }else{
-                                    Toast.makeText(RegisterActivity.this, userPassword, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(RegisterActivity.this, userPassword, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(RegisterActivity.this, "email already exist!", Toast.LENGTH_SHORT).show();
                                     Toast.makeText(RegisterActivity.this, "Sign up failed!", Toast.LENGTH_SHORT).show();
                                 }
                             }

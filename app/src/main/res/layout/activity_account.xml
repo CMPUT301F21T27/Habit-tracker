@@ -166,7 +166,7 @@
         app:layout_constraintStart_toEndOf="@+id/textView12" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/change_password_Image"
         android:layout_width="76dp"
         android:layout_height="44dp"
         android:layout_marginBottom="10dp"
@@ -177,6 +177,18 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_baseline_key_24" />
+
+    <Button
+        android:id="@+id/log_out_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/change_password_Image"
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        app:layout_constraintVertical_bias="0.972" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
