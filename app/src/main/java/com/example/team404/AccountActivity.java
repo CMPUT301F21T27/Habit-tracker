@@ -30,7 +30,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class AccountActivity extends AppCompatActivity {
 
-
+    private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
+    private  ImageView backImage;
     private ImageView notifcationImage;
     private ImageView editImage;
     private ImageView changePwdImage;
@@ -94,7 +95,6 @@ public class AccountActivity extends AppCompatActivity {
 
         });
         changePwdImage = findViewById(R.id.change_password_Image);
-        /*
         changePwdImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,8 +102,6 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-         */
         editImage = findViewById(R.id.EditImage);
         editImage.setOnClickListener(v -> {
 
