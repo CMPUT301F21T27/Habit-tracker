@@ -46,6 +46,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
     private TextView commentTextView;
     private TextView locationTextView;
     int position;
+
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
