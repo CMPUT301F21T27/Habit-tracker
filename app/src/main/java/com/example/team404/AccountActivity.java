@@ -34,7 +34,6 @@ public class AccountActivity extends AppCompatActivity {
     private  ImageView backImage;
     private ImageView notifcationImage;
     private ImageView editImage;
-    private ImageView changePwdImage;
 
     private TextView username;
     private TextView email;
@@ -93,14 +92,6 @@ public class AccountActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
-        });
-        changePwdImage = findViewById(R.id.change_password_Image);
-        changePwdImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AccountActivity.this, AccountPwdEditActivity.class);
-                startActivity(intent);
-            }
         });
         editImage = findViewById(R.id.EditImage);
         editImage.setOnClickListener(v -> {
