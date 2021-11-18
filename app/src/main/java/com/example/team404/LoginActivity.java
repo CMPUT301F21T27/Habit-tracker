@@ -76,8 +76,9 @@ public class LoginActivity extends AppCompatActivity {
                 final String emailAddress = user_email.getText().toString();
                 final String userPassword = user_pass.getText().toString();
 
-                if (emailAddress.equals("")||userPassword.equals("")){
+                if (emailAddress.length() ==0||userPassword.length()==0){
                     Toast.makeText(LoginActivity.this, "Please input email and password!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
 
@@ -88,60 +89,30 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     FirebaseUser real_user = mAuth.getCurrentUser();
-                                    currentUserRef = db.collection("users").document(real_user.getEmail());
+                                    currentUserRef = db.collection("User").document(real_user.getEmail());
                                     String userEmail = mAuth.getCurrentUser().getEmail();
 
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                 } else {
+                                    //Toast.makeText(LoginActivity.this, emailAddress, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(LoginActivity.this, userPassword, Toast.LENGTH_SHORT).show();
                                     Toast.makeText(LoginActivity.this, "password/email is incorrect!", Toast.LENGTH_SHORT).show();
+                                    return;
                                 }
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(LoginActivity.this, "Log in failed!",
-                                        Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Log in failed!",Toast.LENGTH_SHORT).show();
+                                return;
                             }
                         });
 
 
 
-                /*
 
-                //check length for email
-                DocumentReference docRef = db.collection("User").document(emailAddress);
-                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    DocumentSnapshot document = task.getResult();
-                                    if (document.exists()) {
-                                        String real_passward=document.getString("userPassword").toString();
-                                        if (real_passward.equals(userPassword)){
-                                            Toast.makeText(LoginActivity.this, "welcome!",
-                                            Toast.LENGTH_SHORT).show();
-                                            //setContentView(R.layout.activity_main);
-                                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                            return;
-                                        }
-                                        else{
-                                            Toast.makeText(LoginActivity.this, "password is incorrect!",
-                                            Toast.LENGTH_SHORT).show();}
-                                    }
-                                    else {
-                                        Toast.makeText(LoginActivity.this, "Not find this account!",
-                                        Toast.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    Log.d(TAG, "get failed with ", task.getException());
-                                }
-                            }
-                        });
-
-                 */
 
 
 

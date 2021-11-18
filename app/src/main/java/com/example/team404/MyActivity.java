@@ -1,3 +1,55 @@
+
+
+        package com.example.team404;
+
+        import static android.content.ContentValues.TAG;
+        import static java.lang.String.valueOf;
+
+        import android.app.AlertDialog;
+        import android.content.DialogInterface;
+        import android.content.Intent;
+        import android.os.Bundle;
+        import android.util.Log;
+        import android.view.MenuItem;
+        import android.view.View;
+        import android.widget.AdapterView;
+        import android.widget.ArrayAdapter;
+        import android.widget.Button;
+        import android.widget.ListView;
+
+        import androidx.annotation.NonNull;
+        import androidx.annotation.Nullable;
+        import androidx.appcompat.app.AppCompatActivity;
+
+        import com.google.android.gms.tasks.OnCompleteListener;
+        import com.google.android.gms.tasks.OnFailureListener;
+        import com.google.android.gms.tasks.OnSuccessListener;
+        import com.google.android.gms.tasks.Task;
+        import com.google.android.material.bottomnavigation.BottomNavigationView;
+        import com.google.android.material.floatingactionbutton.FloatingActionButton;
+        import com.google.android.material.navigation.NavigationBarView;
+        import com.google.firebase.auth.FirebaseAuth;
+        import com.google.firebase.auth.FirebaseUser;
+        import com.google.firebase.firestore.CollectionReference;
+        import com.google.firebase.firestore.DocumentReference;
+        import com.google.firebase.firestore.DocumentSnapshot;
+        import com.google.firebase.firestore.FirebaseFirestore;
+        import com.google.firebase.firestore.QueryDocumentSnapshot;
+        import com.google.firebase.firestore.QuerySnapshot;
+
+        import java.lang.reflect.Array;
+        import java.text.SimpleDateFormat;
+        import java.util.ArrayList;
+        import java.util.Arrays;
+        import java.util.Calendar;
+        import java.util.Collection;
+        import java.util.Date;
+        import java.util.HashMap;
+        import java.util.List;
+        import java.util.Map;
+
+        /**
+=======
 package com.example.team404;
 
 import static android.content.ContentValues.TAG;
@@ -41,6 +93,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+>>>>>>> b4a88cddd663b33ca9d4eff51db9efd335942727
  * This activity is use to display user's Habits. That user can view, edit, delete habits through here. User can also
  * access the habits to do today through here
  */
@@ -84,8 +137,8 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
         habitList=(ListView) findViewById(R.id.habit_list);
         /**prefill habit for testing */
-       // String year ="2021";
-       // String month ="11";
+        // String year ="2021";
+        // String month ="11";
         //String day1 = "05";
         //Habit habit = new Habit("play the video game","Because no homework",year,month,day1);
 
@@ -111,6 +164,31 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                 String month = document.getData().get("Month").toString();
                                 String day = document.getData().get("Day").toString();
                                 Habit habit = new Habit(id,title,reason,year,month,day);
+
+
+                                String plan = document.getData().get("Plan").toString();
+                                if (plan.contains("Monday")){
+                                    habit.setMonday(true);
+                                }
+                                if (plan.contains("Tuesday")){
+                                    habit.setTuesday(true);
+                                }
+                                if (plan.contains("Wednesday")){
+                                    habit.setWednesday(true);
+                                }
+                                if(plan.contains("Thursday")){
+                                    habit.setThursday(true);
+                                }
+                                if(plan.contains("Friday")){
+                                    habit.setFriday(true);
+                                }
+                                if(plan.contains("Saturday")){
+                                    habit.setSaturday(true);
+                                }
+                                if(plan.contains("Sunday")){
+                                    habit.setSunday(true);
+                                }
+
                                 habitDataList.add(habit);
                                 habitList.setAdapter(habitArrayAdapter);
 
@@ -124,6 +202,10 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                     }
 
                 });
+
+
+        habitArrayAdapter = new Content(this,habitDataList);
+        habitList.setAdapter(habitArrayAdapter);
 
 
         final FloatingActionButton addHabitButton = findViewById(R.id.add_habit_button);
@@ -146,20 +228,20 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
 
 
-       today=(Button) findViewById(R.id.today_button);
-    /** get current date by using calender **/
+        today=(Button) findViewById(R.id.today_button);
+        /** get current date by using calender **/
         Calendar c = Calendar.getInstance();
         int day = c.get(Calendar.DAY_OF_WEEK);
 
-    /** go to Today Activity class (showing up the habits to do today) by using intent **/
+        /** go to Today Activity class (showing up the habits to do today) by using intent **/
         Intent intent = new Intent (this,TodayActivity.class);
 
-       today.setOnClickListener(new View.OnClickListener(){
+        today.setOnClickListener(new View.OnClickListener(){
 
-           @Override
-           public void onClick(View v) {
-               ArrayList<Habit> habitsToday = new ArrayList<Habit>();
-               for(Habit i :habitDataList){
+            @Override
+            public void onClick(View v) {
+                ArrayList<Habit> habitsToday = new ArrayList<Habit>();
+                for(Habit i :habitDataList){
                     if (!(habitDataList.contains(i.getTitle()))) {
                         switch (day) {
                             case Calendar.SUNDAY:
@@ -200,11 +282,11 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
                         }
                     }
-               }
-               intent.putExtra("habitsToday",habitsToday);
+                }
+                intent.putExtra("habitsToday",habitsToday);
                 startActivity(intent);
-           }
-       });
+            }
+        });
 
 
 
@@ -220,12 +302,68 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
      */
     @Override
     public void OnOKPressed(Habit newHabit, Habit habit) {
+        final FirebaseFirestore db;
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userEmail = user.getEmail();
+        db=FirebaseFirestore.getInstance();
+        DocumentReference userDoc = FirebaseFirestore.getInstance().collection("User").document(userEmail);
+        Map<String,Object> h = new HashMap<>();
+        h.put("Day",newHabit.getDay());
+        h.put("Month",newHabit.getMonth());
+        h.put("OwnerReference",userDoc);
+        h.put("Reason",newHabit.getReason());
+        h.put("Title",newHabit.getTitle());
+        h.put("Year",newHabit.getYear());
+        h.put("id",newHabit.getId());
+        String day = "";
+        if(newHabit.getMonday()){
+            day=day+"Monday";
+        }
+        if(newHabit.getTuesday()){
+            day=day+"Tuesday";
+        }
+        if(newHabit.getWednesday()){
+            day=day+"Wednesday";
+        }
+        if(newHabit.getThursday()){
+            day=day+"Thursday";
+        }
+        if(newHabit.getFriday()){
+            day=day+"Friday";
+        }
+        if(newHabit.getSaturday()){
+            day=day+"Saturday";
+        }
+        if(newHabit.getSunday()){
+            day=day+"Sunday";
+        }
+        h.put("Plan",day);
+
+
+
+
         /** if no previous habit selected, it will add a new habit onto the list**/
         if (habit == null) {
             habitArrayAdapter.add(newHabit);
         }
         /** otherwise, it will edit a existing habit**/
         else {
+            db.collection("Habit").document(habit.getId())
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error deleting document", e);
+                        }
+                    });
             int index = habitDataList.indexOf(habit);
             habitDataList.get(index).setTitle(newHabit.getTitle());
             habitDataList.get(index).setMonday(newHabit.getMonday());
@@ -237,9 +375,9 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
             habitDataList.get(index).setSunday(newHabit.getSunday());
 
             if((Integer.valueOf(newHabit.getMonth())>0)){
-            habitDataList.get(index).setYear(newHabit.getYear());
-            habitDataList.get(index).setMonth(newHabit.getMonth());
-            habitDataList.get(index).setDay(newHabit.getDay());}
+                habitDataList.get(index).setYear(newHabit.getYear());
+                habitDataList.get(index).setMonth(newHabit.getMonth());
+                habitDataList.get(index).setDay(newHabit.getDay());}
             else{
                 habitDataList.get(index).setYear(habit.getYear());
                 habitDataList.get(index).setMonth(habit.getMonth());
@@ -247,6 +385,21 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
             }
             habitDataList.get(index).setReason(newHabit.getReason());
         }
+        db.collection("Habit").document(newHabit.getId())
+                .set(h)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+
         habitList.setAdapter(habitArrayAdapter);
     }
 
@@ -256,8 +409,29 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
      */
     @Override
     public void OnDlPressed(Habit habit) {
-            habitDataList.remove(habit);
-            habitList.setAdapter(habitArrayAdapter);
+        final FirebaseFirestore db;
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userEmail = user.getEmail();
+        db=FirebaseFirestore.getInstance();
+        DocumentReference userDoc = FirebaseFirestore.getInstance().collection("User").document(userEmail);
+        db.collection("Habit").document(habit.getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+        habitDataList.remove(habit);
+        habitList.setAdapter(habitArrayAdapter);
     }
     private NavigationBarView.OnItemSelectedListener navListener =
             new NavigationBarView.OnItemSelectedListener() {
@@ -311,7 +485,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
-                            MyActivity.super.onBackPressed();
+                            FirebaseAuth.getInstance().signOut();
                             finishAffinity();
                         }
                     }).create().show();
