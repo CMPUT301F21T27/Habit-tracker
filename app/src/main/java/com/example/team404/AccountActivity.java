@@ -211,7 +211,8 @@ public class AccountActivity extends AppCompatActivity {
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
-                            AccountActivity.super.onBackPressed();
+                            //AccountActivity.super.onBackPressed();
+                            FirebaseAuth.getInstance().signOut();
                             finishAffinity();
                         }
                     }).create().show();

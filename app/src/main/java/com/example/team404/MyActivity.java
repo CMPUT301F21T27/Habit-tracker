@@ -311,7 +311,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
-                            MyActivity.super.onBackPressed();
+                            FirebaseAuth.getInstance().signOut();
                             finishAffinity();
                         }
                     }).create().show();

@@ -1,5 +1,7 @@
 package com.example.team404;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SubscribeActivity extends AppCompatActivity {
 
@@ -74,8 +77,25 @@ public class SubscribeActivity extends AppCompatActivity {
                     return true;
                 }
             };
+    private int count = 0;
     @Override
     public void onBackPressed() {
+        count++;
+        if (count >1){
+            new AlertDialog.Builder(this)
+                    .setTitle("Really Exit?")
+                    .setMessage("Are you sure you want to exit?")
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            FirebaseAuth.getInstance().signOut();
+                            finishAffinity();
+                        }
+                    }).create().show();
+        }else{
+
+        }
 
     }
 }

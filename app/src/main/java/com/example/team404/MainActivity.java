@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
 
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
-                            MainActivity.super.onBackPressed();
+                            FirebaseAuth.getInstance().signOut();
                             finishAffinity();
                         }
                     }).create().show();
