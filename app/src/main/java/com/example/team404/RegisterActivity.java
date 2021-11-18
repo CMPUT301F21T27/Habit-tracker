@@ -145,8 +145,9 @@ public class RegisterActivity extends AppCompatActivity{
                                     //city.put("requestedList", Collections.emptyList());
                                     //city.put("followingList", Collections.emptyList());
 
+
                                     FirebaseFirestore db= FirebaseFirestore.getInstance();
-                                    final CollectionReference collectionReference = db.collection("User");
+                                    CollectionReference collectionReference = db.collection("User");
 
                                     collectionReference
                                             .document(emailAddress)
@@ -212,6 +213,15 @@ public class RegisterActivity extends AppCompatActivity{
 
             }
         });
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            currentUser.reload();
+        }
     }
 }
 
