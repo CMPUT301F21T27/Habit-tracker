@@ -1,4 +1,5 @@
 
+
         package com.example.team404;
 
         import static android.content.ContentValues.TAG;
@@ -48,6 +49,51 @@
         import java.util.Map;
 
         /**
+=======
+package com.example.team404;
+
+import static android.content.ContentValues.TAG;
+import static java.lang.String.valueOf;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
+/**
+>>>>>>> b4a88cddd663b33ca9d4eff51db9efd335942727
  * This activity is use to display user's Habits. That user can view, edit, delete habits through here. User can also
  * access the habits to do today through here
  */
@@ -119,6 +165,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                 String day = document.getData().get("Day").toString();
                                 Habit habit = new Habit(id,title,reason,year,month,day);
 
+
                                 String plan = document.getData().get("Plan").toString();
                                 if (plan.contains("Monday")){
                                     habit.setMonday(true);
@@ -141,6 +188,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                 if(plan.contains("Sunday")){
                                     habit.setSunday(true);
                                 }
+
                                 habitDataList.add(habit);
                                 habitList.setAdapter(habitArrayAdapter);
 
@@ -155,8 +203,10 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
                 });
 
+
         habitArrayAdapter = new Content(this,habitDataList);
         habitList.setAdapter(habitArrayAdapter);
+
 
         final FloatingActionButton addHabitButton = findViewById(R.id.add_habit_button);
         addHabitButton.setOnClickListener(new View.OnClickListener() {
@@ -435,7 +485,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
-                            MyActivity.super.onBackPressed();
+                            FirebaseAuth.getInstance().signOut();
                             finishAffinity();
                         }
                     }).create().show();
