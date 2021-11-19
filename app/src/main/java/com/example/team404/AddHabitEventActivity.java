@@ -20,13 +20,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -45,6 +53,11 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
     ArrayAdapter<HabitEvent> habitEventArrayAdapter;
     ArrayList<HabitEvent> habitEventDataList;
     int position;
+
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+    StorageReference eventsHabbitRef = storageRef.child(timeStamp+".png");
 
 
     private TextView locationvIEW;
@@ -201,6 +214,25 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
         if (requestCode == 123) {
             Bitmap captureImage = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(captureImage);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] imageData = baos.toByteArray();
+            UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
+//            *****ERROR HANDLEING FOR UPLOADTASK
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                    Toast.makeText(AddHabitEventActivity.this, "Upload Failure", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                    // ...
+                    Toast.makeText(AddHabitEventActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
     //https://www.youtube.com/watch?v=fPFr0So1LmI&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt&index=6
