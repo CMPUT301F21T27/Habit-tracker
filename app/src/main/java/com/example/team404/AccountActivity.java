@@ -39,6 +39,7 @@ public class AccountActivity extends AppCompatActivity {
     private TextView email;
     private TextView phone;
     private int log_out_count=0;
+    private String requestedListString;
 
 
     @Override
@@ -73,6 +74,7 @@ public class AccountActivity extends AppCompatActivity {
                 if (value != null && value.exists()){
                     String userPhone = value.getData().get("phone").toString();
                     String userName = value.getData().get("userName").toString();
+                    requestedListString = value.get("requestedList").toString();
                     username.setText(userName);
                     phone.setText(userPhone);
                 }else{
@@ -89,6 +91,7 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AccountActivity.this, NotificationActivity.class);
+                intent.putExtra("reqListString", requestedListString);
                 startActivity(intent);
             }
 

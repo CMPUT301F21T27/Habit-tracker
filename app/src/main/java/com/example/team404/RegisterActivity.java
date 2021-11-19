@@ -142,8 +142,8 @@ public class RegisterActivity extends AppCompatActivity{
                                     city.put("Habits", "");
                                     city.put("Habitsevent", "");
                                     city.put("phone",userphone);
-                                    //city.put("requestedList", Collections.emptyList());
-                                    //city.put("followingList", Collections.emptyList());
+                                    city.put("requestedList", Collections.emptyList());
+                                    city.put("followingList", Collections.emptyList());
 
                                     FirebaseFirestore db= FirebaseFirestore.getInstance();
                                     final CollectionReference collectionReference = db.collection("User");
