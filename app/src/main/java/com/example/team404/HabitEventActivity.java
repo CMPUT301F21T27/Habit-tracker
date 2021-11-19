@@ -22,6 +22,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -65,6 +69,11 @@ public class HabitEventActivity extends AppCompatActivity {
         String comment = extras.getString("comment");
         commentTextView.setText(comment);
         locationTextView.setText(location);
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("example.png");
+        imageView = findViewById(R.id.imageView);
+        Glide.with(this)
+                .load(storageReference)
+                .into(imageView);
 
 
         if(isServicesOK()){
