@@ -52,7 +52,7 @@ public class NotificationActivity extends AppCompatActivity {
         else{ requestsList = Arrays.asList();}
 
         // This list is for testing only
-        //List<String> requestsList2 = Arrays.asList("andrei@gmail.com", "ta@ta.com", requesterListString);
+        //List<String> requestsList = Arrays.asList("ad@gmail.com", "ta@ta.com");
 
         adapter = new RequestsListAdapter(this, R.layout.follow_request_layout ,requestsList);
         requestedListView = findViewById(R.id.requestListView);

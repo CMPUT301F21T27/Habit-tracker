@@ -55,4 +55,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/follow_request_name" />
+
+    <TextView
+        android:id="@+id/follow_result"
+        android:layout_width="119dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="Accepted"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
