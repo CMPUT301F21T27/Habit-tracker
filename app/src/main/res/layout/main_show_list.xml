@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_main_Text"
+        android:ems="10"
+        android:hint="title"
+        android:inputType="textPersonName"
+        android:maxLength="20"/>
+
+    <TextView
+        android:id="@+id/date_main_Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:clickable="true"
+        android:hint="Date_Start"
+        android:inputType="date"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/reason_main_Text"
+        android:ems="10"
+        android:hint="reason"
+        android:inputType="textPersonName"
+        android:maxLength="30"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Days of a week habit occur"></TextView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/sunday_check_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="S">
+
+        </CheckBox>
+
+        <CheckBox
+            android:id="@+id/monday_check_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="M"></CheckBox>
+
+
+        <CheckBox
+            android:id="@+id/tuesday_check_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="T"></CheckBox>
+
+        <CheckBox
+            android:id="@+id/wednesday_check_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="W"></CheckBox>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/thursday_check_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="T"></CheckBox>
+
+        <CheckBox
+            android:id="@+id/friday_check_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="F"></CheckBox>
+
+        <CheckBox
+            android:id="@+id/saturday_check_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="S"></CheckBox>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/follow_main_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Follow" />
+
+
+
+</LinearLayout>
