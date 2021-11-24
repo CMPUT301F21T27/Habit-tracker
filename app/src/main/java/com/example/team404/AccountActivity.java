@@ -41,6 +41,7 @@ public class AccountActivity extends AppCompatActivity {
     private TextView phone;
     private int log_out_count=0;
     private String requestedListString;
+    private String old_password;
 
 
     @Override
@@ -73,6 +74,7 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (value != null && value.exists()){
+                    old_password = value.getData().get("userPassword").toString();
                     String userPhone = value.getData().get("phone").toString();
                     String userName = value.getData().get("userName").toString();
                     requestedListString = value.get("requestedList").toString();
@@ -103,6 +105,7 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AccountActivity.this, AccountPwdEditActivity.class);
+                intent.putExtra("old_password", old_password);
                 startActivity(intent);
             }
         });
