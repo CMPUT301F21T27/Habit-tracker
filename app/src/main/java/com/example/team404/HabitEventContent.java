@@ -32,8 +32,10 @@ public class HabitEventContent extends ArrayAdapter<HabitEvent> {
         HabitEvent habitEvent = habitEevents.get(position);
 
         TextView habitEventTitle = view.findViewById(R.id.habitEventLocation);
+        TextView habitEventDate = view.findViewById(R.id.textView9);
 
         habitEventTitle.setText(habitEvent.getLocation());
+        habitEventDate.setText(habitEvent.getDate());
 
 
         return view;

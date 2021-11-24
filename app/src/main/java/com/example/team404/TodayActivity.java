@@ -47,7 +47,7 @@ public class TodayActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Habit habit_selected = (Habit) adapterView.getItemAtPosition(i);
-                new ViewMainList(habit_selected).show(getSupportFragmentManager(), "View_Today_Habit");
+                new ViewMainListt(habit_selected).show(getSupportFragmentManager(), "View_Today_Habit");
             }
         });
 

@@ -64,6 +64,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_habit_event);
         Bundle extras = getIntent().getExtras();
+
         String location = extras.getString("location");
         String comment = extras.getString("comment");
 
@@ -116,7 +117,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                 Toast.makeText(this, "Please long press to delete current one.", Toast.LENGTH_SHORT).show();
 
             }else if (commentTextView.getText().toString().length() == 0){
-                new AddCommentFragment().show(getSupportFragmentManager(), "ADD String");
+                new AddCommentFragment().show(getSupportFragmentManager(), "EDIT String");
             }
 
         });

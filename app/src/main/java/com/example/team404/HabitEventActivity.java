@@ -22,15 +22,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HabitEventActivity extends AppCompatActivity {
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
@@ -61,6 +68,9 @@ public class HabitEventActivity extends AppCompatActivity {
         locationTextView = findViewById(R.id.locationTextView);
 
         Bundle extras = getIntent().getExtras();
+        String id = extras.getString("id");
+        DocumentReference habitDoc = FirebaseFirestore.getInstance().collection("Habit").document(id);
+        String date = extras.getString("date");
         String location = extras.getString("location");
         String comment = extras.getString("comment");
         commentTextView.setText(comment);
@@ -76,14 +86,38 @@ public class HabitEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
+                String current_location= locationTextView.getText().toString();
+                String current_comment= commentTextView.getText().toString();
 
                 Bundle extras = new Bundle();
-                extras.putString("editTitle", locationTextView.getText().toString());
-                Date date = new Date();
-                extras.putString("editDate", date.toString());
-                extras.putString("editComment", commentTextView.getText().toString());
+                extras.putString("editTitle",current_location);
+
+                extras.putString("editDate", date);
+                extras.putString("editComment", current_comment);
                 intent.putExtras(extras);
                 setResult(111, intent);
+                Map<String,Object> event = new HashMap<>();
+                event.put("Location", current_location);
+                event.put("Comment", current_comment);
+                event.put("Date", date);
+                event.put("OwnerReference", habitDoc);
+
+                final FirebaseFirestore db;
+                db=FirebaseFirestore.getInstance();
+                db.collection("Habit Event List").document(id)
+                        .set(event)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.w(TAG, "success add to fireBase");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "faild add to fireBase", e);
+                            }
+                        });
                 onBackPressed();
             }
         });

@@ -29,6 +29,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -37,22 +41,17 @@ import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddHabitEventActivity extends AppCompatActivity implements AddCommentFragment.onFragmentInteractionListener, EditCommentFragment.onFragmentInteractionListener  {
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
-    private Button LocationButton;
-    private Button PhotoButton;
     private ImageView backImage;
     private ImageView LocationImage;
     private ImageView imageView;
     private ImageView saveImage;
     private TextView commentTextView;
     private TextView locationTextView;
-
-    ListView habitEventList;
-    ArrayAdapter<HabitEvent> habitEventArrayAdapter;
-    ArrayList<HabitEvent> habitEventDataList;
-    int position;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
@@ -70,9 +69,9 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_event);
-        //Bundle extras = getIntent().getExtras();
-        //String location = extras.getString("location");
-        //String comment = extras.getString("comment");
+        Bundle extras = getIntent().getExtras();
+        String habitId = extras.getString("habitId");
+        DocumentReference habitDoc = FirebaseFirestore.getInstance().collection("Habit").document(habitId);
 
         commentTextView= findViewById(R.id.comment_textView);
         locationTextView = findViewById(R.id.location_textView);
@@ -140,6 +139,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                 Intent intent = new Intent();
 
                 Bundle extras = new Bundle();
+                extras.putString("editId", "");
                 extras.putString("editTitle", "");
 
                 extras.putString("editDate", "");
@@ -155,14 +155,43 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
+                String current_location= locationTextView.getText().toString();
+                String current_comment= commentTextView.getText().toString();
 
                 Bundle extras = new Bundle();
-                extras.putString("editTitle", locationTextView.getText().toString());
                 Date date = new Date();
-                extras.putString("editDate", date.toString());
-                extras.putString("editComment", commentTextView.getText().toString());
+                String habit_event_id = String.valueOf(date);;
+                extras.putString("addId", habit_event_id);
+                extras.putString("addTitle",current_location);
+                String date_ = new SimpleDateFormat("EE yyyy-MM-dd").format(date);
+                extras.putString("addDate", date_);
+                extras.putString("addComment", current_comment);
                 intent.putExtras(extras);
                 setResult(000, intent);
+
+                Map<String,Object> event = new HashMap<>();
+                event.put("Location", current_location);
+                event.put("Comment", current_comment);
+                event.put("Date", date_);
+                event.put("OwnerReference", habitDoc);
+
+                final FirebaseFirestore db;
+                db=FirebaseFirestore.getInstance();
+                db.collection("Habit Event List").document(habit_event_id)
+                        .set(event)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.w(TAG, "success add to fireBase");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "faild add to fireBase", e);
+                            }
+                        });
+
                 onBackPressed();
             }
         });

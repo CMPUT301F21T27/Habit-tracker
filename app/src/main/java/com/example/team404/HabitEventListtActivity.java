@@ -10,10 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,7 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class HabitEventListActivity extends AppCompatActivity {
+public class HabitEventListtActivity extends AppCompatActivity {
     ListView habitEventList;
     ArrayAdapter<HabitEvent> habitEventArrayAdapter;
     ArrayList<HabitEvent> habitEventDataList;
@@ -50,9 +48,9 @@ public class HabitEventListActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        //addImage = findViewById(R.id.addImage);
+
         final FirebaseFirestore db;
-        setContentView(R.layout.activity_habit_event_list);
+        setContentView(R.layout.activity_habit_event_listt);
         habitEventList=(ListView) findViewById(R.id.habit_event_list);
         habitEventDataList=new ArrayList<>();
         habitEventArrayAdapter = new HabitEventContent(this,habitEventDataList);
@@ -61,9 +59,7 @@ public class HabitEventListActivity extends AppCompatActivity {
         Intent current_habit_intent = getIntent();
         current_habit_id = current_habit_intent.getStringExtra("current_habit_id");
         today =current_habit_intent.getStringExtra("Today");
-        /*if (today.equals("today")){
-            addImage.setVisibility(ImageView.GONE);
-        }*/
+
         db = FirebaseFirestore.getInstance();
         DocumentReference habitDoc = FirebaseFirestore.getInstance().collection("Habit").document(current_habit_id);
 
@@ -130,7 +126,7 @@ public class HabitEventListActivity extends AppCompatActivity {
                 String comment = currentHabitevent.getComments();
                 String id = currentHabitevent.getId();
                 String date = currentHabitevent.getDate();
-                Intent intent = new Intent(HabitEventListActivity.this, HabitEventActivity.class);
+                Intent intent = new Intent(HabitEventListtActivity.this, HabitEventActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString("id", current_habit_id);
                 extras.putString("location", location);
@@ -147,7 +143,7 @@ public class HabitEventListActivity extends AppCompatActivity {
                     position, long id) {
                 final int selected_item = position;
 
-                new AlertDialog.Builder(HabitEventListActivity.this).
+                new AlertDialog.Builder(HabitEventListtActivity.this).
                         setIcon(android.R.drawable.ic_delete)
                         .setTitle("Are you sure?")
                         .setMessage("Do you want to delete this event?")
@@ -191,8 +187,18 @@ public class HabitEventListActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        addImage = findViewById(R.id.addImage);
+        addImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HabitEventListtActivity.this, AddHabitEventActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("habitId", current_habit_id);
 
-
+                intent.putExtras(extras);
+                startActivityForResult(intent, 000);
+            }
+        });
     }
     //https://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android
     // author: Suragch (answered) GabrielBB(edited)

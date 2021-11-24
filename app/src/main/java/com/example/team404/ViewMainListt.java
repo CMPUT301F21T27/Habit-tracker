@@ -1,26 +1,20 @@
 package com.example.team404;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import java.util.Date;
-
-public class ViewMainList extends DialogFragment {
+public class ViewMainListt extends DialogFragment {
     private TextView title;
     private TextView date_start;
 
@@ -40,13 +34,13 @@ public class ViewMainList extends DialogFragment {
 
 
 
-    public ViewMainList(Habit habit_selected) {
+    public ViewMainListt(Habit habit_selected) {
         this.habit_selected = habit_selected;
     }
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.main_show_list, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.main_show_listt, null);
         title = view.findViewById(R.id.title_main_Text);
         date_start = view.findViewById(R.id.date_main_Text);
         reason = view.findViewById(R.id.reason_main_Text);
@@ -71,7 +65,16 @@ public class ViewMainList extends DialogFragment {
         sundayCheck.setChecked(habit_selected.getSunday());
         addEventButton= view.findViewById(R.id.add_event_button);
 
+        addEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), HabitEventListtActivity.class);
+                String current_habit_id= habit_selected.getId();
+                intent.putExtra("current_habit_id", current_habit_id);
+                startActivity(intent);
 
+            }
+        });
 
 
 
