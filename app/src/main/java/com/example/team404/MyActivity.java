@@ -328,22 +328,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         String userEmail = user.getEmail();
         db=FirebaseFirestore.getInstance();
         DocumentReference userDoc = FirebaseFirestore.getInstance().collection("User").document(userEmail);
-        Map<String,Object> h = new HashMap<>();
-        h.put("Day",newHabit.getDay());
-        h.put("Month",newHabit.getMonth());
-        h.put("OwnerReference",userDoc);
-        h.put("OwnerEmail", userEmail);
-        h.put("Reason",newHabit.getReason());
-        h.put("Title",newHabit.getTitle());
-        h.put("Year",newHabit.getYear());
-        h.put("id",newHabit.getId());
         String day = "";
-        String pub = "";
-        if(newHabit.getPub()){
-            pub="True";
-        }
-        else pub="False";
-        h.put("Public",pub);
         if(newHabit.getMonday()){
             day=day+"Monday";
         }
@@ -365,31 +350,58 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         if(newHabit.getSunday()){
             day=day+"Sunday";
         }
-        h.put("Plan",day);
-
+        String pub = "";
+        if(newHabit.getPub()){
+            pub="True";
+        }
+        else pub="False";
 
 
 
         /** if no previous habit selected, it will add a new habit onto the list**/
         if (habit == null) {
-            habitArrayAdapter.add(newHabit);
-        }
-        /** otherwise, it will edit a existing habit**/
-        else {
-            db.collection("Habit").document(habit.getId())
-                    .delete()
+            Map<String,Object> h = new HashMap<>();
+            h.put("Day",newHabit.getDay());
+            h.put("Month",newHabit.getMonth());
+            h.put("OwnerReference",userDoc);
+            h.put("OwnerEmail", userEmail);
+            h.put("Reason",newHabit.getReason());
+            h.put("Title",newHabit.getTitle());
+            h.put("Year",newHabit.getYear());
+            h.put("id",newHabit.getId());
+
+
+            h.put("Public",pub);
+
+            h.put("Plan",day);
+            db.collection("Habit").document(newHabit.getId())
+                    .set(h)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                            Log.d(TAG, "DocumentSnapshot successfully written!");
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Error deleting document", e);
+                            Log.w(TAG, "Error writing document", e);
                         }
                     });
+            habitArrayAdapter.add(newHabit);
+        }
+        /** otherwise, it will edit a existing habit**/
+        else {
+
+            db.collection("Habit").document(habit.getId())
+                    .update("Day",newHabit.getDay(),
+                            "Month",newHabit.getMonth(),
+                            "Reason",newHabit.getReason(),
+                            "Title",newHabit.getTitle(),
+                            "Year",newHabit.getYear(),
+                            "Public",pub,
+                            "Plan",day);
+
             int index = habitDataList.indexOf(habit);
             habitDataList.get(index).setTitle(newHabit.getTitle());
             habitDataList.get(index).setMonday(newHabit.getMonday());
@@ -412,20 +424,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
             }
             habitDataList.get(index).setReason(newHabit.getReason());
         }
-        db.collection("Habit").document(newHabit.getId())
-                .set(h)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
+
 
         habitList.setAdapter(habitArrayAdapter);
     }
