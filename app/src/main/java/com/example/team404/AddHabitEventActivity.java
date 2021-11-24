@@ -42,6 +42,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -221,7 +222,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
     });
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
 
 
 
@@ -308,6 +309,35 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
             switch (requestCode) {
                 case 1:
                     imageView.setImageURI(image_uri);
+                    try {
+                        Bitmap captureImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                        byte[] imageData = baos.toByteArray();
+                        UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
+//            *****ERROR HANDLEING FOR UPLOADTASK
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle unsuccessful uploads
+                                Toast.makeText(AddHabitEventActivity.this, "Upload Failure", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                                // ...
+                                Toast.makeText(AddHabitEventActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     break;
 
             }
