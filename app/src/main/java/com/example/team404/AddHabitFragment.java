@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -150,7 +151,9 @@ public class AddHabitFragment extends DialogFragment {
 
                 }
             };
+
             habitEventListButton = view.findViewById(R.id.habit_event_list_button);
+            habitEventListButton.setVisibility(habit_selected!=null? ImageView.VISIBLE: ImageView.GONE );
             habitEventListButton.setOnClickListener(v -> {
                 Intent intent = new Intent(getActivity(), HabitEventListActivity.class);
                 String current_habit_id= habit_selected.getId();

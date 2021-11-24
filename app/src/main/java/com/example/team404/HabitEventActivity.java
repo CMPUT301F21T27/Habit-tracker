@@ -96,7 +96,7 @@ public class HabitEventActivity extends AppCompatActivity {
                 extras.putString("editComment", current_comment);
                 intent.putExtras(extras);
                 setResult(111, intent);
-               
+
                 onBackPressed();
             }
         });

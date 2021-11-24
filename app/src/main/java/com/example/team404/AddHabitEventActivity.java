@@ -2,12 +2,16 @@ package com.example.team404;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -52,6 +56,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
     private ImageView saveImage;
     private TextView commentTextView;
     private TextView locationTextView;
+    Uri image_uri;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
@@ -199,20 +204,55 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
         imageView = findViewById(R.id.imageView);
         imageView.setOnClickListener(v -> {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, 123);
-        });
-        if (ContextCompat.checkSelfPermission(AddHabitEventActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(AddHabitEventActivity.this,
-                    new String[]{
-                            Manifest.permission.CAMERA
-                    },
+            //startActivityForResult(intent, 123);
 
-                    123);
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
+            if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                String [] permission = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permission,1000);
+            }
+            else {
+                openCamera();
+            }
         }
+
+    });
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
 
 
 
     }
+    /////////////////////////////////////////////////////////////////////
+    private void openCamera() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE,"New Picture");
+        values.put(MediaStore.Images.Media.DESCRIPTION,"From Camera");
+        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
+
+        //Camera intent
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,image_uri);
+        startActivityForResult(takePictureIntent, 1);
+
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1000:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openCamera();
+                } else {
+                    //permisiion from pop up was denied.
+                    Toast.makeText(AddHabitEventActivity.this, "Permission Denied...", Toast.LENGTH_LONG).show();
+                }
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////
     //initial location image button
     //make the location button is valid
     private void init(){
@@ -263,6 +303,19 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                 }
             });
         }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case 1:
+                    imageView.setImageURI(image_uri);
+                    break;
+
+            }
+        }
+
+
+
+        //////////////////////////////////////////////////////////////////////////
     }
     //https://www.youtube.com/watch?v=fPFr0So1LmI&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt&index=6
     //Author: CodingWithMitch
