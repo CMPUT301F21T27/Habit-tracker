@@ -132,7 +132,7 @@ public class HabitEventListActivity extends AppCompatActivity {
                 String date = currentHabitevent.getDate();
                 Intent intent = new Intent(HabitEventListActivity.this, HabitEventActivity.class);
                 Bundle extras = new Bundle();
-                extras.putString("id", current_habit_id);
+                extras.putString("id", id);
                 extras.putString("location", location);
                 extras.putString("date", date);
                 extras.putString("comment", comment);
@@ -192,7 +192,6 @@ public class HabitEventListActivity extends AppCompatActivity {
             }
         });
 
-
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,6 +208,7 @@ public class HabitEventListActivity extends AppCompatActivity {
     // author: Suragch (answered) GabrielBB(edited)
     //date: 11-5-2021; 12-13-2021
     // protected void onActivityResult(int requestCode, int resultCode, Intent data) is created by Suragch
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -258,4 +258,6 @@ public class HabitEventListActivity extends AppCompatActivity {
 
         }
     }
+
+     */
 }

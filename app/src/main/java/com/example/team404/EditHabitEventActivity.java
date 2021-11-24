@@ -27,6 +27,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -45,6 +46,9 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
     private ImageView saveImage;
     private TextView commentTextView;
     private TextView locationTextView;
+    private String back_comment;
+    private String back_location;
+    private String habit_event_id;
     int position;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -64,14 +68,14 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_habit_event);
         Bundle extras = getIntent().getExtras();
-
-        String location = extras.getString("location");
-        String comment = extras.getString("comment");
+        habit_event_id = extras.getString("id");
+        back_location = extras.getString("location");
+        back_comment = extras.getString("comment");
 
         commentTextView= findViewById(R.id.comment_textView);
         locationTextView = findViewById(R.id.location_textView);
-        commentTextView.setText(comment);
-        locationTextView.setText(location);
+        commentTextView.setText(back_comment);
+        locationTextView.setText(back_location);
 
 
         commentTextView.setOnClickListener(new View.OnClickListener() {
@@ -130,13 +134,14 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String location_ = locationTextView.getText().toString();
+                String comment_ = commentTextView.getText().toString();
 
                 Intent intent = new Intent();
-
                 Bundle extras = new Bundle();
-                extras.putString("locationString", location);
+                extras.putString("locationString", location_);
 
-                extras.putString("commentString", comment);
+                extras.putString("commentString", comment_);
                 intent.putExtras(extras);
                 setResult(333, intent);
                 onBackPressed();
@@ -156,6 +161,22 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                 extras.putString("commentString", comment_);
                 intent.putExtras(extras);
                 setResult(333, intent);
+                final FirebaseFirestore db;
+                db=FirebaseFirestore.getInstance();
+                db.collection("Habit Event List").document(habit_event_id)
+                        .update("Location", location_, "Comment", comment_)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.w(TAG, "success add to fireBase");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "faild add to fireBase", e);
+                            }
+                        });
 
                 onBackPressed();
             }
@@ -270,6 +291,22 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
     }
     @Override
     public void onCancelPressed(){}
+    @Override
+
+    public void onBackPressed() {
+        String location_ = locationTextView.getText().toString();
+        String comment_ = commentTextView.getText().toString();
+
+        Intent intent = new Intent();
+        Bundle extras = new Bundle();
+        extras.putString("locationString", location_);
+
+        extras.putString("commentString", comment_);
+        intent.putExtras(extras);
+        setResult(333, intent);
+
+        super.onBackPressed();
+    }
 
 
 
