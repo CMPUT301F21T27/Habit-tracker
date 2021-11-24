@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
         habitArrayAdapter = new Content(this,habitDataList);
         db.collection("Habit")
                 .whereEqualTo("Public","True")
+
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -65,12 +66,14 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
 
+
                                     String id = document.getData().get("id").toString();
                                     String title = document.getData().get("Title").toString();
                                     String reason = document.getData().get("Reason").toString();
                                     String year = document.getData().get("Year").toString();
                                     String month = document.getData().get("Month").toString();
                                     String day = document.getData().get("Day").toString();
+                                    String email = document.getData().get("OwnerEmail").toString();
 
                                     Habit habit = new Habit(id, title, reason, year, month, day);
                                     habit.setPub(true);
@@ -97,9 +100,9 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                                     if (plan.contains("Sunday")) {
                                         habit.setSunday(true);
                                     }
-
+                                    if (!email.equals(userEmail)){
                                     habitDataList.add(habit);
-                                    habitList.setAdapter(habitArrayAdapter);
+                                    habitList.setAdapter(habitArrayAdapter);}
 
 
 

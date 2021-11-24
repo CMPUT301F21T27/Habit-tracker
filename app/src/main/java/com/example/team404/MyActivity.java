@@ -168,7 +168,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                 String pub = document.getData().get("Public").toString();
 
                                 Habit habit = new Habit(id,title,reason,year,month,day);
-                                if (pub == "True"){
+                                if (pub.contains("True")){
                                     habit.setPub(true);
                                 }
 
