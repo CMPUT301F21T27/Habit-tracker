@@ -15,6 +15,7 @@
         import android.widget.AdapterView;
         import android.widget.ArrayAdapter;
         import android.widget.Button;
+        import android.widget.ImageView;
         import android.widget.ListView;
 
         import androidx.annotation.NonNull;
@@ -106,7 +107,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
     ArrayAdapter<Habit> habitArrayAdapter;
     ArrayList<Habit> habitDataList;
     Button today;
-    Button reorder;
+    ImageView reorder;
 
     /**
      * The main process of MyActivity class.
@@ -136,7 +137,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setSelectedItemId(R.id.nav_my);
         bottomNav.setOnItemSelectedListener(navListener);
-        reorder=(Button)findViewById(R.id.reorder_button);
+        reorder=(ImageView)findViewById(R.id.reorder_button);
         habitList=(ListView) findViewById(R.id.habit_list);
         /**prefill habit for testing */
         // String year ="2021";
