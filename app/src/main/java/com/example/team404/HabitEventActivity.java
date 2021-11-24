@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -27,11 +28,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -64,17 +70,54 @@ public class HabitEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_event);
 
+
         commentTextView= findViewById(R.id.comment_textView);
         locationTextView = findViewById(R.id.locationTextView);
+        editImage = findViewById(R.id.editImage);
+        imageView = findViewById(R.id.imageView);
 
         Bundle extras = getIntent().getExtras();
         String id = extras.getString("id");
-        DocumentReference habitDoc = FirebaseFirestore.getInstance().collection("Habit").document(id);
+        DocumentReference habitEventDoc = FirebaseFirestore.getInstance().collection("Habit Event List").document(id);
+        System.out.println("---------------------------- Image file path is null!"+habitEventDoc);
         String date = extras.getString("date");
         String location = extras.getString("location");
         String comment = extras.getString("comment");
         commentTextView.setText(comment);
         locationTextView.setText(location);
+        habitEventDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String storageUrlString = document.getString("Uri");
+
+                        if (storageUrlString != null) {
+                            Uri storageURL = Uri.parse(storageUrlString);
+                            Glide.with(getApplicationContext()).load(storageURL).into(imageView);
+
+
+                            System.out.println("uri is: " + storageURL.toString());
+
+                        }
+                        else{
+                            System.out.println(" Image file is null!");
+                        }
+
+
+
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "Failed with ", task.getException());
+                }
+            }
+        });
+
+
 
 
         if(isServicesOK()){
@@ -101,7 +144,7 @@ public class HabitEventActivity extends AppCompatActivity {
             }
         });
         //save habitevent after press save button
-        editImage = findViewById(R.id.editImage);
+
         editImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +164,7 @@ public class HabitEventActivity extends AppCompatActivity {
 
 
         // to call Camera to get a photo
-        imageView = findViewById(R.id.imageView);
+
 
 
 

@@ -70,7 +70,7 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
@@ -290,7 +290,7 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String address = " ";
+                    String address = "Address not record";
                     Intent intent = new Intent();
                     intent.putExtra("keyName", address);
                     setResult(RESULT_OK, intent);
@@ -320,7 +320,7 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
             @Override
             public void onClick(View v) {
 
-                String address = "address unable";
+                String address = "Address not record";
                 Intent intent = new Intent();
                 intent.putExtra("keyName", address);
                 setResult(RESULT_OK, intent);
@@ -332,7 +332,7 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String address = "address unable";
+                String address = "Address not record";
                 Intent intent = new Intent();
                 intent.putExtra("keyName", address);
                 setResult(RESULT_OK, intent);

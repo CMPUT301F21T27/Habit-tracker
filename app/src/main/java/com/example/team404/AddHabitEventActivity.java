@@ -58,11 +58,15 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
     private TextView commentTextView;
     private TextView locationTextView;
     Uri image_uri;
+    String uri_string;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = mAuth.getCurrentUser();
+    String userEmail = user.getEmail();
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
-    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-    StorageReference eventsHabbitRef = storageRef.child(timeStamp+".png");
+    String timeStamp = new SimpleDateFormat("yyyy-MM-dd-mm-ss").format(new Date());
+    StorageReference eventsHabbitRef = storageRef.child("/image/"+userEmail+timeStamp+".png");
 
 
     private TextView locationvIEW;
@@ -78,6 +82,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
         Bundle extras = getIntent().getExtras();
         String habitId = extras.getString("habitId");
         DocumentReference habitDoc = FirebaseFirestore.getInstance().collection("Habit").document(habitId);
+
 
         commentTextView= findViewById(R.id.comment_textView);
         locationTextView = findViewById(R.id.location_textView);
@@ -175,28 +180,61 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                 intent.putExtras(extras);
                 setResult(000, intent);
 
-                Map<String,Object> event = new HashMap<>();
-                event.put("Location", current_location);
-                event.put("Comment", current_comment);
-                event.put("Date", date_);
-                event.put("OwnerReference", habitDoc);
 
-                final FirebaseFirestore db;
-                db=FirebaseFirestore.getInstance();
-                db.collection("Habit Event List").document(habit_event_id)
-                        .set(event)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                eventsHabbitRef.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        eventsHabbitRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
-                            public void onSuccess(Void unused) {
-                                Log.w(TAG, "success add to fireBase");
+                            public void onSuccess(Uri uri) {
+                                System.out.println("-----------------> Get photo url success! URL: " + uri.toString());
+                                uri_string=uri.toString();
+                                Map<String,Object> event = new HashMap<>();
+                                event.put("Location", current_location);
+                                event.put("Comment", current_comment);
+                                event.put("Date", date_);
+                                event.put("OwnerReference", habitDoc);
+                                event.put("url", image_uri.toString());
+                                event.put("Uri", uri_string);
+                                final FirebaseFirestore db;
+                                db=FirebaseFirestore.getInstance();
+                                db.collection("Habit Event List").document(habit_event_id)
+                                        .set(event)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Log.w(TAG, "success add to fireBase");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "faild add to fireBase", e);
+                                            }
+                                        });
+                                // shift back to list activity
+                                //Intent intentReturn = new Intent(getApplicationContext(), HabitEventListActivity.class); // Return to the habit event list page
+                                //intentReturn.putExtra("uri", uri.toString());
+                                AddHabitEventActivity.this.finish(); // finish current activity
                             }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
+                        }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "faild add to fireBase", e);
+                                System.out.println("Get photo url failed!");
+
                             }
                         });
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        System.out.println("upload photo failed!");
+
+                    }
+                });
+
+
 
                 onBackPressed();
             }
@@ -205,7 +243,6 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
         imageView = findViewById(R.id.imageView);
         imageView.setOnClickListener(v -> {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            //startActivityForResult(intent, 123);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
@@ -218,8 +255,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                 openCamera();
             }
         }
-
-    });
+        });
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -281,29 +317,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
             }
         }
 
-        if (requestCode == 123) {
-            Bitmap captureImage = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(captureImage);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            byte[] imageData = baos.toByteArray();
-            UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
-//            *****ERROR HANDLEING FOR UPLOADTASK
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                    Toast.makeText(AddHabitEventActivity.this, "Upload Failure", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                    // ...
-                    Toast.makeText(AddHabitEventActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
@@ -315,7 +329,6 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                         captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
                         byte[] imageData = baos.toByteArray();
                         UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
-//            *****ERROR HANDLEING FOR UPLOADTASK
                         uploadTask.addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
@@ -330,10 +343,6 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                 Toast.makeText(AddHabitEventActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
                             }
                         });
-
-
-
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -342,9 +351,6 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
 
             }
         }
-
-
-
         //////////////////////////////////////////////////////////////////////////
     }
     //https://www.youtube.com/watch?v=fPFr0So1LmI&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt&index=6
