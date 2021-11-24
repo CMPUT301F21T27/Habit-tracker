@@ -483,8 +483,8 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                             intent = new Intent(getApplicationContext(), MyActivity.class);
                             //startActivity(intent);
                             //overridePendingTransition(0, 0);
-                            //return true;
-                            break;
+                            return true;
+                            //break;
 
                         case R.id.nav_subscribe:
                             intent = new Intent(getApplicationContext(), SubscribeActivity.class);

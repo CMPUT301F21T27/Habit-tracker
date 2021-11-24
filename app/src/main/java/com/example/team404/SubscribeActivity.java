@@ -66,8 +66,8 @@ public class SubscribeActivity extends AppCompatActivity {
                             intent = new Intent(getApplicationContext(), SubscribeActivity.class);
                             //startActivity(intent);
                             //overridePendingTransition(0, 0);
-                            //return true;
-                            break;
+                            return true;
+                            //break;
                     }
                     startActivity(intent);
                     overridePendingTransition(0, 0);
