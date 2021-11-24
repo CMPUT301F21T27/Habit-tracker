@@ -91,33 +91,12 @@ public class HabitEventActivity extends AppCompatActivity {
 
                 Bundle extras = new Bundle();
                 extras.putString("editTitle",current_location);
-
+                extras.putString("editId", id);
                 extras.putString("editDate", date);
                 extras.putString("editComment", current_comment);
                 intent.putExtras(extras);
                 setResult(111, intent);
-                Map<String,Object> event = new HashMap<>();
-                event.put("Location", current_location);
-                event.put("Comment", current_comment);
-                event.put("Date", date);
-                event.put("OwnerReference", habitDoc);
 
-                final FirebaseFirestore db;
-                db=FirebaseFirestore.getInstance();
-                db.collection("Habit Event List").document(id)
-                        .set(event)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Log.w(TAG, "success add to fireBase");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "faild add to fireBase", e);
-                            }
-                        });
                 onBackPressed();
             }
         });
@@ -132,6 +111,7 @@ public class HabitEventActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(HabitEventActivity.this, EditHabitEventActivity.class);
                 Bundle extras = new Bundle();
+                extras.putString("id", id);
                 extras.putString("location", location);
                 extras.putString("comment", comment);
                 intent.putExtras(extras);
@@ -206,6 +186,7 @@ public class HabitEventActivity extends AppCompatActivity {
         return false;
 
     }
+
 
 
 

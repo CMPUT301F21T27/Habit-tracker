@@ -74,7 +74,8 @@ public class AccountActivity extends AppCompatActivity {
                 if (value != null && value.exists()){
                     String userPhone = value.getData().get("phone").toString();
                     String userName = value.getData().get("userName").toString();
-                    requestedListString = value.get("requestedList").toString();
+                    //requestedListString = value.get("requestedList").toString();
+                    //java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String java.lang.Object.toString()' on a null object reference
                     username.setText(userName);
                     phone.setText(userPhone);
                 }else{
