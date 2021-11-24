@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/title_main_Text"
         android:ems="10"
+        android:textSize="25sp"
         android:hint="title"
         android:inputType="textPersonName"
         android:maxLength="20"/>
@@ -28,6 +29,7 @@
         android:layout_height="match_parent"
         android:id="@+id/reason_main_Text"
         android:ems="10"
+        android:textSize="20sp"
         android:hint="reason"
         android:inputType="textPersonName"
         android:maxLength="30"/>
@@ -35,6 +37,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="15sp"
         android:text="Days of a week habit occur"></TextView>
 
 
