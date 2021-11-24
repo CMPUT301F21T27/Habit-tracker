@@ -11,13 +11,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-
-import android.widget.Switch;
 
 import android.widget.ImageView;
 
@@ -27,7 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -52,7 +48,7 @@ public class AddHabitFragment extends DialogFragment {
     private CheckBox sundayCheck;
     private  Button habitEventListButton;
 
-    private Switch pubSwitch;
+    private CheckBox pubSwitch;
 
     private int year;
     private int month;
@@ -118,7 +114,7 @@ public class AddHabitFragment extends DialogFragment {
         fridayCheck=view.findViewById(R.id.friday_check);
         saturdayCheck=view.findViewById(R.id.saturday_check);
         sundayCheck=view.findViewById(R.id.sunday_check);
-        pubSwitch=view.findViewById(R.id.switch1);
+        pubSwitch=view.findViewById(R.id.pub_check);
         /** User is editing an exist habit, then the editText will show the information of the previous habit **/
         if (habit_selected != null) {
             title.setText(habit_selected.getTitle());

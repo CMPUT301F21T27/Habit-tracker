@@ -43,6 +43,8 @@
         import java.util.Arrays;
         import java.util.Calendar;
         import java.util.Collection;
+        import java.util.Collections;
+        import java.util.Comparator;
         import java.util.Date;
         import java.util.HashMap;
         import java.util.List;
@@ -104,6 +106,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
     ArrayAdapter<Habit> habitArrayAdapter;
     ArrayList<Habit> habitDataList;
     Button today;
+    Button reorder;
 
     /**
      * The main process of MyActivity class.
@@ -133,8 +136,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setSelectedItemId(R.id.nav_my);
         bottomNav.setOnItemSelectedListener(navListener);
-
-
+        reorder=(Button)findViewById(R.id.reorder_button);
         habitList=(ListView) findViewById(R.id.habit_list);
         /**prefill habit for testing */
         // String year ="2021";
@@ -212,7 +214,19 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         habitArrayAdapter = new Content(this,habitDataList);
         habitList.setAdapter(habitArrayAdapter);
 
-
+        reorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Comparator<Habit> compareByTitle = new Comparator<Habit>() {
+                    @Override
+                    public int compare(Habit o1, Habit o2) {
+                        return o1.getTitle().compareTo(o2.getTitle());
+                    }
+                };
+                Collections.sort(habitDataList,compareByTitle);
+                habitList.setAdapter(habitArrayAdapter);
+            }
+        });
         final FloatingActionButton addHabitButton = findViewById(R.id.add_habit_button);
         addHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
