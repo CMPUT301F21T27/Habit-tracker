@@ -34,6 +34,7 @@ public class ViewMainList extends DialogFragment {
     private TextView date_start;
 
     private TextView reason;
+    private TextView ownerEmail;
 
     private Habit habit_selected;
 
@@ -72,6 +73,8 @@ public class ViewMainList extends DialogFragment {
         fridayCheck = view.findViewById(R.id.friday_check_main);
         saturdayCheck = view.findViewById(R.id.saturday_check_main);
         sundayCheck = view.findViewById(R.id.sunday_check_main);
+        ownerEmail = view.findViewById(R.id.ownerEmail);
+
 
 
         title.setText(habit_selected.getTitle());
@@ -86,17 +89,6 @@ public class ViewMainList extends DialogFragment {
         sundayCheck.setChecked(habit_selected.getSunday());
         addEventButton= view.findViewById(R.id.add_event_button);
 
-
-
-
-
-
-
-
-
-        //CODE FOR FUNCTIONALITY OF FOLLOW BUTTON
-        //SHOULD WORK AFTER COMPLETE IMPLEMENTATION OF HOME PAGE
-        /*
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -110,21 +102,23 @@ public class ViewMainList extends DialogFragment {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (value != null && value.exists()){
-                    habitOwnerEmail = (String)value.getData().get("OwnerEmail");
+                    habitOwnerEmail = value.getData().get("OwnerEmail").toString();
                 }
             }
         });
 
-        habitOwnerDocRef = db.collection("User").document(habitOwnerEmail);
+        ownerEmail.setText("Request sent to: "+habitOwnerEmail);
 
-        followButton = view.findViewById(R.id.follow_main_button);
+        followButton = view.findViewById(R.id.button);
         followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                habitOwnerDocRef.update("followingList", FieldValue.arrayUnion(userEmail));
+                habitOwnerDocRef = db.collection("User").document(habitOwnerEmail);
+                habitOwnerDocRef.update("requestedList", FieldValue.arrayUnion(userEmail));
+                ownerEmail.setText("Request sent to: "+habitOwnerEmail);
+                ownerEmail.setVisibility(v.VISIBLE);
             }
         });
-*/
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder

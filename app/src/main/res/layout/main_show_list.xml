@@ -110,8 +110,15 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Withdraw" />
+        android:text="Follow Owner"
+        />
 
+    <TextView
+        android:id="@+id/ownerEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:visibility="invisible" />
 
 
 </LinearLayout>
