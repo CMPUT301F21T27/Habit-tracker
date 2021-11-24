@@ -55,7 +55,6 @@
         <activity android:name=".HabitEventActivity"></activity>
         <activity android:name=".EditHabitEventActivity"></activity>
         <activity android:name=".AddHabitEventActivity"></activity>
-        <activity android:name=".HabitEventListtActivity"></activity>
 
 
         <activity

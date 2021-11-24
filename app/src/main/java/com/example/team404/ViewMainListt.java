@@ -68,9 +68,10 @@ public class ViewMainListt extends DialogFragment {
         addEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), HabitEventListtActivity.class);
+                Intent intent = new Intent(getActivity(), HabitEventListActivity.class);
                 String current_habit_id= habit_selected.getId();
                 intent.putExtra("current_habit_id", current_habit_id);
+                intent.putExtra("Today", "today");
                 startActivity(intent);
 
             }

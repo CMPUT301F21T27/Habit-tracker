@@ -152,11 +152,10 @@ public class AddHabitFragment extends DialogFragment {
             };
             habitEventListButton = view.findViewById(R.id.habit_event_list_button);
             habitEventListButton.setOnClickListener(v -> {
-                String today="today";
                 Intent intent = new Intent(getActivity(), HabitEventListActivity.class);
                 String current_habit_id= habit_selected.getId();
                 intent.putExtra("current_habit_id", current_habit_id);
-                intent.putExtra("Today", today );
+                intent.putExtra("Today", "Not today");
 
                 startActivity(intent);
             });

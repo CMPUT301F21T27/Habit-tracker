@@ -50,7 +50,6 @@ public class HabitEventListActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        //addImage = findViewById(R.id.addImage);
         final FirebaseFirestore db;
         setContentView(R.layout.activity_habit_event_list);
         habitEventList=(ListView) findViewById(R.id.habit_event_list);
@@ -61,9 +60,10 @@ public class HabitEventListActivity extends AppCompatActivity {
         Intent current_habit_intent = getIntent();
         current_habit_id = current_habit_intent.getStringExtra("current_habit_id");
         today =current_habit_intent.getStringExtra("Today");
-        /*if (today.equals("today")){
-            addImage.setVisibility(ImageView.GONE);
-        }*/
+        ImageView addImage = findViewById(R.id.addImage);
+        addImage.setVisibility(today.equals("today")? ImageView.VISIBLE: ImageView.INVISIBLE );
+
+
         db = FirebaseFirestore.getInstance();
         DocumentReference habitDoc = FirebaseFirestore.getInstance().collection("Habit").document(current_habit_id);
 
@@ -193,6 +193,17 @@ public class HabitEventListActivity extends AppCompatActivity {
         });
 
 
+        addImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HabitEventListActivity.this, AddHabitEventActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("habitId", current_habit_id);
+
+                intent.putExtras(extras);
+                startActivityForResult(intent, 000);
+            }
+        });
     }
     //https://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android
     // author: Suragch (answered) GabrielBB(edited)
