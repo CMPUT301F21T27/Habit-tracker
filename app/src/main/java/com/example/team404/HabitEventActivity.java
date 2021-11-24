@@ -183,12 +183,15 @@ public class HabitEventActivity extends AppCompatActivity {
             // Get String data from Intent
             String locationString = data.getStringExtra("locationString");
             String commentString = data.getStringExtra("commentString");
+            String storageUrlString = data.getStringExtra("uri");
 
             // Set text view with string
             TextView textView = (TextView) findViewById(R.id.locationTextView);
             textView.setText(locationString);
             TextView textView1 = (TextView) findViewById(R.id.comment_textView);
             textView1.setText(commentString);
+            Uri storageURL = Uri.parse(storageUrlString);
+            Glide.with(getApplicationContext()).load(storageURL).into(imageView);
         }
     }
     //initial location image button
