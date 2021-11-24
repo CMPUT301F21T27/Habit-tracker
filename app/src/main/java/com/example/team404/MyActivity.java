@@ -313,6 +313,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         h.put("Day",newHabit.getDay());
         h.put("Month",newHabit.getMonth());
         h.put("OwnerReference",userDoc);
+        h.put("OwnerEmail", userEmail);
         h.put("Reason",newHabit.getReason());
         h.put("Title",newHabit.getTitle());
         h.put("Year",newHabit.getYear());

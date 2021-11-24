@@ -18,6 +18,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
 import java.util.Date;
 
 public class ViewMainList extends DialogFragment {
@@ -37,7 +46,13 @@ public class ViewMainList extends DialogFragment {
     private CheckBox sundayCheck;
     private Button addEventButton;
 
-
+    private Button followButton;
+    private FirebaseFirestore db;
+    private DocumentReference habitDocRef;
+    private DocumentReference habitOwnerDocRef;
+    private DocumentReference userDocRef;
+    private String habitOwnerEmail;
+    private String test;
 
 
     public ViewMainList(Habit habit_selected) {
@@ -77,6 +92,39 @@ public class ViewMainList extends DialogFragment {
 
 
 
+
+
+        //CODE FOR FUNCTIONALITY OF FOLLOW BUTTON
+        //SHOULD WORK AFTER COMPLETE IMPLEMENTATION OF HOME PAGE
+        /*
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userEmail = user.getEmail();
+        String habitId = habit_selected.getId();
+        db= FirebaseFirestore.getInstance();
+        userDocRef = db.collection("User").document(userEmail);
+        habitDocRef = db.collection("Habit").document(habitId);
+
+        habitDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()){
+                    habitOwnerEmail = (String)value.getData().get("OwnerEmail");
+                }
+            }
+        });
+
+        habitOwnerDocRef = db.collection("User").document(habitOwnerEmail);
+
+        followButton = view.findViewById(R.id.follow_main_button);
+        followButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                habitOwnerDocRef.update("followingList", FieldValue.arrayUnion(userEmail));
+            }
+        });
+*/
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
