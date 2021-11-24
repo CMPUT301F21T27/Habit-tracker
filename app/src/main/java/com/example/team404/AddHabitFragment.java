@@ -18,6 +18,7 @@ import android.widget.EditText;
 
 import android.widget.ImageView;
 
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,9 +47,9 @@ public class AddHabitFragment extends DialogFragment {
     private CheckBox fridayCheck;
     private CheckBox saturdayCheck;
     private CheckBox sundayCheck;
-    private  Button habitEventListButton;
+    private Button habitEventListButton;
 
-    private CheckBox pubSwitch;
+    private Switch pubSwitch;
 
     private int year;
     private int month;
@@ -114,7 +115,7 @@ public class AddHabitFragment extends DialogFragment {
         fridayCheck=view.findViewById(R.id.friday_check);
         saturdayCheck=view.findViewById(R.id.saturday_check);
         sundayCheck=view.findViewById(R.id.sunday_check);
-        pubSwitch=view.findViewById(R.id.pub_check);
+        pubSwitch=view.findViewById(R.id.pub_switch);
         /** User is editing an exist habit, then the editText will show the information of the previous habit **/
         if (habit_selected != null) {
             title.setText(habit_selected.getTitle());

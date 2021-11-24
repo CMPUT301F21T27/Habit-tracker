@@ -99,8 +99,8 @@
         android:layout_height="wrap_content"
         android:text="habit event" />
 
-    <CheckBox
-        android:id="@+id/pub_check"
+    <Switch
+        android:id="@+id/pub_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="public" />
