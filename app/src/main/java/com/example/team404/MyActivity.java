@@ -163,7 +163,12 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                 String year = document.getData().get("Year").toString();
                                 String month = document.getData().get("Month").toString();
                                 String day = document.getData().get("Day").toString();
+                                String pub = document.getData().get("Public").toString();
+
                                 Habit habit = new Habit(id,title,reason,year,month,day);
+                                if (pub == "True"){
+                                    habit.setPub(true);
+                                }
 
 
                                 String plan = document.getData().get("Plan").toString();
@@ -319,6 +324,12 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         h.put("Year",newHabit.getYear());
         h.put("id",newHabit.getId());
         String day = "";
+        String pub = "";
+        if(newHabit.getPub()){
+            pub="True";
+        }
+        else pub="False";
+        h.put("Public",pub);
         if(newHabit.getMonday()){
             day=day+"Monday";
         }
@@ -374,6 +385,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
             habitDataList.get(index).setFriday(newHabit.getFriday());
             habitDataList.get(index).setSaturday(newHabit.getSaturday());
             habitDataList.get(index).setSunday(newHabit.getSunday());
+            habitDataList.get(index).setPub(newHabit.getPub());
 
             if((Integer.valueOf(newHabit.getMonth())>0)){
                 habitDataList.get(index).setYear(newHabit.getYear());

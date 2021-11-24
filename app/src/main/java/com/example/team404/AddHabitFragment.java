@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,8 @@ public class AddHabitFragment extends DialogFragment {
     private CheckBox saturdayCheck;
     private CheckBox sundayCheck;
     private  Button habitEventListButton;
+
+    private Switch pubSwitch;
 
     private int year;
     private int month;
@@ -111,10 +114,10 @@ public class AddHabitFragment extends DialogFragment {
         fridayCheck=view.findViewById(R.id.friday_check);
         saturdayCheck=view.findViewById(R.id.saturday_check);
         sundayCheck=view.findViewById(R.id.sunday_check);
+        pubSwitch=view.findViewById(R.id.switch1);
         /** User is editing an exist habit, then the editText will show the information of the previous habit **/
         if (habit_selected != null) {
             title.setText(habit_selected.getTitle());
-
             date_start.setText(habit_selected.getYear() +"-"+habit_selected.getMonth()+"-"+habit_selected.getDay());
             reason.setText(habit_selected.getReason());
             mondayCheck.setChecked(habit_selected.getMonday());
@@ -124,6 +127,7 @@ public class AddHabitFragment extends DialogFragment {
             fridayCheck.setChecked(habit_selected.getFriday());
             saturdayCheck.setChecked(habit_selected.getSaturday());
             sundayCheck.setChecked(habit_selected.getSunday());
+            pubSwitch.setChecked(habit_selected.getPub());
             }
             date_start.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -176,12 +180,22 @@ public class AddHabitFragment extends DialogFragment {
                     .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+
                             Date date= new Date();
                             String habit_id = String.valueOf(date);
                             String habit_title = title.getText().toString();
-                            String habit_year =  Integer.toString(year);
-                            String habit_month =  Integer.toString(month);
-                            String habit_day =  Integer.toString(day);
+                            String habit_year;
+                            String habit_month;
+                            String habit_day;
+                            if (habit_selected!=null && (day==0|| day==00)){
+                                habit_year=habit_selected.getYear();
+                                habit_month=habit_selected.getMonth();
+                                habit_day=habit_selected.getDay();
+                            }else {
+                                habit_year = Integer.toString(year);
+                                habit_month = Integer.toString(month);
+                                habit_day = Integer.toString(day);
+                            }
                             String habit_reason = reason.getText().toString();
                             Habit habit = new Habit(habit_id, habit_title, habit_reason, habit_year,habit_month,habit_day);
 
@@ -192,6 +206,7 @@ public class AddHabitFragment extends DialogFragment {
                             habit.setFriday(fridayCheck.isChecked());
                             habit.setSaturday(saturdayCheck.isChecked());
                             habit.setSunday(sundayCheck.isChecked());
+                            habit.setPub(pubSwitch.isChecked());
 
 
                             listener.OnOKPressed(habit, habit_selected);

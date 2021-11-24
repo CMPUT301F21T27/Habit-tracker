@@ -56,47 +56,51 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
         habitDataList=new ArrayList<>();
         habitArrayAdapter = new Content(this,habitDataList);
         db.collection("Habit")
-                .whereEqualTo("OwnerReference",userDoc)
+                .whereEqualTo("Public","True")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                String id =  document.getData().get("id").toString();
-                                String title = document.getData().get("Title").toString();
-                                String reason = document.getData().get("Reason").toString();
-                                String year = document.getData().get("Year").toString();
-                                String month = document.getData().get("Month").toString();
-                                String day = document.getData().get("Day").toString();
-                                Habit habit = new Habit(id,title,reason,year,month,day);
 
 
-                                String plan = document.getData().get("Plan").toString();
-                                if (plan.contains("Monday")){
-                                    habit.setMonday(true);
-                                }
-                                if (plan.contains("Tuesday")){
-                                    habit.setTuesday(true);
-                                }
-                                if (plan.contains("Wednesday")){
-                                    habit.setWednesday(true);
-                                }
-                                if(plan.contains("Thursday")){
-                                    habit.setThursday(true);
-                                }
-                                if(plan.contains("Friday")){
-                                    habit.setFriday(true);
-                                }
-                                if(plan.contains("Saturday")){
-                                    habit.setSaturday(true);
-                                }
-                                if(plan.contains("Sunday")){
-                                    habit.setSunday(true);
-                                }
+                                    String id = document.getData().get("id").toString();
+                                    String title = document.getData().get("Title").toString();
+                                    String reason = document.getData().get("Reason").toString();
+                                    String year = document.getData().get("Year").toString();
+                                    String month = document.getData().get("Month").toString();
+                                    String day = document.getData().get("Day").toString();
 
-                                habitDataList.add(habit);
-                                habitList.setAdapter(habitArrayAdapter);
+                                    Habit habit = new Habit(id, title, reason, year, month, day);
+                                    habit.setPub(true);
+
+                                    String plan = document.getData().get("Plan").toString();
+                                    if (plan.contains("Monday")) {
+                                        habit.setMonday(true);
+                                    }
+                                    if (plan.contains("Tuesday")) {
+                                        habit.setTuesday(true);
+                                    }
+                                    if (plan.contains("Wednesday")) {
+                                        habit.setWednesday(true);
+                                    }
+                                    if (plan.contains("Thursday")) {
+                                        habit.setThursday(true);
+                                    }
+                                    if (plan.contains("Friday")) {
+                                        habit.setFriday(true);
+                                    }
+                                    if (plan.contains("Saturday")) {
+                                        habit.setSaturday(true);
+                                    }
+                                    if (plan.contains("Sunday")) {
+                                        habit.setSunday(true);
+                                    }
+
+                                    habitDataList.add(habit);
+                                    habitList.setAdapter(habitArrayAdapter);
+
 
 
 

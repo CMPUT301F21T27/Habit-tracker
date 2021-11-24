@@ -20,12 +20,14 @@ public class Habit implements java.io.Serializable {
     private Boolean saturday;
     private Boolean sunday;
 
+    private Boolean pub;
 
 
 
 
 
-    Habit(String id, String t, String r,String year, String month, String day){
+
+    Habit(String id, String t, String r,String year, String month, String day) {
         setId(id);
         setTitle(t);
         setReason(r);
@@ -34,16 +36,14 @@ public class Habit implements java.io.Serializable {
         setYear(year);
         setMonth(month);
         setDay(day);
-        monday=false;
-        tuesday=false;
-        wednesday=false;
-        thursday=false;
-        friday=false;
-        saturday=false;
-        sunday=false;
-
-
-
+        monday = false;
+        tuesday = false;
+        wednesday = false;
+        thursday = false;
+        friday = false;
+        saturday = false;
+        sunday = false;
+        pub = false;
 
 
     }
@@ -114,7 +114,9 @@ public class Habit implements java.io.Serializable {
     public void setId(String i) {
         this.id=i;
     }
-
+    public void setPub(boolean p){
+        this.pub=p;
+    }
 
     /**
      * Sets habit title with a character limit of 20
@@ -196,7 +198,7 @@ public class Habit implements java.io.Serializable {
      */
 
 
-
+    public Boolean getPub(){return pub;}
 
     public String getDay(){return day;}
     /**
