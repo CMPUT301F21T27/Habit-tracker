@@ -63,6 +63,12 @@ public class ViewMainListt extends DialogFragment {
         fridayCheck.setChecked(habit_selected.getFriday());
         saturdayCheck.setChecked(habit_selected.getSaturday());
         sundayCheck.setChecked(habit_selected.getSunday());
+
+
+
+
+
+
         addEventButton= view.findViewById(R.id.add_event_button);
 
         addEventButton.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +78,7 @@ public class ViewMainListt extends DialogFragment {
                 String current_habit_id= habit_selected.getId();
                 intent.putExtra("current_habit_id", current_habit_id);
                 intent.putExtra("Today", "today");
+
                 startActivity(intent);
 
             }

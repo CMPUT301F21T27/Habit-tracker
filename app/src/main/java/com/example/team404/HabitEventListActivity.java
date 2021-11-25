@@ -20,16 +20,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class HabitEventListActivity extends AppCompatActivity {
     ListView habitEventList;
@@ -42,6 +49,8 @@ public class HabitEventListActivity extends AppCompatActivity {
     private  String today;
     private String Cloud_location;
     private String Cloud_comment;
+    private  String Cloud_photo;
+    private String currentUri;
     //--------------------------------------------------------------------//
     //I will do later after add firesbase database.
     // Once I get habit id and I will create habit event Id, I can pass all varable to the another activty after firebase
@@ -84,25 +93,41 @@ public class HabitEventListActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot doc : value) {
                             if ( doc.get("Location") == null){
                                 Cloud_location = "No location provide";
+                            }else{
+                                Cloud_location = String.valueOf(doc.getData().get("Location"));
                             }
-                            //if ( doc.get("Photo") == null){
-                            //    Cloud_location = "No photo provide";
-                            //}
                             if ( doc.get("Comment") == null){
                                 Cloud_comment = "No comment provide";
+                            }else{
+                                Cloud_comment = String.valueOf(doc.getData().get("Comment"));
                             }
-                            Log.d(TAG, "Current habit eventuuuuuu: " + String.valueOf(doc.getData().get("OwnerReference")));
+                            if ( doc.get("Uri") == null){
+                                Cloud_comment = "No photo provide";
+                            }else{
+                                Cloud_photo = String.valueOf(doc.getData().get("Uri"));
+                            }
+
 
                             String id = doc.getId();
-                            Cloud_location = String.valueOf(doc.getData().get("Location"));
-                            Cloud_comment = String.valueOf(doc.getData().get("Comment"));
                             String date = String.valueOf(doc.getData().get("Date"));
+                            habitEventDataList.add(new HabitEvent(id,  Cloud_photo, Cloud_location, Cloud_comment, date));
+                            /*
+                            if (habitEventDataList.size()==0){
+                                addImage.setVisibility(ImageView.VISIBLE);
+                            }else{
+                                System.out.println("--------1111-----------2222--------"+habitEventDataList.size());
+                                String valid_until = habitEventDataList.get(habitEventDataList.size()-1).getId();
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                Date strDate = null;
+                                try {
+                                    strDate = sdf.parse(valid_until);
+                                } catch (ParseException pe) {
+                                    pe.printStackTrace();
+                                }
+                                addImage.setVisibility(new Date().after(strDate)?ImageView.VISIBLE :ImageView.INVISIBLE );
+                            }
 
-
-                            habitEventDataList.add(new HabitEvent(id, Cloud_location, Cloud_comment, date));
-                            Log.d(TAG, "Current habit event44: " + habitEventDataList.size());
-                            //habitEventList.setAdapter(habitEventArrayAdapter);
-                            Log.d(TAG, "Current habit eventuurty6y6y6uuuu: " + habitEventDataList.size());
+                             */
 
 
                         }
@@ -110,17 +135,15 @@ public class HabitEventListActivity extends AppCompatActivity {
                         Log.d(TAG, "Current habit event: " + habitDoc);
                     }
                 });
-
-
-
-
+        System.out.println("--------1111--------------------"+habitEventDataList.size());
+        //System.out.println("--------1111--------------------"+habitEventDataList.get(-1));
 
 
 
         //-------------
         //habitEventArrayAdapter = new HabitEventContent(this,habitEventDataList);
         //habitEventList.setAdapter(habitEventArrayAdapter);
-
+        //String currentUri =Cloud_photo;
         habitEventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -130,15 +153,20 @@ public class HabitEventListActivity extends AppCompatActivity {
                 String comment = currentHabitevent.getComments();
                 String id = currentHabitevent.getId();
                 String date = currentHabitevent.getDate();
+                String uri =  currentHabitevent.getUri();
+                System.out.println("--------1111--------------------"+uri);
+
                 Intent intent = new Intent(HabitEventListActivity.this, HabitEventActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString("id", id);
                 extras.putString("location", location);
                 extras.putString("date", date);
+                extras.putString("Uri",uri);
                 extras.putString("comment", comment);
                 intent.putExtras(extras);
+                System.out.println("---------2222-------------------"+uri+"---------");
 
-                startActivityForResult(intent, 111);
+                startActivity(intent);
             }
         });
         habitEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -184,6 +212,7 @@ public class HabitEventListActivity extends AppCompatActivity {
         habitEventArrayAdapter = new HabitEventContent(this,habitEventDataList);
         habitEventList.setAdapter(habitEventArrayAdapter);
 
+        //addImage.setVisibility(today.equals("today")? ImageView.VISIBLE: ImageView.INVISIBLE );
         backImage = findViewById(R.id.backImage);
         backImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,60 +233,5 @@ public class HabitEventListActivity extends AppCompatActivity {
             }
         });
     }
-    //https://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android
-    // author: Suragch (answered) GabrielBB(edited)
-    //date: 11-5-2021; 12-13-2021
-    // protected void onActivityResult(int requestCode, int resultCode, Intent data) is created by Suragch
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-
-        if (requestCode == 000) {
-            // Get String data from Intent
-            String returnId = data.getStringExtra("addId");
-            String returnString = data.getStringExtra("addTitle");
-            String returnDate = data.getStringExtra("addDate");
-            String returnComment = data.getStringExtra("addComment");
-            if (returnString.length()!=0 || returnComment.length()!=0){
-                HabitEvent newhabitEvent = new HabitEvent(returnId, returnString ,returnComment, returnDate);
-                //habitEventDataList.add(newhabitEvent);
-                //habitEventArrayAdapter = new HabitEventContent(this,habitEventDataList);
-                //habitEventList.setAdapter(habitEventArrayAdapter);
-                //habitEventArrayAdapter.notifyDataSetChanged();
-            }else if (returnString.length()==0 && returnComment.length()==0){
-                Toast.makeText(this, "please add comment/location", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-
-
-        }
-        if (requestCode == 111) {
-
-            // Get String data from Intent
-            String returnId = data.getStringExtra("editId");
-            String returnString = data.getStringExtra("editTitle");
-            String returnDate = data.getStringExtra("editDate");
-            String returnComment = data.getStringExtra("editComment");
-
-            if (returnString.length()!=0 || returnComment.length()!=0){
-                HabitEvent newhabitEvent = new HabitEvent(returnId, returnString ,returnComment, returnDate);
-                //habitEventDataList.remove(position);
-
-                //habitEventDataList.set(position, newhabitEvent );
-                //habitEventList.setAdapter(habitEventArrayAdapter);
-                //habitEventArrayAdapter.notifyDataSetChanged();
-            }else if (returnString.length()==0 && returnComment.length()==0){
-                Toast.makeText(this, "please add comment/location", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-
-
-        }
-    }
-
-     */
 }

@@ -179,61 +179,90 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                 extras.putString("addComment", current_comment);
                 intent.putExtras(extras);
                 setResult(000, intent);
+                if (image_uri!=null) {
 
+                    eventsHabbitRef.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            eventsHabbitRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    System.out.println("-----------------> Get photo url success! URL: " + uri.toString());
+                                    uri_string = uri.toString();
+                                    Map<String, Object> event = new HashMap<>();
+                                    event.put("Id", habit_event_id);
+                                    event.put("Location", current_location);
+                                    event.put("Comment", current_comment);
+                                    event.put("Date", date_);
+                                    event.put("OwnerReference", habitDoc);
+                                    event.put("url", image_uri.toString());
+                                    event.put("Uri", uri_string);
+                                    final FirebaseFirestore db;
+                                    db = FirebaseFirestore.getInstance();
+                                    db.collection("Habit Event List").document(habit_event_id)
+                                            .set(event)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    Log.w(TAG, "success add to fireBase");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, "faild add to fireBase", e);
+                                                }
+                                            });
+                                    // shift back to list activity
+                                    //Intent intentReturn = new Intent(getApplicationContext(), HabitEventListActivity.class); // Return to the habit event list page
+                                    //intentReturn.putExtra("uri", uri.toString());
+                                    AddHabitEventActivity.this.finish(); // finish current activity
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    System.out.println("Get photo url failed!");
 
-                eventsHabbitRef.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        eventsHabbitRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                System.out.println("-----------------> Get photo url success! URL: " + uri.toString());
-                                uri_string=uri.toString();
-                                Map<String,Object> event = new HashMap<>();
-                                event.put("Location", current_location);
-                                event.put("Comment", current_comment);
-                                event.put("Date", date_);
-                                event.put("OwnerReference", habitDoc);
-                                event.put("url", image_uri.toString());
-                                event.put("Uri", uri_string);
-                                final FirebaseFirestore db;
-                                db=FirebaseFirestore.getInstance();
-                                db.collection("Habit Event List").document(habit_event_id)
-                                        .set(event)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void unused) {
-                                                Log.w(TAG, "success add to fireBase");
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.w(TAG, "faild add to fireBase", e);
-                                            }
-                                        });
-                                // shift back to list activity
-                                //Intent intentReturn = new Intent(getApplicationContext(), HabitEventListActivity.class); // Return to the habit event list page
-                                //intentReturn.putExtra("uri", uri.toString());
-                                AddHabitEventActivity.this.finish(); // finish current activity
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                System.out.println("Get photo url failed!");
+                                }
+                            });
 
-                            }
-                        });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            System.out.println("upload photo failed!");
 
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        System.out.println("upload photo failed!");
-
-                    }
-                });
-
+                        }
+                    });
+                }else{
+                    Map<String, Object> event = new HashMap<>();
+                    event.put("Location", current_location);
+                    event.put("Comment", current_comment);
+                    event.put("Date", date_);
+                    event.put("OwnerReference", habitDoc);
+                    event.put("url","");
+                    event.put("Uri", "");
+                    final FirebaseFirestore db;
+                    db = FirebaseFirestore.getInstance();
+                    db.collection("Habit Event List").document(habit_event_id)
+                            .set(event)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.w(TAG, "success add to fireBase");
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "faild add to fireBase", e);
+                                }
+                            });
+                    // shift back to list activity
+                    //Intent intentReturn = new Intent(getApplicationContext(), HabitEventListActivity.class); // Return to the habit event list page
+                    //intentReturn.putExtra("uri", uri.toString());
+                    AddHabitEventActivity.this.finish(); // finish current activity
+                }
 
 
                 onBackPressed();

@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/data_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="2021-12-12"

@@ -117,6 +117,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         android:src="@drawable/ic_baseline_add_a_photo_24"/>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"

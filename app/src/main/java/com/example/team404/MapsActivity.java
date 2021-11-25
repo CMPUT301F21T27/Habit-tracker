@@ -306,7 +306,7 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
     }
 
 
-    // press check image button to to back last activty
+    // press check image button to back last activty
     // save information
 
     public  void buttonOnClick(){

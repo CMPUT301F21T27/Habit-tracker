@@ -1,6 +1,8 @@
 package com.example.team404;
 
 
+import static android.content.ContentValues.TAG;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,6 +36,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -60,15 +64,18 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
     private TextView locationTextView;
     private String back_comment;
     private String back_location;
+    private  String back_storageUrlString;
     private String habit_event_id;
     int position;
     Uri image_uri;
     String uri_string;
-
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser user = mAuth.getCurrentUser();
+    String userEmail = user.getEmail();
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
-    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-    StorageReference eventsHabbitRef = storageRef.child(timeStamp+".png");
+    String timeStamp = new SimpleDateFormat("WW-yyyy-MM-dd-hh-mm-ss").format(new Date());
+    StorageReference eventsHabbitRef = storageRef.child("/image/"+userEmail+timeStamp+".png");
 
 
     private TextView locationvIEW;
@@ -81,55 +88,29 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_habit_event);
+
         Bundle extras = getIntent().getExtras();
         habit_event_id = extras.getString("id");
         back_location = extras.getString("location");
         back_comment = extras.getString("comment");
+        back_storageUrlString = extras.getString("storageUrlString");
 
         commentTextView= findViewById(R.id.comment_textView);
         locationTextView = findViewById(R.id.location_textView);
+        imageView=findViewById(R.id.imageView);
         saveImage=findViewById(R.id.saveImage);
+
         commentTextView.setText(back_comment);
         locationTextView.setText(back_location);
+        System.out.println("---------------------------- Image file path is null!"+back_storageUrlString);
+        if (back_storageUrlString!=null){
+            Uri storageURL = Uri.parse(back_storageUrlString);
+            Glide.with(getApplicationContext()).load(storageURL).into(imageView);
+            System.out.println("---------------------------- Image file path is null!"+storageURL);
+        }
+
         DocumentReference habitEventDoc = FirebaseFirestore.getInstance().collection("Habit Event List").document(habit_event_id);
         System.out.println("---------------------------- Image file path is null!"+habitEventDoc);
-        String date = extras.getString("date");
-        String location = extras.getString("location");
-        String comment = extras.getString("comment");
-        commentTextView.setText(comment);
-        locationTextView.setText(location);
-        habitEventDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        String storageUrlString = document.getString("Uri");
-
-                        if (storageUrlString != null) {
-                            Uri storageURL = Uri.parse(storageUrlString);
-                            Glide.with(getApplicationContext()).load(storageURL).into(imageView);
-
-
-                            System.out.println("uri is: " + storageURL.toString());
-
-                        }
-                        else{
-                            System.out.println(" Image file is null!");
-                        }
-
-
-
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "Failed with ", task.getException());
-                }
-            }
-        });
-
 
         commentTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,11 +173,12 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
                 Intent intent = new Intent();
                 Bundle extras = new Bundle();
-                extras.putString("locationString", location_);
-
-                extras.putString("commentString", comment_);
+                extras.putString("location", location_);
+                extras.putString("comment", comment_);
+                extras.putString("storageUrlString",back_storageUrlString);
                 intent.putExtras(extras);
                 setResult(333, intent);
+                finish();
                 onBackPressed();
             }
         });
@@ -206,39 +188,31 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
                 String location_ = locationTextView.getText().toString();
                 String comment_ = commentTextView.getText().toString();
-                Intent intent = new Intent();
-                Bundle extras = new Bundle();
-                extras.putString("locationString", location_);
+                System.out.println("-------------------rfrf--------- Image file path is null!"+image_uri);
 
-                extras.putString("commentString", comment_);
-                intent.putExtras(extras);
-                setResult(333, intent);
-
+                if (location_==null){
+                    location_="No address record";
+                }
+                if(comment_==null){
+                    comment_="No comment record";
+                }
+                System.out.println("-----------------00000----- "+comment_+location_);
                 if (image_uri!=null) {
-
-
+                    String finalLocation_ = location_;
+                    String finalComment_ = comment_;
+                    System.out.println("-----------------00000----- "+comment_+location_+image_uri.toString());
                     eventsHabbitRef.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             eventsHabbitRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    System.out.println("-----------------> Get photo url success! URL: " + uri.toString());
-                                    uri_string = uri.toString();
-                                /*
-                                Map<String,Object> event = new HashMap<>();
-                                event.put("Location", current_location);
-                                event.put("Comment", current_comment);
-                                event.put("Date", date_);
-                                event.put("OwnerReference", habitDoc);
-                                event.put("url", image_uri.toString());
-                                event.put("Uri", uri_string);
-
-                                 */
+                                    System.out.println(" Get photo url success! URL: " + uri.toString());
+                                    back_storageUrlString = uri.toString();
                                     final FirebaseFirestore db;
                                     db = FirebaseFirestore.getInstance();
                                     db.collection("Habit Event List").document(habit_event_id)
-                                            .update("Location", location_, "Comment", comment_, "Uri", uri_string)
+                                            .update("Location", finalLocation_, "Comment", finalComment_, "Uri", back_storageUrlString)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
@@ -251,9 +225,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                                                     Log.w(TAG, "faild add to fireBase", e);
                                                 }
                                             });
-                                    // shift back to list activity
-                                    //Intent intentReturn = new Intent(getApplicationContext(), HabitEventListActivity.class); // Return to the habit event list page
-                                    //intentReturn.putExtra("uri", uri.toString());
+
                                     EditHabitEventActivity.this.finish(); // finish current activity
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
@@ -272,11 +244,50 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
                         }
                     });
+                    Intent intent = new Intent();
+                    Bundle extras = new Bundle();
+                    extras.putString("location", location_);
+                    extras.putString("comment", comment_);
+                    extras.putString("storageUrlString",back_storageUrlString);
+                    System.out.println("--------------99999--------- "+back_storageUrlString);
+
+                    intent.putExtras(extras);
+                    setResult(333, intent);
+                    finish();
+                    onBackPressed();
+                }else{
+                    if (back_storageUrlString==null){
+                        back_storageUrlString=null;
+                    }
+                    final FirebaseFirestore db;
+                    db = FirebaseFirestore.getInstance();
+                    db.collection("Habit Event List").document(habit_event_id)
+                        .update("Location", location_, "Comment", comment_, "Uri", back_storageUrlString)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.w(TAG, "success add to fireBase");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "faild add to fireBase", e);
+                            }
+                        });
+
+                        Intent intent = new Intent();
+                        Bundle extras = new Bundle();
+                        extras.putString("location", location_);
+                        extras.putString("comment", comment_);
+                        extras.putString("storageUrlString",back_storageUrlString);
+                        System.out.println("------------14444444----"+back_storageUrlString);
+
+                        intent.putExtras(extras);
+                        setResult(333, intent);
+                        finish();
+                        onBackPressed();
                 }
-
-
-
-                onBackPressed();
             }
         });
 
@@ -294,6 +305,49 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                 else {
                     openCamera();
                 }
+            }
+        });
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                final int selected_item = position;
+
+                new AlertDialog.Builder(EditHabitEventActivity.this).
+                        setIcon(android.R.drawable.ic_delete)
+                        .setTitle("Are you sure?")
+                        .setMessage("Do you want to delete this photo?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+
+                                final FirebaseFirestore db;
+                                db = FirebaseFirestore.getInstance();
+                                db.collection("Habit Event List").document(habit_event_id)
+                                        .update("Uri","")
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                imageView.setImageResource(android.R.color.transparent);
+                                                //imageView=findViewById(R.id.imageView);
+                                                //imageView.setVisibility(ImageView.VISIBLE);
+                                                back_storageUrlString=null;
+                                                image_uri=null;
+                                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                                Toast.makeText(getApplicationContext(), "Delete successfully!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error deleting document", e);
+                                            }
+                                        });
+                            }
+                        })
+                        .setNegativeButton("No" , null).show();
+
+                return true;
             }
         });
 
@@ -357,29 +411,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
             }
         }
 
-        if (requestCode == 123) {
-            Bitmap captureImage = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(captureImage);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            byte[] imageData = baos.toByteArray();
-            UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
-//            *****ERROR HANDLEING FOR UPLOADTASK
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                    Toast.makeText(EditHabitEventActivity.this, "Upload Failure", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                    // ...
-                    Toast.makeText(EditHabitEventActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
@@ -464,13 +496,12 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
         Intent intent = new Intent();
         Bundle extras = new Bundle();
-        extras.putString("locationString", location_);
-        extras.putString("uri", uri_string);
-
-        extras.putString("commentString", comment_);
+        extras.putString("location", location_);
+        extras.putString("storageUrlString", back_storageUrlString);
+        extras.putString("comment", comment_);
         intent.putExtras(extras);
         setResult(333, intent);
-
+        finish();
         super.onBackPressed();
     }
 
