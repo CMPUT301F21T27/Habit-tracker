@@ -70,6 +70,7 @@ public class HabitEventListActivity extends AppCompatActivity {
         current_habit_id = current_habit_intent.getStringExtra("current_habit_id");
         today =current_habit_intent.getStringExtra("Today");
         ImageView addImage = findViewById(R.id.addImage);
+
         addImage.setVisibility(today.equals("today")? ImageView.VISIBLE: ImageView.INVISIBLE );
 
 
@@ -116,33 +117,38 @@ public class HabitEventListActivity extends AppCompatActivity {
 
                         }
 
-                            if (habitEventDataList.size()==0){
-                                addImage.setVisibility(ImageView.VISIBLE);
+                            if (habitEventDataList.size()== 0 && today.equals("today") ){
+                                    addImage.setVisibility(ImageView.VISIBLE);
+
                             }else{
-                                System.out.println("--------1111-----------2222--------"+habitEventDataList.size());
+                                if(today.equals("today")) {
 
-                                String valid_until = habitEventDataList.get(habitEventDataList.size()-1).getDate();
-                                System.out.println("--------1111-----------2222--------"+valid_until);
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                                String valid_now= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                                SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd");
-                                System.out.println("--------1111-----------2222--444------"+valid_now);
-                                Date strDate = null;
-                                Date current_Date =null;
 
-                                try {
+                                    System.out.println("--------1111-----------2222--------" + habitEventDataList.size());
 
-                                    strDate = sdf.parse(valid_until);
-                                    current_Date= sdf2.parse(valid_now);
-                                    System.out.println("--------1111-----------2222--------"+strDate);
-                                    System.out.println("--------1111-----------2222--------"+current_Date);
-                                } catch (Exception pe) {
-                                    pe.printStackTrace();
+                                    String valid_until = habitEventDataList.get(habitEventDataList.size() - 1).getDate();
+                                    System.out.println("--------1111-----------2222--------" + valid_until);
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                    String valid_now = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                                    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    System.out.println("--------1111-----------2222--444------" + valid_now);
+                                    Date strDate = null;
+                                    Date current_Date = null;
+
+                                    try {
+
+                                        strDate = sdf.parse(valid_until);
+                                        current_Date = sdf2.parse(valid_now);
+                                        System.out.println("--------1111-----------2222--------" + strDate);
+                                        System.out.println("--------1111-----------2222--------" + current_Date);
+                                    } catch (Exception pe) {
+                                        pe.printStackTrace();
+                                    }
+                                    System.out.println("--------1111-----------2222--------" + strDate);
+                                    System.out.println("--------1111-----------2222--------" + current_Date);
+                                    addImage.setVisibility(current_Date.after(strDate) ? ImageView.VISIBLE : ImageView.INVISIBLE);
+                                    //addImage.setVisibility(current_Date.after(strDate) ? System.out.println("111") ;: System.out.println("222"););
                                 }
-                                System.out.println("--------1111-----------2222--------"+strDate);
-                                System.out.println("--------1111-----------2222--------"+current_Date);
-                                addImage.setVisibility(current_Date.after(strDate)?ImageView.VISIBLE :ImageView.INVISIBLE );
-                                //addImage.setVisibility(current_Date.after(strDate) ? System.out.println("111") ;: System.out.println("222"););
                             }
 
 
