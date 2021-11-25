@@ -174,7 +174,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                 String habit_event_id = String.valueOf(date);;
                 extras.putString("addId", habit_event_id);
                 extras.putString("addTitle",current_location);
-                String date_ = new SimpleDateFormat("EE yyyy-MM-dd").format(date);
+                String date_ = new SimpleDateFormat("yyyy-MM-dd").format(date);
                 extras.putString("addDate", date_);
                 extras.putString("addComment", current_comment);
                 intent.putExtras(extras);

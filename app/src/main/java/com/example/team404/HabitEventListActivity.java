@@ -111,26 +111,42 @@ public class HabitEventListActivity extends AppCompatActivity {
                             String id = doc.getId();
                             String date = String.valueOf(doc.getData().get("Date"));
                             habitEventDataList.add(new HabitEvent(id,  Cloud_photo, Cloud_location, Cloud_comment, date));
-                            /*
+
+
+
+                        }
+
                             if (habitEventDataList.size()==0){
                                 addImage.setVisibility(ImageView.VISIBLE);
                             }else{
                                 System.out.println("--------1111-----------2222--------"+habitEventDataList.size());
-                                String valid_until = habitEventDataList.get(habitEventDataList.size()-1).getId();
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+                                String valid_until = habitEventDataList.get(habitEventDataList.size()-1).getDate();
+                                System.out.println("--------1111-----------2222--------"+valid_until);
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                String valid_now= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                                SimpleDateFormat sdf2=new SimpleDateFormat("yyyy-MM-dd");
+                                System.out.println("--------1111-----------2222--444------"+valid_now);
                                 Date strDate = null;
+                                Date current_Date =null;
+
                                 try {
+
                                     strDate = sdf.parse(valid_until);
-                                } catch (ParseException pe) {
+                                    current_Date= sdf2.parse(valid_now);
+                                    System.out.println("--------1111-----------2222--------"+strDate);
+                                    System.out.println("--------1111-----------2222--------"+current_Date);
+                                } catch (Exception pe) {
                                     pe.printStackTrace();
                                 }
-                                addImage.setVisibility(new Date().after(strDate)?ImageView.VISIBLE :ImageView.INVISIBLE );
+                                System.out.println("--------1111-----------2222--------"+strDate);
+                                System.out.println("--------1111-----------2222--------"+current_Date);
+                                addImage.setVisibility(current_Date.after(strDate)?ImageView.VISIBLE :ImageView.INVISIBLE );
+                                //addImage.setVisibility(current_Date.after(strDate) ? System.out.println("111") ;: System.out.println("222"););
                             }
 
-                             */
 
 
-                        }
                         habitEventArrayAdapter.notifyDataSetChanged();
                         Log.d(TAG, "Current habit event: " + habitDoc);
                     }
