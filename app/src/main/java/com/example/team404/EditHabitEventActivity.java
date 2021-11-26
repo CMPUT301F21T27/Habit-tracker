@@ -170,16 +170,24 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
             public void onClick(View v) {
                 String location_ = locationTextView.getText().toString();
                 String comment_ = commentTextView.getText().toString();
-
-                Intent intent = new Intent();
+                finish();
+                Intent intent = new Intent(EditHabitEventActivity.this, HabitEventActivity.class);
+                //Intent intent = new Intent();
                 Bundle extras = new Bundle();
+                extras.putString("id", habit_event_id);
                 extras.putString("location", location_);
                 extras.putString("comment", comment_);
                 extras.putString("storageUrlString",back_storageUrlString);
                 intent.putExtras(extras);
                 setResult(333, intent);
-                finish();
-                onBackPressed();
+
+                System.out.println("--------path is null!"+image_uri);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                System.out.println("------------+++++++++++++++++++++++++++++"+image_uri);
+                Toast.makeText(EditHabitEventActivity.this, "Nothing changed!", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                //onBackPressed();
             }
         });
         saveImage.setOnClickListener(new View.OnClickListener() {
@@ -222,7 +230,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    Log.w(TAG, "faild add to fireBase", e);
+                                                    Log.w(TAG, "failed add to fireBase", e);
                                                 }
                                             });
 
@@ -244,6 +252,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
                         }
                     });
+                    /*
                     Intent intent = new Intent();
                     Bundle extras = new Bundle();
                     extras.putString("location", location_);
@@ -253,12 +262,15 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
                     intent.putExtras(extras);
                     setResult(333, intent);
+
+                     */
                     finish();
+                    System.out.println("--------path is null!"+image_uri);
+                    //Intent intent = new Intent(EditHabitEventActivity.this, HabitEventListActivity.class);
+                    System.out.println("------------+++++++++++++++++++++++++++++"+image_uri);
+                    //startActivity(intent);
                     onBackPressed();
                 }else{
-                    if (back_storageUrlString==null){
-                        back_storageUrlString=null;
-                    }
                     final FirebaseFirestore db;
                     db = FirebaseFirestore.getInstance();
                     db.collection("Habit Event List").document(habit_event_id)
@@ -266,17 +278,17 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Log.w(TAG, "success add to fireBase");
+                                Log.w(TAG, "success add to firestore");
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "faild add to fireBase", e);
+                                Log.w(TAG, "failed add to firestore", e);
                             }
                         });
 
-                        Intent intent = new Intent();
+                        /*Intent intent = new Intent();
                         Bundle extras = new Bundle();
                         extras.putString("location", location_);
                         extras.putString("comment", comment_);
@@ -285,7 +297,12 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
                         intent.putExtras(extras);
                         setResult(333, intent);
+
+                         */
                         finish();
+                        //Intent intent = new Intent(EditHabitEventActivity.this, HabitEventListActivity.class);
+                        System.out.println("----+++--------+++++++++++++++++++++++++++++"+image_uri);
+                        //startActivity(intent);
                         onBackPressed();
                 }
             }
@@ -324,13 +341,13 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                                 final FirebaseFirestore db;
                                 db = FirebaseFirestore.getInstance();
                                 db.collection("Habit Event List").document(habit_event_id)
-                                        .update("Uri","")
+                                        .update("Uri",null)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 imageView.setImageResource(android.R.color.transparent);
-                                                //imageView=findViewById(R.id.imageView);
-                                                //imageView.setVisibility(ImageView.VISIBLE);
+                                                imageView=findViewById(R.id.imageView_delete);
+                                                imageView.setVisibility(ImageView.VISIBLE);
                                                 back_storageUrlString=null;
                                                 image_uri=null;
                                                 Log.d(TAG, "DocumentSnapshot successfully deleted!");
@@ -491,6 +508,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
     @Override
 
     public void onBackPressed() {
+        /*
         String location_ = locationTextView.getText().toString();
         String comment_ = commentTextView.getText().toString();
 
@@ -501,7 +519,10 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
         extras.putString("comment", comment_);
         intent.putExtras(extras);
         setResult(333, intent);
+
+         */
         finish();
+
         super.onBackPressed();
     }
 

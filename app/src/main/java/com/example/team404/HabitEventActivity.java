@@ -81,21 +81,46 @@ public class HabitEventActivity extends AppCompatActivity {
         String id = extras.getString("id");
         DocumentReference habitEventDoc = FirebaseFirestore.getInstance().collection("Habit Event List").document(id);
         System.out.println("------------------aaaa-----------"+habitEventDoc);
-        String date = extras.getString("date");
+
         String location = extras.getString("location");
         String comment = extras.getString("comment");
-        String storageUrlString = extras.getString("Uri");
+        String storageUrlString = extras.getString("storageUrlString");
         if (storageUrlString!=null){
             Uri storageURL = Uri.parse(storageUrlString);
-            System.out.println("------------------------dceefrfre---- Image file path is null!"+storageURL.toString());
+            System.out.println("------------------------dceefrfre---- Image file p!"+storageURL.toString());
             Glide.with(getApplicationContext()).load(storageURL).into(imageView);
         }
-        System.out.println("------------------------dceefrfre---- Image file path is null!"+storageUrlString);
+
+
+        System.out.println("------------------------dceefrfre--"+storageUrlString);
         commentTextView.setText(comment);
         locationTextView.setText(location);
-        if(isServicesOK()){
-            init();
-        }
+        /*
+        habitEventDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String storageUrlString = document.getData().get("Uri").toString();
+                        if (storageUrlString!=null){
+                            Uri storageURL = Uri.parse(storageUrlString);
+                            System.out.println("------------------------dceefrfre---- Image file p!"+storageURL.toString());
+                            Glide.with(getApplicationContext()).load(storageURL).into(imageView);
+                        }
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+         */
+
+
 
         backImage = findViewById(R.id.backImage);
         backImage.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +152,7 @@ public class HabitEventActivity extends AppCompatActivity {
                 // do it later
                 String comment = commentTextView.getText().toString();
                 String  location = locationTextView.getText().toString();
-
+                /*
                 Intent intent = new Intent(HabitEventActivity.this, EditHabitEventActivity.class);
                 Bundle extras = new Bundle();
                 extras.putString("id", id);
@@ -136,6 +161,18 @@ public class HabitEventActivity extends AppCompatActivity {
                 extras.putString("storageUrlString", storageUrlString);
                 intent.putExtras(extras);
                 startActivityForResult(intent, 333);
+
+                 */
+                HabitEventActivity.this.finish();
+                Intent intent = new Intent(HabitEventActivity.this, EditHabitEventActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("id", id);
+                extras.putString("location", location);
+                extras.putString("comment", comment);
+                extras.putString("storageUrlString", storageUrlString);
+                intent.putExtras(extras);
+
+                startActivity(intent);
             }
         });
 
@@ -165,11 +202,17 @@ public class HabitEventActivity extends AppCompatActivity {
             //imageView=findViewById(R.id.imageView_delete);
             //imageView.setVisibility(ImageView.VISIBLE);
             if (storageUrlString!=null){
+                imageView.setImageResource(android.R.color.transparent);
+                imageView = findViewById(R.id.imageView);
 
                 Uri storageURL = Uri.parse(storageUrlString);
                 Glide.with(getApplicationContext()).load(storageURL).into(imageView);
                 System.out.println("----------------------5555555555--- Image file path is null!"+storageURL.toString());
-            }else imageView.setImageResource(android.R.color.transparent);
+            }else {
+                imageView.setImageResource(android.R.color.transparent);
+                imageView=findViewById(R.id.imageView_delete);
+                imageView.setVisibility(ImageView.VISIBLE);
+            }
 
             // Set text view with string
             TextView textView = (TextView) findViewById(R.id.locationTextView);

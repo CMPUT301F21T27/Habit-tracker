@@ -103,7 +103,7 @@ public class HabitEventListActivity extends AppCompatActivity {
                                 Cloud_comment = String.valueOf(doc.getData().get("Comment"));
                             }
                             if ( doc.get("Uri") == null){
-                                Cloud_comment = "No photo provide";
+                                Cloud_photo = null;
                             }else{
                                 Cloud_photo = String.valueOf(doc.getData().get("Uri"));
                             }
@@ -157,7 +157,7 @@ public class HabitEventListActivity extends AppCompatActivity {
                         Log.d(TAG, "Current habit event: " + habitDoc);
                     }
                 });
-        System.out.println("--------1111--------------------"+habitEventDataList.size());
+        //System.out.println("--------1111--------------------"+habitEventDataList.size());
         //System.out.println("--------1111--------------------"+habitEventDataList.get(-1));
 
 
@@ -183,7 +183,7 @@ public class HabitEventListActivity extends AppCompatActivity {
                 extras.putString("id", id);
                 extras.putString("location", location);
                 extras.putString("date", date);
-                extras.putString("Uri",uri);
+                extras.putString("storageUrlString",uri);
                 extras.putString("comment", comment);
                 intent.putExtras(extras);
                 System.out.println("---------2222-------------------"+uri+"---------");

@@ -101,9 +101,9 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                                     if (plan.contains("Sunday")) {
                                         habit.setSunday(true);
                                     }
-                                    if (!email.equals(userEmail)){
+                                    //if (!email.equals(userEmail)){
                                     habitDataList.add(habit);
-                                    habitList.setAdapter(habitArrayAdapter);}
+                                    habitList.setAdapter(habitArrayAdapter);
 
 
 

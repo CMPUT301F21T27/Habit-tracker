@@ -90,7 +90,7 @@
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.237"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
@@ -107,8 +107,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="234dp"
-        android:layout_height="169dp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
         android:layout_marginTop="8dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,17 +116,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         android:src="@drawable/ic_baseline_add_a_photo_24"/>
+
     <ImageView
         android:id="@+id/imageView_delete"
-        android:layout_width="234dp"
-        android:layout_height="169dp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
         android:layout_marginTop="8dp"
+        android:src="@drawable/ic_baseline_add_a_photo_24"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        android:src="@drawable/ic_baseline_add_a_photo_24"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -141,10 +141,10 @@
         app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/linearLayout">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView6"
@@ -153,9 +153,9 @@
                 android:text="Comment:"
                 android:textSize="30sp"
                 tools:layout_conversion_absoluteHeight="40dp"
-                tools:layout_editor_absoluteY="431dp"
+                tools:layout_conversion_absoluteWidth="139dp"
                 tools:layout_editor_absoluteX="0dp"
-                tools:layout_conversion_absoluteWidth="139dp" />
+                tools:layout_editor_absoluteY="431dp" />
 
 
         </LinearLayout>
