@@ -168,19 +168,31 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
             public void onClick(View v) {
                 final FirebaseFirestore db;
                 db = FirebaseFirestore.getInstance();
+                System.out.println("---------2222-----------11--------"+habitId+"---------");
+
                 db.collection("Habit").document(habitId).
                         get()
                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                System.out.println("---------2222----------3---------"+total_did+"---------");
+
                                 total_did=Integer.valueOf(documentSnapshot.getData().get("Total Did").toString());
+                                total_did=total_did+1;
+                                System.out.println("---------2222----------33---------"+total_did+"---------");
+
 
                             }
 
                         });
-                total_did=total_did+1;
+                System.out.println("---------2222-------------------"+total_did+"---6------");
+
+
+                System.out.println("---------2222-------------------"+total_did+"------7---");
+
                 db.collection("Habit").document(habitId).
                         update("Total Did",total_did);
+                System.out.println("---------2222-------------------"+total_did+"------7--8-");
                 Intent intent = new Intent();
                 String current_location= locationTextView.getText().toString();
                 String current_comment= commentTextView.getText().toString();

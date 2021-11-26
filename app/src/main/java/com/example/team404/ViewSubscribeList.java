@@ -2,7 +2,6 @@ package com.example.team404;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class ViewMainListt extends DialogFragment {
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
+public class ViewSubscribeList extends DialogFragment {
     private TextView title;
     private TextView date_start;
 
     private TextView reason;
+    private TextView ownerEmail;
 
     private Habit habit_selected;
 
@@ -30,12 +39,17 @@ public class ViewMainListt extends DialogFragment {
     private CheckBox saturdayCheck;
     private CheckBox sundayCheck;
     private Button addEventButton;
+
     private Button followButton;
+    private FirebaseFirestore db;
+    private DocumentReference habitDocRef;
+    private DocumentReference habitOwnerDocRef;
+    private DocumentReference userDocRef;
+    private String habitOwnerEmail;
+    private String test;
 
 
-
-
-    public ViewMainListt(Habit habit_selected) {
+    public ViewSubscribeList(Habit habit_selected) {
         this.habit_selected = habit_selected;
     }
     @NonNull
@@ -52,6 +66,8 @@ public class ViewMainListt extends DialogFragment {
         fridayCheck = view.findViewById(R.id.friday_check_main);
         saturdayCheck = view.findViewById(R.id.saturday_check_main);
         sundayCheck = view.findViewById(R.id.sunday_check_main);
+        ownerEmail = view.findViewById(R.id.ownerEmail);
+
 
 
         title.setText(habit_selected.getTitle());
@@ -64,27 +80,46 @@ public class ViewMainListt extends DialogFragment {
         fridayCheck.setChecked(habit_selected.getFriday());
         saturdayCheck.setChecked(habit_selected.getSaturday());
         sundayCheck.setChecked(habit_selected.getSunday());
-
-
-
-
-
-        followButton = view.findViewById(R.id.button);
-        followButton.setVisibility(Button.GONE);
         addEventButton= view.findViewById(R.id.add_event_button);
-        addEventButton.setVisibility(Button.VISIBLE);
-        addEventButton.setOnClickListener(new View.OnClickListener() {
+
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userEmail = user.getEmail();
+        String habitId = habit_selected.getId();
+        db= FirebaseFirestore.getInstance();
+        userDocRef = db.collection("User").document(userEmail);
+        habitDocRef = db.collection("Habit").document(habitId);
+
+        habitDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), HabitEventListActivity.class);
-                String current_habit_id= habit_selected.getId();
-                intent.putExtra("current_habit_id", current_habit_id);
-                intent.putExtra("Today", "today");
-
-                startActivity(intent);
-
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value != null && value.exists()){
+                    habitOwnerEmail = value.getData().get("OwnerEmail").toString();
+                    followButton = view.findViewById(R.id.button);
+                    followButton.setVisibility(Button.GONE);
+                    ownerEmail.setText("The owner: "+habitOwnerEmail);
+                    ownerEmail.setVisibility(TextView.VISIBLE);
+                }
             }
         });
+
+
+
+/*
+        followButton = view.findViewById(R.id.button);
+        followButton.setVisibility(Button.VISIBLE);
+        followButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                habitOwnerDocRef = db.collection("User").document(habitOwnerEmail);
+                habitOwnerDocRef.update("requestedList", FieldValue.arrayUnion(userEmail));
+                ownerEmail.setText("Request sent to: "+habitOwnerEmail);
+                ownerEmail.setVisibility(v.VISIBLE);
+            }
+        });
+
+ */
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

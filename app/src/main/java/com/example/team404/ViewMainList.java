@@ -103,22 +103,37 @@ public class ViewMainList extends DialogFragment {
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (value != null && value.exists()){
                     habitOwnerEmail = value.getData().get("OwnerEmail").toString();
+                    if (habitOwnerEmail.equals(userEmail)){
+                        followButton = view.findViewById(R.id.button);
+                        followButton.setVisibility(Button.GONE);
+                        ownerEmail.setText("Cannot follow yourself!");
+                        ownerEmail.setVisibility(TextView.VISIBLE);
+                        return;
+                    } else{
+                        followButton = view.findViewById(R.id.button);
+                        followButton.setVisibility(Button.VISIBLE);
+                        followButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                habitOwnerDocRef = db.collection("User").document(habitOwnerEmail);
+                                habitOwnerDocRef.update("requestedList", FieldValue.arrayUnion(userEmail));
+                                ownerEmail.setText("Request sent to: "+habitOwnerEmail);
+                                ownerEmail.setVisibility(v.VISIBLE);
+                            }
+                        });
+                        }
+
                 }
             }
         });
 
-        ownerEmail.setText("Request sent to: "+habitOwnerEmail);
 
-        followButton = view.findViewById(R.id.button);
-        followButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                habitOwnerDocRef = db.collection("User").document(habitOwnerEmail);
-                habitOwnerDocRef.update("requestedList", FieldValue.arrayUnion(userEmail));
-                ownerEmail.setText("Request sent to: "+habitOwnerEmail);
-                ownerEmail.setVisibility(v.VISIBLE);
-            }
-        });
+
+
+
+
+
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder

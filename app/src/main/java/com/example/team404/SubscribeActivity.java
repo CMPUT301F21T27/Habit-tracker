@@ -2,6 +2,8 @@ package com.example.team404;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -136,6 +138,15 @@ public class SubscribeActivity extends AppCompatActivity {
 
             }
         });
+        habitArrayAdapter = new Content(this,habitDataList);
+        habitList.setAdapter(habitArrayAdapter);
+        habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Habit habit_selected = (Habit) adapterView.getItemAtPosition(i);
+                new ViewSubscribeList(habit_selected).show(getSupportFragmentManager(), "View_Habit");
+            }
+        });
 
     }
     private NavigationBarView.OnItemSelectedListener navListener =
@@ -176,8 +187,26 @@ public class SubscribeActivity extends AppCompatActivity {
                     return true;
                 }
             };
+    private int count = 0;
     @Override
     public void onBackPressed() {
+        count++;
+        if (count >1){
+            new AlertDialog.Builder(this)
+                    .setTitle("Really Exit?")
+                    .setMessage("Are you sure you want to exit?")
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            //MainActivity.super.onBackPressed();
+                            FirebaseAuth.getInstance().signOut();
+                            finishAffinity();
+                        }
+                    }).create().show();
+        }else{
+
+        }
 
     }
 }

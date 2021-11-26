@@ -110,6 +110,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:text="Follow Owner"
         />
 
@@ -118,7 +119,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        />
+    <Button
+        android:id="@+id/add_event_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/teal_200"
+        android:visibility="invisible"
+        android:text="Add event" />
 
 
 </LinearLayout>
