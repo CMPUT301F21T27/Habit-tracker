@@ -109,6 +109,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
     Button today;
     ImageView reorder;
 
+
     /**
      * The main process of MyActivity class.
      * @param savedInstanceState
@@ -124,6 +125,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         String userEmail = user.getEmail();
         db=FirebaseFirestore.getInstance();
         DocumentReference userDoc = FirebaseFirestore.getInstance().collection("User").document(userEmail);
+
         habitDataList = new ArrayList<>();
 
 
@@ -148,6 +150,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
         habitDataList=new ArrayList<>();
         habitArrayAdapter = new Content(this,habitDataList);
+
         //habitDataList.add(habit);
         /** using Content class as adpter**/
 
@@ -160,6 +163,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+
                                 String id =  document.getData().get("id").toString();
                                 String title = document.getData().get("Title").toString();
                                 String reason = document.getData().get("Reason").toString();
@@ -169,6 +173,8 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                 String pub = document.getData().get("Public").toString();
                                 int total = Integer.valueOf((document.getData().get("Total").toString()));
                                 String last = document.getData().get("Last").toString();
+                                int total_did= Integer.valueOf((document.getData().get("Total Did").toString()));
+
 
 
 
@@ -257,8 +263,12 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                             .update("Total",total,
                                                     "Last",last);
                                 }
+
+
                                 habit.setLastDay(last);
                                 habit.setTotal_habit_day(total);
+                                habit.setTotal_did(total_did);
+
 
                                 habitDataList.add(habit);
                                 habitList.setAdapter(habitArrayAdapter);
@@ -369,6 +379,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                 intent.putExtra("habitsToday",habitsToday);
                 startActivity(intent);
             }
+
         });
 
 
@@ -435,6 +446,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
             h.put("id",newHabit.getId());
             h.put("Last", newHabit.getLastDay());
             h.put("Total",newHabit.getTotal_habit_day());
+            h.put("Total Did",newHabit.getTotal_did());
 
             h.put("Public",pub);
 
@@ -557,6 +569,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                             //return true;
                             break;
                     }
+                    finish();
                     startActivity(intent);
                     overridePendingTransition(0, 0);
                     return true;
@@ -585,5 +598,11 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         }
 
     }
+            @Override
+            public void onRestart(){
+                super.onRestart();
+                habitList.setAdapter(habitArrayAdapter);
+            }
 
-}
+
+        }

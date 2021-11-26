@@ -211,6 +211,7 @@ public class AddHabitFragment extends DialogFragment {
                                 SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
                                 Date date_now = new Date(System.currentTimeMillis());
                                 habit.setLastDay(formatter.format(date_now));
+                                habit.setTotal_did(0);
                             }
                             habit.setMonday(mondayCheck.isChecked());
                             habit.setTuesday(tuesdayCheck.isChecked());

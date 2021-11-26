@@ -28,7 +28,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
     ListView habitList;
@@ -75,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                                     String month = document.getData().get("Month").toString();
                                     String day = document.getData().get("Day").toString();
                                     String email = document.getData().get("OwnerEmail").toString();
+                                    int total = Integer.valueOf(document.getData().get("Total").toString());
+                                    int total_did = Integer.valueOf(document.getData().get("Total Did").toString());
+                                    String last = document.getData().get("Last").toString();
 
                                     Habit habit = new Habit(id, title, reason, year, month, day);
                                     habit.setPub(true);
@@ -101,6 +109,63 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                                     if (plan.contains("Sunday")) {
                                         habit.setSunday(true);
                                     }
+                                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+                                Date date_now = new Date(System.currentTimeMillis());
+                                boolean is_habit_today= false;
+                                Calendar c = Calendar.getInstance();
+                                int day_habit = c.get(Calendar.DAY_OF_WEEK);
+                                switch (day_habit) {
+                                    case Calendar.SUNDAY:
+                                        if (habit.getSunday()) {
+                                            is_habit_today= true;
+                                        }
+                                        break;
+                                    case Calendar.MONDAY:
+                                        if (habit.getMonday()) {
+                                            is_habit_today= true;
+                                        }
+                                        break;
+                                    case Calendar.TUESDAY:
+                                        if (habit.getTuesday()) {
+                                            is_habit_today= true;
+                                        }
+                                        break;
+                                    case Calendar.WEDNESDAY:
+                                        if (habit.getWednesday()) {
+                                            is_habit_today= true;
+                                        }
+                                        break;
+                                    case Calendar.THURSDAY:
+                                        if (habit.getThursday()) {
+                                            is_habit_today= true;
+                                        }
+                                        break;
+                                    case Calendar.FRIDAY:
+                                        if (habit.getFriday()) {
+                                            is_habit_today= true;
+                                        }
+                                        break;
+                                    case Calendar.SATURDAY:
+                                        if (habit.getSaturday()) {
+                                            is_habit_today= true;
+                                        }
+                                        break;
+
+                                }
+                                if (!last.equals(formatter.format(date_now))&&(is_habit_today==true)){
+
+                                    total = total+1;
+                                    last=formatter.format(date_now);
+                                    Map<String,Object> h = new HashMap<>();
+                                    h.put("Total",total);
+                                    h.put("Last",last);
+                                    db.collection("Habit").document(id)
+                                            .update("Total",total,
+                                                    "Last",last);
+                                }
+                                habit.setLastDay(last);
+                                habit.setTotal_habit_day(total);
+                                habit.setTotal_did(total_did);
                                     if (!email.equals(userEmail)){
                                     habitDataList.add(habit);
                                     habitList.setAdapter(habitArrayAdapter);}
