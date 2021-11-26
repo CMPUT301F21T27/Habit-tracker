@@ -25,6 +25,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.type.DateTime;
+
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -129,6 +133,7 @@ public class AddHabitFragment extends DialogFragment {
             saturdayCheck.setChecked(habit_selected.getSaturday());
             sundayCheck.setChecked(habit_selected.getSunday());
             pubSwitch.setChecked(habit_selected.getPub());
+
             }
             date_start.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -190,6 +195,7 @@ public class AddHabitFragment extends DialogFragment {
                             String habit_year;
                             String habit_month;
                             String habit_day;
+
                             if (habit_selected!=null && (day==0|| day==00)){
                                 habit_year=habit_selected.getYear();
                                 habit_month=habit_selected.getMonth();
@@ -201,7 +207,11 @@ public class AddHabitFragment extends DialogFragment {
                             }
                             String habit_reason = reason.getText().toString();
                             Habit habit = new Habit(habit_id, habit_title, habit_reason, habit_year,habit_month,habit_day);
-
+                            if(habit_selected ==null){
+                                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+                                Date date_now = new Date(System.currentTimeMillis());
+                                habit.setLastDay(formatter.format(date_now));
+                            }
                             habit.setMonday(mondayCheck.isChecked());
                             habit.setTuesday(tuesdayCheck.isChecked());
                             habit.setWednesday(wednesdayCheck.isChecked());
@@ -210,6 +220,7 @@ public class AddHabitFragment extends DialogFragment {
                             habit.setSaturday(saturdayCheck.isChecked());
                             habit.setSunday(sundayCheck.isChecked());
                             habit.setPub(pubSwitch.isChecked());
+
 
 
                             listener.OnOKPressed(habit, habit_selected);
