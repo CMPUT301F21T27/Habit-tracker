@@ -16,22 +16,17 @@
         app:itemIconTint="@drawable/selector"
         app:menu="@menu/bottom_nav_menu" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ListView
+        android:id="@+id/subscribe_list"
+        android:layout_width="408dp"
+        android:layout_height="518dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.299">
 
-        android:text="@string/subscribe_list" />
-
-    <Button
-        android:id="@+id/habit_event_button"
-        android:layout_width="137dp"
-        android:layout_height="63dp"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="208dp"
-        android:visibility="invisible"
-        android:hint="@string/habit_event"
-        android:text="@string/habit_event" />
+    </ListView>
 
 
 </RelativeLayout>
