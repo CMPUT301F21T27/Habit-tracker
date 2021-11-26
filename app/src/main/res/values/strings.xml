@@ -12,7 +12,7 @@
     <string name="add_account_photo">add account photo</string>
     <string name="account_photo_name">account_photo_name</string>
     <string name="comment_name">comment_name</string>
-
+    <string name="account">Account</string>
 
 
 </resources>
