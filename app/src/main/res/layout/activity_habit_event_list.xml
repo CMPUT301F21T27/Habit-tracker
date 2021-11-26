@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -16,7 +17,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="48dp">
 
             <ImageView
                 android:id="@+id/backImage"
@@ -50,14 +51,15 @@
                 android:focusable="true"
                 android:src="@drawable/ic_baseline_add_circle_outline_24"
                 android:visibility="visible"
-                app:tint="@color/white" />
+                app:tint="@color/white"
+                tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/title"
 
                 android:layout_width="wrap_content"
 
-                android:layout_height="47dp"
+                android:layout_height="48dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
@@ -77,5 +79,8 @@
     <ListView
         android:id="@+id/habit_event_list"
         android:layout_width="match_parent"
-        android:layout_height="670dp" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp" />
+</RelativeLayout>
