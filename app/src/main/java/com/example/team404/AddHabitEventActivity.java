@@ -36,6 +36,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -68,7 +69,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
     String timeStamp = new SimpleDateFormat("yyyy-MM-dd-mm-ss").format(new Date());
     StorageReference eventsHabbitRef = storageRef.child("/image/"+userEmail+timeStamp+".png");
 
-
+    private int total_did;
     private TextView locationvIEW;
     private TextView photo;
     private static final String TAG = "AddHabitEventActivity";
@@ -165,6 +166,21 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
         saveImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final FirebaseFirestore db;
+                db = FirebaseFirestore.getInstance();
+                db.collection("Habit").document(habitId).
+                        get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                total_did=Integer.valueOf(documentSnapshot.getData().get("Total Did").toString());
+
+                            }
+
+                        });
+                total_did=total_did+1;
+                db.collection("Habit").document(habitId).
+                        update("Total Did",total_did);
                 Intent intent = new Intent();
                 String current_location= locationTextView.getText().toString();
                 String current_comment= commentTextView.getText().toString();
@@ -197,8 +213,9 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                     event.put("OwnerReference", habitDoc);
                                     event.put("url", image_uri.toString());
                                     event.put("Uri", uri_string);
-                                    final FirebaseFirestore db;
-                                    db = FirebaseFirestore.getInstance();
+                                    event.put("Habit Id", habitId);
+
+
                                     db.collection("Habit Event List").document(habit_event_id)
                                             .set(event)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -213,9 +230,13 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                                     Log.w(TAG, "faild add to fireBase", e);
                                                 }
                                             });
+
+
+
                                     // shift back to list activity
                                     //Intent intentReturn = new Intent(getApplicationContext(), HabitEventListActivity.class); // Return to the habit event list page
                                     //intentReturn.putExtra("uri", uri.toString());
+
                                     AddHabitEventActivity.this.finish(); // finish current activity
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
@@ -236,14 +257,16 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                     });
                 }else{
                     Map<String, Object> event = new HashMap<>();
+
                     event.put("Location", current_location);
                     event.put("Comment", current_comment);
                     event.put("Date", date_);
                     event.put("OwnerReference", habitDoc);
                     event.put("url","");
                     event.put("Uri", "");
-                    final FirebaseFirestore db;
-                    db = FirebaseFirestore.getInstance();
+                    event.put("Habit Id", habitId);
+
+
                     db.collection("Habit Event List").document(habit_event_id)
                             .set(event)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -258,6 +281,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                     Log.w(TAG, "faild add to fireBase", e);
                                 }
                             });
+
                     // shift back to list activity
                     //Intent intentReturn = new Intent(getApplicationContext(), HabitEventListActivity.class); // Return to the habit event list page
                     //intentReturn.putExtra("uri", uri.toString());

@@ -27,6 +27,7 @@ public class Habit implements java.io.Serializable {
 
     private String  lastDay;
 
+    private int total_did;
 
 
 
@@ -53,6 +54,7 @@ public class Habit implements java.io.Serializable {
         pub = false;
         lastDay="";
         total_habit_day=1;
+        total_did = 0;
 
 
 
@@ -76,6 +78,11 @@ public class Habit implements java.io.Serializable {
         this.monday=m;
 
     }
+
+    public void setTotal_did(int i){
+        this.total_did=i;
+    }
+
 
     /**
      * Set is habit occur on Tuesday
@@ -189,6 +196,8 @@ public class Habit implements java.io.Serializable {
      * Returns the title of the habit
      * @return title
      */
+
+    public int getTotal_did(){return total_did;}
     public String getId(){return id;}
     /**
      * Returns the title of the habit

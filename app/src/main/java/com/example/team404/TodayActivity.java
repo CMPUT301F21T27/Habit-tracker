@@ -30,6 +30,7 @@ public class TodayActivity extends AppCompatActivity {
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
+
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         /** initialize vairables**/
@@ -50,7 +51,7 @@ public class TodayActivity extends AppCompatActivity {
                 new ViewMainListt(habit_selected).show(getSupportFragmentManager(), "View_Today_Habit");
             }
         });
-
+        today_habit.setAdapter(habitArrayAdapter);
 /**
  * after click the back button, it will take user back to the My Activity page
  */
@@ -62,4 +63,9 @@ public class TodayActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        today_habit.setAdapter(habitArrayAdapter);
+    }
 }
