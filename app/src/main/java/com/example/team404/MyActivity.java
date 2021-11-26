@@ -167,15 +167,8 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                 String month = document.getData().get("Month").toString();
                                 String day = document.getData().get("Day").toString();
                                 String pub = document.getData().get("Public").toString();
-                                int total = Integer.valueOf((document.getData().get("Total").toString()));
-                                String last = document.getData().get("Last").toString();
-
-
-
-
 
                                 Habit habit = new Habit(id,title,reason,year,month,day);
-
                                 if (pub.contains("True")){
                                     habit.setPub(true);
                                 }
@@ -203,62 +196,6 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                 if(plan.contains("Sunday")){
                                     habit.setSunday(true);
                                 }
-                                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-                                Date date_now = new Date(System.currentTimeMillis());
-                                boolean is_habit_today= false;
-                                Calendar c = Calendar.getInstance();
-                                int day_habit = c.get(Calendar.DAY_OF_WEEK);
-                                switch (day_habit) {
-                                    case Calendar.SUNDAY:
-                                        if (habit.getSunday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-                                    case Calendar.MONDAY:
-                                        if (habit.getMonday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-                                    case Calendar.TUESDAY:
-                                        if (habit.getTuesday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-                                    case Calendar.WEDNESDAY:
-                                        if (habit.getWednesday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-                                    case Calendar.THURSDAY:
-                                        if (habit.getThursday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-                                    case Calendar.FRIDAY:
-                                        if (habit.getFriday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-                                    case Calendar.SATURDAY:
-                                        if (habit.getSaturday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-
-                                }
-                                if (!last.equals(formatter.format(date_now))&&(is_habit_today==true)){
-
-                                    total = total+1;
-                                    last=formatter.format(date_now);
-                                    Map<String,Object> h = new HashMap<>();
-                                    h.put("Total",total);
-                                    h.put("Last",last);
-                                    db.collection("Habit").document(id)
-                                            .update("Total",total,
-                                                    "Last",last);
-                                }
-                                habit.setLastDay(last);
-                                habit.setTotal_habit_day(total);
 
                                 habitDataList.add(habit);
                                 habitList.setAdapter(habitArrayAdapter);
@@ -433,8 +370,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
             h.put("Title",newHabit.getTitle());
             h.put("Year",newHabit.getYear());
             h.put("id",newHabit.getId());
-            h.put("Last", newHabit.getLastDay());
-            h.put("Total",newHabit.getTotal_habit_day());
+
 
             h.put("Public",pub);
 

@@ -22,13 +22,6 @@ public class Habit implements java.io.Serializable {
 
     private Boolean pub;
 
-    private int total_habit_day;
-
-
-    private String  lastDay;
-
-
-
 
 
 
@@ -51,22 +44,9 @@ public class Habit implements java.io.Serializable {
         saturday = false;
         sunday = false;
         pub = false;
-        lastDay="";
-        total_habit_day=1;
-
-
-
 
 
     }
-    public void setTotal_habit_day(int i){
-        this.total_habit_day=i;
-    }
-    public void setLastDay(String i){
-        this.lastDay=i;
-    }
-
-
     /**
      * Set is habit occur on Monday
      * @param m
@@ -217,7 +197,7 @@ public class Habit implements java.io.Serializable {
      * @return Day
      */
 
-    public String getLastDay(){return lastDay;}
+
     public Boolean getPub(){return pub;}
 
     public String getDay(){return day;}
@@ -256,8 +236,6 @@ public class Habit implements java.io.Serializable {
      * @return sunday
      */
     public Boolean getSunday() {return sunday;}
-    public int getTotal_habit_day(){return total_habit_day;}
-
 
 
 
