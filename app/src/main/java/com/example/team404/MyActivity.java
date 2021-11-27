@@ -248,6 +248,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                 }
                                 if (!last.equals(formatter.format(date_now))&&(is_habit_today==true)){
                                     total=0;
+                                    //http://www.java2s.com/Tutorials/Java/Data_Type_How_to/Date/Get_all_Monday_dates_in_given_month.htm
 
                                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("  yyyy-MM-dd");
                                     String inputString1 = habit.getLastDay();
