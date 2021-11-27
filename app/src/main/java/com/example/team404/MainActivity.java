@@ -157,9 +157,9 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                                 habit.setLastDay(last);
                                 habit.setTotal_habit_day(total);
                                 habit.setTotal_did(total_did);
-                                if (!email.equals(userEmail)){
+
                                     habitDataList.add(habit);
-                                    habitList.setAdapter(habitArrayAdapter);}
+                                    habitList.setAdapter(habitArrayAdapter);
 
 
 
