@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +37,7 @@ public class AccountActivity extends AppCompatActivity {
     private ImageView notifcationImage;
     private ImageView editImage;
     private ImageView changePwdImage;
+    private ImageView profileView;
 
     private TextView username;
     private TextView email;
@@ -42,6 +45,7 @@ public class AccountActivity extends AppCompatActivity {
     private int log_out_count=0;
     private String requestedListString;
     private String old_password;
+    private String profile_uri_string;
 
 
     @Override
@@ -63,6 +67,7 @@ public class AccountActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.name);
         email = (TextView) findViewById(R.id.email);
         phone = (TextView) findViewById(R.id.phone);
+        profileView= findViewById((R.id.profile));
 
         email.setText(userEmail);
 
@@ -74,6 +79,12 @@ public class AccountActivity extends AppCompatActivity {
                 String userPhone = value.getData().get("phone").toString();
                 String userName = value.getData().get("userName").toString();
                 requestedListString = value.get("requestedList").toString();
+                if (value.get("profile_uri")!=null){
+                    profile_uri_string=value.get("profile_uri").toString();
+                    Uri storageURL = Uri.parse(profile_uri_string);
+                    Glide.with(getApplicationContext()).load(storageURL).into(profileView);
+                    System.out.println("---------------------------storage url:"+storageURL);
+                }
                 username.setText(userName);
                 phone.setText(userPhone);
             }else{
@@ -106,10 +117,12 @@ public class AccountActivity extends AppCompatActivity {
             Intent intent = new Intent(AccountActivity.this, AccountEditActivity.class);
             Bundle extras = new Bundle();
             extras.putString("phone", phone_);
+            extras.putString("profile_uri", profile_uri_string);
             extras.putString("name", name);
             intent.putExtras(extras);
             startActivityForResult(intent, 333);
         });
+
 
         Button logoutButton = findViewById(R.id.log_out_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {

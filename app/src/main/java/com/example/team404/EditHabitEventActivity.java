@@ -108,7 +108,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
         if (back_storageUrlString!=null){
             Uri storageURL = Uri.parse(back_storageUrlString);
             Glide.with(getApplicationContext()).load(storageURL).into(imageView);
-            System.out.println("---------------------------- Image file path is null!"+storageURL);
+            System.out.println("----------------------------storage url:"+storageURL);
         }
 
         DocumentReference habitEventDoc = FirebaseFirestore.getInstance().collection("Habit Event List").document(habit_event_id);
@@ -254,18 +254,6 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
                         }
                     });
-                    /*
-                    Intent intent = new Intent();
-                    Bundle extras = new Bundle();
-                    extras.putString("location", location_);
-                    extras.putString("comment", comment_);
-                    extras.putString("storageUrlString",back_storageUrlString);
-                    System.out.println("--------------99999--------- "+back_storageUrlString);
-
-                    intent.putExtras(extras);
-                    setResult(333, intent);
-
-                     */
                     finish();
                     System.out.println("--------path is null!"+image_uri);
                     //Intent intent = new Intent(EditHabitEventActivity.this, HabitEventListActivity.class);
@@ -290,17 +278,6 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                             }
                         });
 
-                        /*Intent intent = new Intent();
-                        Bundle extras = new Bundle();
-                        extras.putString("location", location_);
-                        extras.putString("comment", comment_);
-                        extras.putString("storageUrlString",back_storageUrlString);
-                        System.out.println("------------14444444----"+back_storageUrlString);
-
-                        intent.putExtras(extras);
-                        setResult(333, intent);
-
-                         */
                         finish();
                         //Intent intent = new Intent(EditHabitEventActivity.this, HabitEventListActivity.class);
                         System.out.println("----+++--------+++++++++++++++++++++++++++++"+image_uri);
@@ -349,7 +326,6 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                final int selected_item = position;
 
                 new AlertDialog.Builder(EditHabitEventActivity.this).
                         setIcon(android.R.drawable.ic_delete)
@@ -406,7 +382,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
         //Camera intent
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,image_uri);
-        startActivityForResult(takePictureIntent, 1);
+        startActivityForResult(takePictureIntent, 111);
 
     }
     @Override
