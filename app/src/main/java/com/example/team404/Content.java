@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +40,7 @@ import java.util.Map;
 public class Content extends ArrayAdapter<Habit> {
 private ArrayList<Habit> habits;
 private Context context;
+DonutProgress donutProgress;
 
 
 private ArrayList<String> habit_refers;
@@ -82,16 +84,34 @@ private ArrayList<String> habit_refers;
     TextView habitTitle = view.findViewById(R.id.titleTextView);
     TextView habitReason = view.findViewById(R.id.reasonTextView);
     TextView habitDate = view.findViewById(R.id.dateTextView);
+    /*
     ImageView green = view.findViewById(R.id.green);
     ImageView red =view.findViewById(R.id.red);
     ImageView yellow = view.findViewById(R.id.yellow);
     ImageView cyan = view.findViewById(R.id.cyan);
+
+     */
+    donutProgress =(DonutProgress) view.findViewById(R.id.donut_progress);
 
 
 
 
 
     double result = (double)(habit.getTotal_did()*1.0/ habit.getTotal_habit_day());
+
+    if(habit.getTotal_did()<=habit.getTotal_habit_day()){
+        System.out.println("result-------------");
+        System.out.println(result);
+        int result_int = (int) result*100;
+        System.out.println(result_int);
+        donutProgress.setProgress(result_int);
+
+    }
+
+
+
+
+/*
     if ((result>0.75)){
         green.setVisibility(View.VISIBLE);
         red.setVisibility(View.INVISIBLE);
@@ -116,6 +136,8 @@ private ArrayList<String> habit_refers;
         yellow.setVisibility(View.INVISIBLE);
         cyan.setVisibility(View.INVISIBLE);
     }
+
+ */
 
 
     habitTitle.setText(habit.getTitle());
