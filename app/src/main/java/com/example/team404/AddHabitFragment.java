@@ -134,100 +134,100 @@ public class AddHabitFragment extends DialogFragment {
             sundayCheck.setChecked(habit_selected.getSunday());
             pubSwitch.setChecked(habit_selected.getPub());
 
+        }
+        date_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                year = calendar.get(Calendar.YEAR);
+                month = calendar.get(Calendar.MONTH);
+                day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(view.getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, DateStartSetListener, year, month, day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
             }
-            date_start.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Calendar calendar = Calendar.getInstance();
-                    year = calendar.get(Calendar.YEAR);
-                    month = calendar.get(Calendar.MONTH);
-                    day = calendar.get(Calendar.DAY_OF_MONTH);
-                    DatePickerDialog dialog = new DatePickerDialog(view.getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, DateStartSetListener, year, month, day);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.show();
-                }
 
 
-            });
+        });
         /** using date picker to set up the Start date of the habit **/
-            DateStartSetListener = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int y, int m, int d) {
-                    year = y;
-                    month = m+1;
-                    day = d;
-                    date_start.setText(year+"-"+month+"-"+day);
+        DateStartSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int y, int m, int d) {
+                year = y;
+                month = m+1;
+                day = d;
+                date_start.setText(year+"-"+month+"-"+day);
 
-                }
-            };
+            }
+        };
 
-            habitEventListButton = view.findViewById(R.id.habit_event_list_button);
-            habitEventListButton.setVisibility(habit_selected!=null? ImageView.VISIBLE: ImageView.GONE );
-            habitEventListButton.setOnClickListener(v -> {
-                Intent intent = new Intent(getActivity(), HabitEventListActivity.class);
-                String current_habit_id= habit_selected.getId();
-                intent.putExtra("current_habit_id", current_habit_id);
-                intent.putExtra("Today", "Not today");
+        habitEventListButton = view.findViewById(R.id.habit_event_list_button);
+        habitEventListButton.setVisibility(habit_selected!=null? ImageView.VISIBLE: ImageView.GONE );
+        habitEventListButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), HabitEventListActivity.class);
+            String current_habit_id= habit_selected.getId();
+            intent.putExtra("current_habit_id", current_habit_id);
+            intent.putExtra("Today", "Not today");
 
-                startActivity(intent);
-            });
+            startActivity(intent);
+        });
         /** set up the Positive, neutral, Negative Button of the dialog for add, cancel, delete **/
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            return builder
-                    .setView(view)
-                    .setTitle("Add Habit")
-                    .setNegativeButton("Cancel", null)
-                    .setNeutralButton("Delete", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            if (habit_selected != null) {
-                                listener.OnDlPressed(habit_selected);
-                            }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        return builder
+                .setView(view)
+                .setTitle("Add/Edit Habit")
+                .setNegativeButton("Cancel", null)
+                .setNeutralButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (habit_selected != null) {
+                            listener.OnDlPressed(habit_selected);
                         }
-                    })
-                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                            Date date= new Date();
-                            String habit_id = String.valueOf(date);
-                            String habit_title = title.getText().toString();
-                            String habit_year;
-                            String habit_month;
-                            String habit_day;
+                        Date date= new Date();
+                        String habit_id = String.valueOf(date);
+                        String habit_title = title.getText().toString();
+                        String habit_year;
+                        String habit_month;
+                        String habit_day;
 
-                            if (habit_selected!=null && (day==0|| day==00)){
-                                habit_year=habit_selected.getYear();
-                                habit_month=habit_selected.getMonth();
-                                habit_day=habit_selected.getDay();
-                            }else {
-                                habit_year = Integer.toString(year);
-                                habit_month = Integer.toString(month);
-                                habit_day = Integer.toString(day);
-                            }
-                            String habit_reason = reason.getText().toString();
-                            Habit habit = new Habit(habit_id, habit_title, habit_reason, habit_year,habit_month,habit_day);
-                            if(habit_selected ==null){
-                                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-                                Date date_now = new Date(System.currentTimeMillis());
-                                habit.setLastDay(formatter.format(date_now));
-                                habit.setTotal_did(0);
-                            }
-                            habit.setMonday(mondayCheck.isChecked());
-                            habit.setTuesday(tuesdayCheck.isChecked());
-                            habit.setWednesday(wednesdayCheck.isChecked());
-                            habit.setThursday(thursdayCheck.isChecked());
-                            habit.setFriday(fridayCheck.isChecked());
-                            habit.setSaturday(saturdayCheck.isChecked());
-                            habit.setSunday(sundayCheck.isChecked());
-                            habit.setPub(pubSwitch.isChecked());
-
-
-
-                            listener.OnOKPressed(habit, habit_selected);
-
+                        if (habit_selected!=null && (day==0|| day==00)){
+                            habit_year=habit_selected.getYear();
+                            habit_month=habit_selected.getMonth();
+                            habit_day=habit_selected.getDay();
+                        }else {
+                            habit_year = Integer.toString(year);
+                            habit_month = Integer.toString(month);
+                            habit_day = Integer.toString(day);
                         }
-                    }).create();
+                        String habit_reason = reason.getText().toString();
+                        Habit habit = new Habit(habit_id, habit_title, habit_reason, habit_year,habit_month,habit_day);
+                        if(habit_selected ==null){
+                            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+                            Date date_now = new Date(System.currentTimeMillis());
+                            habit.setLastDay(formatter.format(date_now));
+                            habit.setTotal_did(0);
+                        }
+                        habit.setMonday(mondayCheck.isChecked());
+                        habit.setTuesday(tuesdayCheck.isChecked());
+                        habit.setWednesday(wednesdayCheck.isChecked());
+                        habit.setThursday(thursdayCheck.isChecked());
+                        habit.setFriday(fridayCheck.isChecked());
+                        habit.setSaturday(saturdayCheck.isChecked());
+                        habit.setSunday(sundayCheck.isChecked());
+                        habit.setPub(pubSwitch.isChecked());
+
+
+
+                        listener.OnOKPressed(habit, habit_selected);
+
+                    }
+                }).create();
 
 
 

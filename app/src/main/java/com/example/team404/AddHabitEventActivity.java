@@ -233,6 +233,18 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     Log.w(TAG, "success add to fireBase");
+                                                    db.collection("Habit").document(habitId).
+                                                            get()
+                                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                                @Override
+                                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                                    total_did=Integer.valueOf(documentSnapshot.getData().get("Total Did").toString());
+                                                                    total_did=total_did+1;
+                                                                    db.collection("Habit").document(habitId).
+                                                                            update("Total Did",total_did);
+                                                                }
+
+                                                            });
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
@@ -288,6 +300,18 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                 @Override
                                 public void onSuccess(Void unused) {
                                     Log.w(TAG, "success add to fireBase");
+                                    db.collection("Habit").document(habitId).
+                                            get()
+                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                    total_did=Integer.valueOf(documentSnapshot.getData().get("Total Did").toString());
+                                                    total_did=total_did+1;
+                                                    db.collection("Habit").document(habitId).
+                                                            update("Total Did",total_did);
+                                                }
+
+                                            });
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
