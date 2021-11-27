@@ -181,14 +181,15 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
 
                                 total_did=Integer.valueOf(documentSnapshot.getData().get("Total Did").toString());
                                 total_did=total_did+1;
+                                db.collection("Habit").document(habitId).
+                                        update("Total Did",total_did);
 
 
                             }
 
                         });
 
-                db.collection("Habit").document(habitId).
-                        update("Total Did",total_did);
+
 
                 String current_location= locationTextView.getText().toString();
                 String current_comment= commentTextView.getText().toString();
