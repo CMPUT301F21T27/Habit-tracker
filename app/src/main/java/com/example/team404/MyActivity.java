@@ -7,6 +7,7 @@ import static android.content.ContentValues.TAG;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +38,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -145,6 +152,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                 .whereEqualTo("OwnerReference",userDoc)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -240,10 +248,20 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                 }
                                 if (!last.equals(formatter.format(date_now))&&(is_habit_today==true)){
                                     total=0;
+
+                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("  yyyy-MM-dd");
+                                    String inputString1 = habit.getLastDay();
+                                    String inputString2 = formatter.format(date_now);
+
+                                    LocalDate date1 = LocalDate.parse(inputString1, dtf);
+                                    LocalDate date2 = LocalDate.parse(inputString2, dtf);
+                                    long daysBetween = Duration.between(date1, date2).toDays();
+                                    System.out.println ("Days: " + daysBetween);
                                     Date startDate = new Date(Integer.valueOf(habit.getYear()),
                                             Integer.valueOf(habit.getMonth()),Integer.valueOf(habit.getDay()));
                                     Date endDate = date_now;
                                     long diff = endDate.getTime() - startDate.getTime();
+                                    System.out.println("--------+++"+diff);
 
                                     total = total+1;
                                     last=formatter.format(date_now);
