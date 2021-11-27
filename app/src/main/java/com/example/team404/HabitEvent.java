@@ -3,8 +3,10 @@ package com.example.team404;
 import java.util.ArrayList;
 
 public class HabitEvent implements java.io.Serializable{
+    //--------------------------------
+    //Create habit event object
+    //--------------------------------
     private String id;
-    //add photo
     private String uri;
     private String location;
     private String comments;
@@ -18,19 +20,8 @@ public class HabitEvent implements java.io.Serializable{
         this.date = date;
     }
 
-    public HabitEvent(String id, String location, String comments, String date) {
-        this.id = id;
-        this.location = location;
-        this.comments = comments;
-        this.date = date;
-    }
-
     public String getUri() {
         return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
     }
 
     public String getId() {
@@ -51,10 +42,6 @@ public class HabitEvent implements java.io.Serializable{
 
     public String getComments() {
         return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
     }
 
     public String getDate() {

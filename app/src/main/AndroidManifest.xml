@@ -43,7 +43,6 @@
             android:exported="true"
             android:label="@string/title_activity_maps" />
         <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".LocationActivity"></activity>
 
         <activity android:name=".TodayActivity"></activity>
         <activity android:name=".SubscribeActivity"></activity>

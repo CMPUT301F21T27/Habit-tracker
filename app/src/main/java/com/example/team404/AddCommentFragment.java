@@ -16,10 +16,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 public class AddCommentFragment extends DialogFragment {
+    //--------------------------------
+    //Display fragment to add comment
+    //--------------------------------
     private EditText commentName;
-    //private EditText account_photoName;
     private onFragmentInteractionListener listener;
-    Toast toast;
 
 
 
@@ -43,7 +44,6 @@ public class AddCommentFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_comment_fragment_layout, null);
-        //account_photoName = view.findViewById(R.id.account_photo_name_editText);
         commentName = view.findViewById((R.id.comment_editText));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -54,7 +54,6 @@ public class AddCommentFragment extends DialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //String photo = account_photoName.getText().toString();
                         String comment = commentName.getText().toString();
                         if (comment.length()==0){
                             Toast.makeText(getActivity(), "Please input valid words", Toast.LENGTH_LONG).show();

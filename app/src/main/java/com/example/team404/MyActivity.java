@@ -141,20 +141,11 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         bottomNav.setOnItemSelectedListener(navListener);
         reorder=(ImageView)findViewById(R.id.reorder_button);
         habitList=(ListView) findViewById(R.id.habit_list);
-        /**prefill habit for testing */
-        // String year ="2021";
-        // String month ="11";
-        //String day1 = "05";
-        //Habit habit = new Habit("play the video game","Because no homework",year,month,day1);
 
 
         habitDataList=new ArrayList<>();
         habitArrayAdapter = new Content(this,habitDataList);
 
-        //habitDataList.add(habit);
-        /** using Content class as adpter**/
-
-        //habitList.setAdapter(habitArrayAdapter);
         db.collection("Habit")
                 .whereEqualTo("OwnerReference",userDoc)
                 .get()

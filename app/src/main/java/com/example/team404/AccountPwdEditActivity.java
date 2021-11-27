@@ -22,7 +22,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class AccountPwdEditActivity extends AppCompatActivity {
-
+    //--------------------------------
+    //change account password
+    //if the user can input old password correctly, then can change to a new password
+    //previous activity: AccountActivity.java
+    //--------------------------------
     private TextView usernameEditText;
     private TextView emailTextView;
     private TextView phoneEditText;

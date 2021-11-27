@@ -53,9 +53,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EditHabitEventActivity extends AppCompatActivity implements AddCommentFragment.onFragmentInteractionListener, EditCommentFragment.onFragmentInteractionListener  {
+    //--------------------------------
+    //edit optional photo, optional location, optional comment
+    //later activity: MapsActivity.java
+    //previous activity: HabitEventActivity
+    //--------------------------------
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
-    private Button LocationButton;
-    private Button PhotoButton;
     private ImageView backImage;
     private ImageView LocationImage;
     private ImageView imageView;
@@ -68,7 +71,6 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
     private String habit_event_id;
     int position;
     Uri image_uri;
-    String uri_string;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
     String userEmail = user.getEmail();
@@ -78,8 +80,6 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
     StorageReference eventsHabbitRef = storageRef.child("/image/"+userEmail+timeStamp+".png");
 
 
-    private TextView locationvIEW;
-    private TextView photo;
     private static final String TAG = "EditHabitEventActivity";
 
     private static final int ERROR_DIALOG_REQUEST = 9001;

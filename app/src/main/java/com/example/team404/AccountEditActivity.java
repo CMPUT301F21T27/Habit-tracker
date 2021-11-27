@@ -19,7 +19,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class AccountEditActivity extends AppCompatActivity {
-
+    //--------------------------------
+    //Change account information
+    //email is unique id, cannot changed
+    //previous activity: AccountActivity.java
+    //--------------------------------
     private EditText usernameEditText;
     private TextView emailTextView;
     private EditText phoneEditText;

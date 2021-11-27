@@ -29,9 +29,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class AccountActivity extends AppCompatActivity {
-
-    private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
-    private  ImageView backImage;
+    //--------------------------------
+    //Display account information
+    //--------------------------------
     private ImageView notifcationImage;
     private ImageView editImage;
     private ImageView changePwdImage;
