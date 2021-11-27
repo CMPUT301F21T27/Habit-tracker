@@ -75,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                                     String month = document.getData().get("Month").toString();
                                     String day = document.getData().get("Day").toString();
                                     String email = document.getData().get("OwnerEmail").toString();
+                                    int total = Integer.valueOf((document.getData().get("Total").toString()));
+                                    String last = document.getData().get("Last").toString();
+                                    int total_did= Integer.valueOf((document.getData().get("Total Did").toString()));
 
                                     Habit habit = new Habit(id, title, reason, year, month, day);
                                     habit.setPub(true);
@@ -101,6 +104,9 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                                     if (plan.contains("Sunday")) {
                                         habit.setSunday(true);
                                     }
+                                habit.setLastDay(last);
+                                habit.setTotal_habit_day(total);
+                                habit.setTotal_did(total_did);
                                     //if (!email.equals(userEmail)){
                                     habitDataList.add(habit);
                                     habitList.setAdapter(habitArrayAdapter);

@@ -96,7 +96,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
->>>>>>> b4a88cddd663b33ca9d4eff51db9efd335942727
+
  * This activity is use to display user's Habits. That user can view, edit, delete habits through here. User can also
  * access the habits to do today through here
  */
