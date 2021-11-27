@@ -34,7 +34,8 @@
                 android:focusable="true"
                 android:src="@drawable/ic_baseline_arrow_back_24"
                 android:visibility="visible"
-                app:tint="@color/white" />
+                app:tint="@color/white"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <ImageView
                 android:id="@+id/addImage"
@@ -47,10 +48,10 @@
                 android:layout_marginLeft="343dp"
                 android:layout_marginTop="2dp"
                 android:clickable="true"
-                android:contentDescription="@string/back_button"
+                android:contentDescription="@string/add_button"
                 android:focusable="true"
                 android:src="@drawable/ic_baseline_add_circle_outline_24"
-                android:visibility="visible"
+                android:visibility="invisible"
                 app:tint="@color/white"
                 tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 

@@ -55,8 +55,6 @@ public class AccountActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         String userEmail = user.getEmail();
 
-
-
         setContentView(R.layout.activity_account);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setSelectedItemId(R.id.nav_account);
@@ -70,44 +68,33 @@ public class AccountActivity extends AppCompatActivity {
 
         db= FirebaseFirestore.getInstance();
         DocumentReference userDocRef = db.collection("User").document(userEmail);
-        userDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (value != null && value.exists()){
-                    old_password = value.getData().get("userPassword").toString();
-                    String userPhone = value.getData().get("phone").toString();
-                    String userName = value.getData().get("userName").toString();
-                    requestedListString = value.get("requestedList").toString();
-                    //java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String java.lang.Object.toString()' on a null object reference
-                    username.setText(userName);
-                    phone.setText(userPhone);
-                }else{
-                    String userPhone = "Empty phone number";
-                    phone.setText(userPhone);
-                }
-
+        userDocRef.addSnapshotListener((value, error) -> {
+            if (value != null && value.exists()){
+                old_password = value.getData().get("userPassword").toString();
+                String userPhone = value.getData().get("phone").toString();
+                String userName = value.getData().get("userName").toString();
+                requestedListString = value.get("requestedList").toString();
+                username.setText(userName);
+                phone.setText(userPhone);
+            }else{
+                String userPhone = "Empty phone number";
+                phone.setText(userPhone);
             }
+
         });
 
 
         notifcationImage = findViewById(R.id.notificationImage);
-        notifcationImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AccountActivity.this, NotificationActivity.class);
-                intent.putExtra("reqListString", requestedListString);
-                startActivity(intent);
-            }
-
+        notifcationImage.setOnClickListener(view -> {
+            Intent intent = new Intent(AccountActivity.this, NotificationActivity.class);
+            intent.putExtra("reqListString", requestedListString);
+            startActivity(intent);
         });
         changePwdImage = findViewById(R.id.change_password_Image);
-        changePwdImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AccountActivity.this, AccountPwdEditActivity.class);
-                intent.putExtra("old_password", old_password);
-                startActivity(intent);
-            }
+        changePwdImage.setOnClickListener(view -> {
+            Intent intent = new Intent(AccountActivity.this, AccountPwdEditActivity.class);
+            intent.putExtra("old_password", old_password);
+            startActivity(intent);
         });
 
         editImage = findViewById(R.id.EditImage);
@@ -133,22 +120,14 @@ public class AccountActivity extends AppCompatActivity {
                 if (log_out_count >1){
                     FirebaseAuth.getInstance().signOut();
                     finish();
-
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
 
                 }else{
                     Toast.makeText(AccountActivity.this, "Press again to exit!", Toast.LENGTH_SHORT).show();
-
                 }
-
-
-
             }
         });
-
-
-
     }
     //https://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android
     // author: Suragch (answered) GabrielBB(edited)
@@ -171,12 +150,6 @@ public class AccountActivity extends AppCompatActivity {
                 textView1.setText(returnphone);
             }
         }
-
-
-
-
-
-
 
     private NavigationBarView.OnItemSelectedListener navListener =
             new NavigationBarView.OnItemSelectedListener() {

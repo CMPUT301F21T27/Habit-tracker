@@ -2,6 +2,7 @@ package com.example.team404;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,7 +49,7 @@ public class HabitEventListActivity extends AppCompatActivity {
     ArrayList<HabitEvent> habitEventDataList;
     private ImageView backImage;
     private ImageView addImage;
-    private int position ;
+    private int position;
     private String current_habit_id;
     private  String today;
     private String Cloud_location;
@@ -68,9 +69,12 @@ public class HabitEventListActivity extends AppCompatActivity {
         Intent current_habit_intent = getIntent();
         current_habit_id = current_habit_intent.getStringExtra("current_habit_id");
         today =current_habit_intent.getStringExtra("Today");
-        ImageView addImage = findViewById(R.id.addImage);
 
-        addImage.setVisibility(today.equals("today")? ImageView.VISIBLE: ImageView.INVISIBLE );
+
+
+
+        ImageView addImage = findViewById(R.id.addImage);
+        //addImage.setVisibility(today.equals("today")? ImageView.VISIBLE: ImageView.INVISIBLE );
 
 
         db = FirebaseFirestore.getInstance();
@@ -115,32 +119,29 @@ public class HabitEventListActivity extends AppCompatActivity {
 
 
                         }
+                        System.out.println("--++++++--");
+                        if (habitEventDataList.size()== 0 && today.equals("today") ){
+                                addImage.setVisibility(ImageView.VISIBLE);
 
-                            if (habitEventDataList.size()== 0 && today.equals("today") ){
-                                    addImage.setVisibility(ImageView.VISIBLE);
+                        }else{
+                            if(today.equals("today")) {
+                                String valid_until = habitEventDataList.get(habitEventDataList.size() - 1).getDate();
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                String valid_now = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+                                Date strDate = null;
+                                Date current_Date = null;
 
-                            }else{
-                                if(today.equals("today")) {
+                                try {
 
-
-
-                                    String valid_until = habitEventDataList.get(habitEventDataList.size() - 1).getDate();
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                                    String valid_now = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                                    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-                                    Date strDate = null;
-                                    Date current_Date = null;
-
-                                    try {
-
-                                        strDate = sdf.parse(valid_until);
-                                        current_Date = sdf2.parse(valid_now);
-                                    } catch (Exception pe) {
-                                        pe.printStackTrace();
-                                    }
-                                    addImage.setVisibility(current_Date.after(strDate) ? ImageView.VISIBLE : ImageView.INVISIBLE);
+                                    strDate = sdf.parse(valid_until);
+                                    current_Date = sdf2.parse(valid_now);
+                                } catch (Exception pe) {
+                                    pe.printStackTrace();
                                 }
+                                addImage.setVisibility(current_Date.after(strDate) ? ImageView.VISIBLE : ImageView.INVISIBLE);
                             }
+                        }
 
 
 
@@ -148,7 +149,9 @@ public class HabitEventListActivity extends AppCompatActivity {
                         Log.d(TAG, "Current habit event: " + habitDoc);
                     }
                 });
-
+        System.out.println("----");
+        //addImage.setVisibility(today.equals("today")? ImageView.VISIBLE: ImageView.INVISIBLE );
+        System.out.println("--++++--");
         habitEventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -192,6 +195,10 @@ public class HabitEventListActivity extends AppCompatActivity {
                                 String current_habit_event_id = currentHabitevent.getId();
                                 habitEventDataList.remove(selected_item);
                                 habitEventArrayAdapter.notifyDataSetChanged();
+                                if (habitEventDataList.size()== 0 && today.equals("today") ){
+                                    addImage.setVisibility(ImageView.VISIBLE);
+
+                                }
                                 db.collection("Habit Event List").document(current_habit_event_id)
                                         .delete()
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -237,6 +244,19 @@ public class HabitEventListActivity extends AppCompatActivity {
                 startActivityForResult(intent, 000);
             }
         });
+    }
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
+        if (requestCode == 000) {
+            if (resultCode == RESULT_OK) {
+                String returnString = data.getStringExtra("Disappear add button");
+                System.out.println("--++++=====--");
+                addImage.setVisibility(returnString.equals("true")? ImageView.INVISIBLE: ImageView.VISIBLE );
+
+
+            }
+        }
     }
 
 }

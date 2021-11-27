@@ -4,6 +4,7 @@ package com.example.team404;
 import static android.content.ContentValues.TAG;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -311,18 +313,38 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
         // to call Camera to get a photo
         imageView = findViewById(R.id.imageView);
         imageView.setOnClickListener(v -> {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
-                if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
-                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                    String [] permission = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                    requestPermissions(permission,1000);
+            final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+            AlertDialog.Builder builder = new AlertDialog.Builder(EditHabitEventActivity.this);
+            builder.setTitle("Add Photo!");
+            builder.setItems(options, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int item) {
+                    if (options[item].equals("Take Photo")) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
+                                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                                String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                                requestPermissions(permission, 1000);
+                            } else {
+                                openCamera();
+                            }
+                        } else {
+                            openCamera();
+                        }
+                    } else if (options[item].equals("Choose from Gallery")) {
+
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+
+                        startActivityForResult(intent, 222);
+
+                    } else if (options[item].equals("Cancel")) {
+
+                        dialog.dismiss();
+
+                    }
                 }
-                else {
-                    openCamera();
-                }
-            }
+            });
+            builder.show();
         });
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -415,54 +437,72 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
     }
     //Waiting for next activity to pass string back in to the current activity
+    @SuppressLint("MissingSuperCall")
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
+    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
         if (requestCode == SECOND_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 String returnString = data.getStringExtra("keyName");
 
-                //locationTextView = (TextView) findViewById(R.id.location_textView);
                 locationTextView.setText(returnString);
             }
         }
+        if (requestCode==111){
+            if (resultCode == Activity.RESULT_OK) {
+                imageView.setImageURI(image_uri);
+                try {
+                    Bitmap captureImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    byte[] imageData = baos.toByteArray();
+                    UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(EditHabitEventActivity.this, "Upload Failure", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(EditHabitEventActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else if(requestCode==222){
+            if (resultCode == Activity.RESULT_OK) {
 
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case 1:
+                try {
+                    image_uri = data.getData();
                     imageView.setImageURI(image_uri);
-                    try {
-                        Bitmap captureImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                        byte[] imageData = baos.toByteArray();
-                        UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
-                        uploadTask.addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle unsuccessful uploads
-                                Toast.makeText(EditHabitEventActivity.this, "Upload Failure", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                                // ...
-                                Toast.makeText(EditHabitEventActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Bitmap captureImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    byte[] imageData = baos.toByteArray();
+                    UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(EditHabitEventActivity.this, "Upload Failure", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(EditHabitEventActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                    break;
 
             }
         }
-        //////////////////////////////////////////////////////////////////////////
+
+
+
     }
     //https://www.youtube.com/watch?v=fPFr0So1LmI&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt&index=6
     //Author: CodingWithMitch
