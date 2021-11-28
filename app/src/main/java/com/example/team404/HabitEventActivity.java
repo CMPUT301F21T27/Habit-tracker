@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.internal.Storage;
@@ -55,17 +56,20 @@ public class HabitEventActivity extends AppCompatActivity {
     private ImageView backImage;
     private ImageView imageView;
     private ImageView editImage;
+    private String today;
+    private String current_habit_id;
 
     private TextView commentTextView;
     private TextView locationTextView;
-
+    String TAG= "HabitEventActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_event);
-
+        ContentLoadingProgressBar contentLoadingProgressBar = findViewById(R.id.progress_bar);
+        contentLoadingProgressBar.hide();
 
         commentTextView= findViewById(R.id.comment_textView);
         locationTextView = findViewById(R.id.locationTextView);
@@ -74,20 +78,28 @@ public class HabitEventActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         String id = extras.getString("id");
-
+        System.out.println("_----------------------------------hea  0");
         String location = extras.getString("location");
         String comment = extras.getString("comment");
+        today = extras.getString("today");
+        current_habit_id= extras.getString("current_habit_id");
+
         String storageUrlString = extras.getString("storageUrlString");
+
         if (storageUrlString!=null){
+            System.out.println("_----------------------------------hea");
+            contentLoadingProgressBar.show();
             Uri storageURL = Uri.parse(storageUrlString);
+            System.out.println("_----------------------------------hea  1");
             Glide.with(getApplicationContext()).load(storageURL).into(imageView);
+            contentLoadingProgressBar.hide();
+        }else{
+            contentLoadingProgressBar.hide();
         }
 
 
         commentTextView.setText(comment);
         locationTextView.setText(location);
-
-
 
         backImage = findViewById(R.id.backImage);
         backImage.setOnClickListener(v -> onBackPressed());
@@ -105,6 +117,8 @@ public class HabitEventActivity extends AppCompatActivity {
             extras1.putString("location", location1);
             extras1.putString("comment", comment1);
             extras1.putString("storageUrlString", storageUrlString);
+            extras1.putString("today", today);
+            extras1.putString("current_habit_id", current_habit_id);
             intent.putExtras(extras1);
 
             startActivity(intent);
@@ -127,10 +141,12 @@ public class HabitEventActivity extends AppCompatActivity {
             String commentString = data.getStringExtra("comment");
             String storageUrlString = data.getStringExtra("storageUrlString");
             if (storageUrlString!=null){
+                System.out.println("_----------------------------------hea 33");
                 imageView.setImageResource(android.R.color.transparent);
                 imageView = findViewById(R.id.imageView);
                 Uri storageURL = Uri.parse(storageUrlString);
                 Glide.with(getApplicationContext()).load(storageURL).into(imageView);
+
             }else {
                 imageView.setImageResource(android.R.color.transparent);
                 imageView=findViewById(R.id.imageView_delete);

@@ -206,7 +206,6 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                         case R.id.nav_home:
                             intent = new Intent(getApplicationContext(), MainActivity.class);
 
-                            //break;
                             return true;
 
                         case R.id.nav_account:
@@ -225,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                     }
                     startActivity(intent);
                     overridePendingTransition(0, 0);
+                    finish();
                     return true;
                 }
             };

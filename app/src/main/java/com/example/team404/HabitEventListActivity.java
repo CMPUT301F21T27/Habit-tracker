@@ -56,6 +56,7 @@ public class HabitEventListActivity extends AppCompatActivity {
     private String Cloud_location;
     private String Cloud_comment;
     private  String Cloud_photo;
+    private int total_did;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -71,15 +72,18 @@ public class HabitEventListActivity extends AppCompatActivity {
 
         Intent current_habit_intent = getIntent();
         current_habit_id = current_habit_intent.getStringExtra("current_habit_id");
-        today =current_habit_intent.getStringExtra("Today");
-
+        today =current_habit_intent.getStringExtra("today");
+        System.out.println("--------------------------------1---"+current_habit_id);
+        System.out.println("--------------------------------11---"+today);
 
 
 
         ImageView addImage = findViewById(R.id.addImage);
         //addImage.setVisibility(today.equals("today")? ImageView.VISIBLE: ImageView.INVISIBLE );
 
-
+        System.out.println("----------------1111111111111111111-------------------");
+        System.out.println("--------------------------------1---"+current_habit_id);
+        System.out.println("--------------------------------11---"+today);
         db = FirebaseFirestore.getInstance();
         DocumentReference habitDoc = FirebaseFirestore.getInstance().collection("Habit").document(current_habit_id);
 
@@ -175,6 +179,8 @@ public class HabitEventListActivity extends AppCompatActivity {
                 extras.putString("date", date);
                 extras.putString("storageUrlString",uri);
                 extras.putString("comment", comment);
+                extras.putString("today",today);
+                extras.putString("current_habit_id",current_habit_id);
                 intent.putExtras(extras);
                 System.out.println("---------2222-------------------"+uri+"---------");
 
@@ -210,6 +216,21 @@ public class HabitEventListActivity extends AppCompatActivity {
                                             public void onSuccess(Void aVoid) {
                                                 Log.d(TAG, "DocumentSnapshot successfully deleted!");
                                                 Toast.makeText(getApplicationContext(), "Delete successfully!", Toast.LENGTH_SHORT).show();
+                                                db.collection("Habit").document(current_habit_id).
+                                                        get()
+                                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                                                total_did=Integer.valueOf(documentSnapshot.getData().get("Total Did").toString());
+                                                                total_did=total_did-1;
+                                                                db.collection("Habit").document(current_habit_id).
+                                                                        update("Total Did",total_did);
+
+
+                                                            }
+
+                                                        });
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -265,5 +286,6 @@ public class HabitEventListActivity extends AppCompatActivity {
             }
         }
     }
+
 
 }

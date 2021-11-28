@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
-    android:background="#D6EAF8"
+    android:background="@drawable/image1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
@@ -14,7 +14,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="#CFE2F8 "
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         android:visibility="visible"
@@ -59,8 +59,9 @@
                 android:layout_marginEnd="126dp"
                 android:layout_marginRight="126dp"
                 android:text="My Habit"
-                android:textColor="@color/white"
-                android:textSize="30sp" />
+                android:textColor="#5B9CEA "
+                android:textSize="30sp"
+                android:textStyle="bold|italic"  />
 
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -117,6 +118,7 @@
         android:layout_marginEnd="0dp"
         android:drawableLeft="@drawable/ic_baseline_today_24"
         android:text="TODAY"
+
         app:layout_constraintBottom_toTopOf="@+id/habit_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
