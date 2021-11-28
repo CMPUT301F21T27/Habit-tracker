@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -121,6 +122,87 @@ public class AddHabitFragment extends DialogFragment {
         sundayCheck=view.findViewById(R.id.sunday_check);
         pubSwitch=view.findViewById(R.id.pub_switch);
         /** User is editing an exist habit, then the editText will show the information of the previous habit **/
+        if (habit_selected!=null){
+            date_start.setClickable(false);
+            mondayCheck.setClickable(false);
+            tuesdayCheck.setClickable(false);
+            wednesdayCheck.setClickable(false);
+            thursdayCheck.setClickable(false);
+            fridayCheck.setClickable(false);
+            saturdayCheck.setClickable(false);
+            sundayCheck.setClickable(false);
+        }
+        mondayCheck.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(habit_selected!=null){
+                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
+                    mondayCheck.setChecked(habit_selected.getMonday());
+                }
+            }
+        });
+        tuesdayCheck.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(habit_selected!=null){
+                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
+                    tuesdayCheck.setChecked(habit_selected.getTuesday());
+                }
+            }
+        });
+        wednesdayCheck.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(habit_selected!=null){
+                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
+                    wednesdayCheck.setChecked(habit_selected.getWednesday());
+                }
+            }
+        });
+        thursdayCheck.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(habit_selected!=null){
+                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
+                    thursdayCheck.setChecked(habit_selected.getThursday());
+                }
+            }
+        });
+        fridayCheck.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(habit_selected!=null){
+                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
+                    fridayCheck.setChecked(habit_selected.getFriday());
+                }
+            }
+        });
+        saturdayCheck.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(habit_selected!=null){
+                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
+                    saturdayCheck.setChecked(habit_selected.getSaturday());
+                }
+            }
+        });
+        sundayCheck.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(habit_selected!=null){
+                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
+                    sundayCheck.setChecked(habit_selected.getSunday());
+                }
+            }
+        });
+
         if (habit_selected != null) {
             title.setText(habit_selected.getTitle());
             date_start.setText(habit_selected.getYear() +"-"+habit_selected.getMonth()+"-"+habit_selected.getDay());
@@ -138,13 +220,17 @@ public class AddHabitFragment extends DialogFragment {
         date_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(habit_selected!=null){
+                    Toast.makeText(getActivity(), "Date cannot get edit", Toast.LENGTH_SHORT).show();
+                }
+                else{
                 Calendar calendar = Calendar.getInstance();
                 year = calendar.get(Calendar.YEAR);
                 month = calendar.get(Calendar.MONTH);
                 day = calendar.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(view.getContext(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, DateStartSetListener, year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
+                dialog.show();}
             }
 
 
