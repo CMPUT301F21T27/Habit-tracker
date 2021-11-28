@@ -172,6 +172,7 @@ public class AccountActivity extends AppCompatActivity {
                     finish();
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
+                    finish();
 
                 }else{
                     Toast.makeText(AccountActivity.this, "Press again to exit!", Toast.LENGTH_SHORT).show();
