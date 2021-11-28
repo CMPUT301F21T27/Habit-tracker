@@ -16,6 +16,7 @@
         android:textSize="25sp"
         android:hint="title"
         android:inputType="textPersonName"
+        android:layout_marginLeft="10dp"
         android:maxLength="20"/>
 
     <TextView
@@ -26,6 +27,7 @@
         android:clickable="true"
         android:hint="Date_Start"
         android:inputType="date"
+        android:layout_marginLeft="10dp"
         android:textSize="24sp" />
 
     <TextView
@@ -34,6 +36,7 @@
         android:id="@+id/reason_main_Text"
         android:ems="10"
         android:textSize="20sp"
+        android:layout_marginLeft="10dp"
         android:hint="reason"
         android:inputType="textPersonName"
         android:maxLength="30"/>
@@ -42,6 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
+        android:layout_marginLeft="10dp"
         android:text="Days of a week habit occur"></TextView>
 
 

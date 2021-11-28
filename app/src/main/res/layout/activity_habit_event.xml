@@ -133,7 +133,7 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -167,7 +167,7 @@
             android:id="@+id/comment_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#51C6FF00"
+            android:background="@drawable/shape_gradient"
             android:clickable="true"
             android:maxLength="20"
             android:minHeight="48dp"
