@@ -110,8 +110,8 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="10dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -122,8 +122,8 @@
     <ImageView
         android:id="@+id/imageView_delete"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/ic_baseline_add_a_photo_24"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -132,10 +132,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:background="@drawable/shape_button"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -180,10 +179,10 @@
             android:id="@+id/comment_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/shape_gradient"
             android:clickable="true"
             android:maxLength="20"
             android:minHeight="48dp"
-            android:background="@drawable/shape_gradient"
             android:textSize="20sp"
             tools:ignore="SpeakableTextPresentCheck" />
 
