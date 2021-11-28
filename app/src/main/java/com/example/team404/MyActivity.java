@@ -637,6 +637,11 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
     @Override
     public void onRestart(){
         super.onRestart();
+
+
+        startActivity(getIntent());
+        finish();
+        overridePendingTransition(0, 0);
         habitList.setAdapter(habitArrayAdapter);
     }
 
