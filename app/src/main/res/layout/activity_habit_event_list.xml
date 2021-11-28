@@ -76,6 +76,19 @@
 
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar"
+
+        style="@android:style/Widget.ProgressBar.Large"
+        android:theme="@android:style/Animation"
+        android:layout_width="55dp"
+        android:layout_height="66dp"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="356dp"
+        android:layout_marginBottom="665dp"
+
+        android:visibility="visible"
+        tools:ignore="InvalidId" />
 
     <ListView
         android:id="@+id/habit_event_list"

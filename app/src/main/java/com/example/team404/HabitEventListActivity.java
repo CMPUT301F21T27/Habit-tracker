@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -62,6 +63,8 @@ public class HabitEventListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         final FirebaseFirestore db;
         setContentView(R.layout.activity_habit_event_list);
+        ContentLoadingProgressBar contentLoadingProgressBar = findViewById(R.id.progress_bar);
+        contentLoadingProgressBar.show();
         habitEventList= findViewById(R.id.habit_event_list);
         habitEventDataList=new ArrayList<>();
         habitEventArrayAdapter = new HabitEventContent(this,habitEventDataList);
@@ -92,7 +95,7 @@ public class HabitEventListActivity extends AppCompatActivity {
 
                         Log.d(TAG, "Current habit event: " + habitDoc);
 
-
+                        contentLoadingProgressBar.show();
                         habitEventDataList.clear();
                         for (QueryDocumentSnapshot doc : value) {
                             if ( doc.get("Location") == null){
@@ -119,6 +122,7 @@ public class HabitEventListActivity extends AppCompatActivity {
 
 
                         }
+                        contentLoadingProgressBar.hide();
                         System.out.println("--++++++--");
                         if (habitEventDataList.size()== 0 && today.equals("today") ){
                                 addImage.setVisibility(ImageView.VISIBLE);
@@ -252,7 +256,10 @@ public class HabitEventListActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 String returnString = data.getStringExtra("Disappear add button");
                 System.out.println("--++++=====--");
+                ContentLoadingProgressBar contentLoadingProgressBar = findViewById(R.id.progress_bar);
+                contentLoadingProgressBar.show();
                 addImage.setVisibility(returnString.equals("true")? ImageView.INVISIBLE: ImageView.VISIBLE );
+                contentLoadingProgressBar.hide();
 
 
             }

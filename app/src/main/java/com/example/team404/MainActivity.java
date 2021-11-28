@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -61,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
         habitList=findViewById(R.id.main_list);
         habitDataList=new ArrayList<>();
         habitArrayAdapter = new Content(this,habitDataList);
+        ContentLoadingProgressBar contentLoadingProgressBar = findViewById(R.id.progress_bar);
+        //
+        contentLoadingProgressBar.show();
         db.collection("Habit")
                 .whereEqualTo("Public","True")
 
@@ -165,6 +169,9 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
 
 
                             }
+                            //setProgressBarIndeterminate(false);
+                            //contentLoadingProgressBar.setVisibility(View.VISIBLE);
+                            contentLoadingProgressBar.hide();
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
