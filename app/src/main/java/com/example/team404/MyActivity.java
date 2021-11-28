@@ -248,6 +248,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                 }
                                 if (!last.equals(formatter.format(date_now))&&(is_habit_today==true)){
                                     total=0;
+
                                     LocalDate today = LocalDate.now();
                                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
                                     LocalDate startDate = LocalDate.of(Integer.valueOf(habit.getYear())
@@ -260,6 +261,9 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                         long daysBetween= Duration.between(date1,date2).toDays();
                                         total= (int)(daysBetween);
                                         
+
+
+                                    //http://www.java2s.com/Tutorials/Java/Data_Type_How_to/Date/Get_all_Monday_dates_in_given_month.htm
 
 
 
