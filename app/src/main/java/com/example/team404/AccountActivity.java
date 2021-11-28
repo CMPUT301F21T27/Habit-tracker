@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +20,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.appcheck.FirebaseAppCheck;
+import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -29,6 +38,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class AccountActivity extends AppCompatActivity {
     //--------------------------------
@@ -47,18 +59,22 @@ public class AccountActivity extends AppCompatActivity {
     private String old_password;
     private String profile_uri_string;
 
+    FirebaseAuth mAuth;
+    FirebaseUser user;
+    String userEmail;
+
+    String TAG = "AccountActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
 
-        final FirebaseFirestore db;
-        FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
+        user = mAuth.getCurrentUser();
+        userEmail = user.getEmail();
+        System.out.println("---------------------------uid:"+user.getUid());
         String userEmail = user.getEmail();
-
         setContentView(R.layout.activity_account);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setSelectedItemId(R.id.nav_account);
@@ -70,30 +86,51 @@ public class AccountActivity extends AppCompatActivity {
         profileView= findViewById((R.id.profile));
 
         email.setText(userEmail);
-
+        final FirebaseFirestore db;
         db= FirebaseFirestore.getInstance();
         DocumentReference userDocRef = db.collection("User").document(userEmail);
-        userDocRef.addSnapshotListener((value, error) -> {
-            if (value != null && value.exists()){
-                old_password = value.getData().get("userPassword").toString();
-                String userPhone = value.getData().get("phone").toString();
-                String userName = value.getData().get("userName").toString();
-                requestedListString = value.get("requestedList").toString();
-                if (value.get("profile_uri")!=null){
-                    profile_uri_string=value.get("profile_uri").toString();
-                    Uri storageURL = Uri.parse(profile_uri_string);
-                    Glide.with(getApplicationContext()).load(storageURL).into(profileView);
-                    System.out.println("---------------------------storage url:"+storageURL);
-                }
-                username.setText(userName);
-                phone.setText(userPhone);
-            }else{
-                String userPhone = "Empty phone number";
-                phone.setText(userPhone);
-            }
+        userDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        old_password = document.get("userPassword").toString();
+                        String userPhone = document.get("phone").toString();
+                        String userName = document.get("userName").toString();
+                        requestedListString = document.get("requestedList").toString();
+                        if (document.get("profile_uri")!=null){
+                            profile_uri_string=document.get("profile_uri").toString();
+                            Uri storageURL = Uri.parse(profile_uri_string);
+                            Glide.with(getApplicationContext()).load(storageURL).into(profileView);
+                            System.out.println("------------*************************************---------------storage url:"+storageURL);
+                            System.out.println("---------------------------uid:"+user.getUid());
+                            username.setText(userName);
+                            phone.setText(userPhone);
 
+                        }
+                        if(userPhone==null){
+                            userPhone = "Empty phone number";
+                            phone.setText(userPhone);
+                        }
+                        username.setText(userName);
+                        phone.setText(userPhone);
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+
+
+
+
+
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
         });
 
+        System.out.println("------------******************1*******************--------------");
 
         notifcationImage = findViewById(R.id.notificationImage);
         notifcationImage.setOnClickListener(view -> {
@@ -153,9 +190,18 @@ public class AccountActivity extends AppCompatActivity {
 
             if (requestCode == 333) {
                 // Get String data from Intent
+                System.out.println("------------********************66*****************-----66------");
+                System.out.println("---------------------------uid:"+user.getUid());
                 String returnString = data.getStringExtra("editName");
                 String returnphone = data.getStringExtra("editPhone");
+                String  profile_uri_string=data.getStringExtra("uri_string");
+                if (profile_uri_string!=null){
+                    Uri storageURL = Uri.parse(profile_uri_string);
+                    Glide.with(getApplicationContext()).load(storageURL).into(profileView);
+                    System.out.println("------------*************************************---------------storage url:"+storageURL);
+                    System.out.println("---------------------------uid:"+user.getUid());
 
+                }
                 // Set text view with string
                 TextView textView = (TextView) findViewById(R.id.name);
                 textView.setText(returnString);
@@ -198,10 +244,12 @@ public class AccountActivity extends AppCompatActivity {
                             break;
                     }
                     startActivity(intent);
+                    finish();
                     overridePendingTransition(0, 0);
                     return true;
                 }
             };
+
     private int count = 0;
     @Override
     public void onBackPressed() {

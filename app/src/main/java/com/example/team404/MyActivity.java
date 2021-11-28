@@ -566,9 +566,10 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                             //return true;
                             break;
                     }
-                    finish();
+
                     startActivity(intent);
                     overridePendingTransition(0, 0);
+                    finish();
                     return true;
                 }
             };

@@ -1,6 +1,7 @@
 package com.example.team404;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,7 +13,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.appcheck.FirebaseAppCheck;
+import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -36,18 +43,19 @@ public class AccountPwdEditActivity extends AppCompatActivity {
     private ImageView saveImage;
     private String userOldPwd;
     private String old_password;
-
+    FirebaseAuth mAuth;
+    FirebaseUser user;
+    String userEmail;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
 
-
-        FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userEmail = user.getEmail();
 
+        user = mAuth.getCurrentUser();
+
+        userEmail = user.getEmail();
 
         setContentView(R.layout.activity_change_account_pwd);
         emailTextView = findViewById(R.id.emailEditText);
@@ -81,20 +89,21 @@ public class AccountPwdEditActivity extends AppCompatActivity {
 
 
                 user.updatePassword(newPwd)
-                        .addOnCompleteListener(AccountPwdEditActivity.this, new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    userDocRef.update("userPassword", newPwd);
-                                    onBackPressed();
-                                    Toast.makeText(getApplicationContext(), "Password Updated Successfully", Toast.LENGTH_SHORT).show();
+                    .addOnCompleteListener(AccountPwdEditActivity.this, new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                userDocRef.update("userPassword", newPwd);
+                                finish();
+                                onBackPressed();
+                                Toast.makeText(getApplicationContext(), "Password Updated Successfully", Toast.LENGTH_SHORT).show();
 
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "For Security reasons you have to re-login first.\nThen try to update password", Toast.LENGTH_LONG).show();
-                                    return;
-                                }
+                            } else {
+                                Toast.makeText(getApplicationContext(), "For Security reasons you have to re-login first.\nThen try to update password", Toast.LENGTH_LONG).show();
+                                return;
                             }
-                        });
+                        }
+                    });
             }
         });
 
@@ -125,6 +134,7 @@ public class AccountPwdEditActivity extends AppCompatActivity {
         }
         return true;
     }
+
 
 
     @Override

@@ -129,6 +129,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginTop="16dp"
@@ -164,13 +165,30 @@
             android:id="@+id/comment_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#51C6FF00"
             android:clickable="true"
             android:maxLength="20"
             android:minHeight="48dp"
-            android:background="#51C6FF00"
             android:textSize="20sp"
             tools:ignore="SpeakableTextPresentCheck" />
+
     </LinearLayout>
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar"
+
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="55dp"
+        android:layout_height="66dp"
+        android:theme="@android:style/Animation"
+        android:visibility="visible"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.296"
+        tools:ignore="InvalidId,MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

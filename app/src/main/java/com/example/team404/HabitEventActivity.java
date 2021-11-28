@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.internal.Storage;
@@ -65,7 +66,8 @@ public class HabitEventActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_event);
-
+        ContentLoadingProgressBar contentLoadingProgressBar = findViewById(R.id.progress_bar);
+        contentLoadingProgressBar.show();
 
         commentTextView= findViewById(R.id.comment_textView);
         locationTextView = findViewById(R.id.locationTextView);
@@ -81,6 +83,9 @@ public class HabitEventActivity extends AppCompatActivity {
         if (storageUrlString!=null){
             Uri storageURL = Uri.parse(storageUrlString);
             Glide.with(getApplicationContext()).load(storageURL).into(imageView);
+            contentLoadingProgressBar.hide();
+        }else{
+            contentLoadingProgressBar.hide();
         }
 
 
@@ -131,6 +136,7 @@ public class HabitEventActivity extends AppCompatActivity {
                 imageView = findViewById(R.id.imageView);
                 Uri storageURL = Uri.parse(storageUrlString);
                 Glide.with(getApplicationContext()).load(storageURL).into(imageView);
+
             }else {
                 imageView.setImageResource(android.R.color.transparent);
                 imageView=findViewById(R.id.imageView_delete);

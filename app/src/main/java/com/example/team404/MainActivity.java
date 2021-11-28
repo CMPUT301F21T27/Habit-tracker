@@ -224,7 +224,8 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                             break;
                     }
                     startActivity(intent);
-                    overridePendingTransition(0, 0);
+
+                    finish();
                     return true;
                 }
             };

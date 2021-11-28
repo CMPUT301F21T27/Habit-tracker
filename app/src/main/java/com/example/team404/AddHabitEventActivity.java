@@ -165,7 +165,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                 onBackPressed();
             }
         });
-        //save habitevent after press save button
+        //save habit event after press save button
         saveImage = findViewById(R.id.saveImage);
         saveImage.setOnClickListener(new View.OnClickListener() {
             @Override
