@@ -253,7 +253,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
 
                                     LocalDate today = LocalDate.now();
-                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+
                                     LocalDate startDate = LocalDate.of(Integer.valueOf(habit.getYear())
                                             ,Integer.valueOf(habit.getMonth()),Integer.valueOf(habit.getDay()));
                                     long noOfDaysBetween = ChronoUnit.DAYS.between(startDate, today);
@@ -262,23 +262,39 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                         int total_days=0;
                                         for(int i=0; i<total;i++){
                                             LocalDate everyDay =startDate.plusDays(i);
-                                            if((everyDay.getDayOfWeek()== DayOfWeek.MONDAY)&&(habit.getMonday())){
+
+
+                                            if((everyDay.getDayOfWeek()== DayOfWeek.MONDAY)&&(habit.getMonday()==true)){
+
+                                                System.out.println((habit.getMonday()));
                                                 total_days++;
-                                            }else if((everyDay.getDayOfWeek()== DayOfWeek.TUESDAY)&&(habit.getTuesday())){
+                                            }else if((everyDay.getDayOfWeek()== DayOfWeek.TUESDAY)&&(habit.getTuesday()==true)){
+
+                                                System.out.println((habit.getTuesday()));
                                                 total_days++;
-                                            }else if((everyDay.getDayOfWeek()== DayOfWeek.WEDNESDAY)&&(habit.getWednesday())){
+                                            }else if((everyDay.getDayOfWeek()== DayOfWeek.WEDNESDAY)&&(habit.getWednesday()==true)){
+
+                                                System.out.println((habit.getWednesday()));
                                                 total_days++;
                                             }
-                                            else if((everyDay.getDayOfWeek()== DayOfWeek.THURSDAY)&&(habit.getThursday())){
+                                            else if((everyDay.getDayOfWeek()== DayOfWeek.THURSDAY)&&(habit.getThursday()==true)){
+
+                                                System.out.println((habit.getThursday()));
                                                 total_days++;
                                             }
-                                            else if((everyDay.getDayOfWeek()== DayOfWeek.FRIDAY)&&(habit.getFriday())){
+                                            else if((everyDay.getDayOfWeek()== DayOfWeek.FRIDAY)&&(habit.getFriday()==true)){
+
+                                                System.out.println((habit.getFriday()));
                                                 total_days++;
                                             }
-                                            else if((everyDay.getDayOfWeek()== DayOfWeek.SATURDAY)&&(habit.getSaturday())){
+                                            else if((everyDay.getDayOfWeek()== DayOfWeek.SATURDAY)&&(habit.getSaturday()==true)){
+
+                                                System.out.println((habit.getSaturday()));
                                                 total_days++;
                                             }
-                                            else if((everyDay.getDayOfWeek()== DayOfWeek.SUNDAY)&&(habit.getSunday())){
+                                            else if((everyDay.getDayOfWeek()== DayOfWeek.SUNDAY)&&(habit.getSunday()==true)){
+
+                                                System.out.println((habit.getSunday()));
                                                 total_days++;
                                             }
 
@@ -300,7 +316,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                     h.put("Total",total_days);
                                     h.put("Last",last);
                                     db.collection("Habit").document(id)
-                                            .update("Total",total,
+                                            .update("Total",total_days,
                                                     "Last",last);
 
 
