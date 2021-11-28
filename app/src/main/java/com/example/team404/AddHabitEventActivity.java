@@ -270,6 +270,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
 
                         }
                     });
+                    AddHabitEventActivity.this.finish(); // finish current activity
                     //Toast.makeText(AddHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
                     contentLoadingProgressBar.show();
                     handler.postDelayed(new Runnable() {
@@ -527,5 +528,10 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
     }
     @Override
     public void onCancelPressed(){}
+    @Override
+    public void onBackPressed() {
+     //super.onBackPressed();
+        finish();
+    }
 
 }

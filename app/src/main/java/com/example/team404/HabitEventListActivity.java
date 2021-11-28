@@ -56,6 +56,7 @@ public class HabitEventListActivity extends AppCompatActivity {
     private String Cloud_location;
     private String Cloud_comment;
     private  String Cloud_photo;
+    private int total_did;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -215,6 +216,21 @@ public class HabitEventListActivity extends AppCompatActivity {
                                             public void onSuccess(Void aVoid) {
                                                 Log.d(TAG, "DocumentSnapshot successfully deleted!");
                                                 Toast.makeText(getApplicationContext(), "Delete successfully!", Toast.LENGTH_SHORT).show();
+                                                db.collection("Habit").document(current_habit_id).
+                                                        get()
+                                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                                                total_did=Integer.valueOf(documentSnapshot.getData().get("Total Did").toString());
+                                                                total_did=total_did-1;
+                                                                db.collection("Habit").document(current_habit_id).
+                                                                        update("Total Did",total_did);
+
+
+                                                            }
+
+                                                        });
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -270,5 +286,6 @@ public class HabitEventListActivity extends AppCompatActivity {
             }
         }
     }
+
 
 }
