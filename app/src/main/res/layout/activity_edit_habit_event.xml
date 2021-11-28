@@ -141,37 +141,38 @@
         app:layout_constraintTop_toBottomOf="@+id/locationImage"
         app:layout_constraintVertical_bias="1.0">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/linearLayout">
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Comment:"
-                android:textSize="30sp"
-                tools:layout_conversion_absoluteHeight="40dp"
-                tools:layout_editor_absoluteY="431dp"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_conversion_absoluteWidth="139dp" />
+            android:layout_height="wrap_content">
 
             <ImageButton
                 android:id="@+id/add_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="220dp"
                 android:background="#FFFFFF"
                 android:minWidth="48dp"
                 android:minHeight="48dp"
                 android:src="@drawable/ic_baseline_add_circle_outline_24"
-                tools:ignore="SpeakableTextPresentCheck"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="48dp"
-                tools:layout_editor_absoluteX="139dp"
-                tools:layout_editor_absoluteY="431dp" />
-        </LinearLayout>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView6"
+                app:layout_constraintTop_toTopOf="@+id/textView6"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Comment:"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/comment_textView"
@@ -183,7 +184,22 @@
             android:background="#51C6FF00"
             android:textSize="20sp"
             tools:ignore="SpeakableTextPresentCheck" />
+
     </LinearLayout>
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="55dp"
+        android:layout_height="66dp"
+        android:theme="@android:style/Animation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.499"
+        tools:ignore="InvalidId,MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

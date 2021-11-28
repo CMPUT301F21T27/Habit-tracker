@@ -16,6 +16,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +31,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
@@ -71,7 +73,9 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
     private String back_location;
     private  String back_storageUrlString;
     private String habit_event_id;
-    int position;
+    private String today;
+    private String current_habit_id;
+    private Boolean save_upload =false;
     Uri image_uri;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser user = mAuth.getCurrentUser();
@@ -90,12 +94,18 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_habit_event);
+        ContentLoadingProgressBar contentLoadingProgressBar = findViewById(R.id.progress_bar);
+        contentLoadingProgressBar.hide();
+
 
         Bundle extras = getIntent().getExtras();
         habit_event_id = extras.getString("id");
         back_location = extras.getString("location");
         back_comment = extras.getString("comment");
+        today = extras.getString("today");
+        current_habit_id = extras.getString("current_habit_id");
         back_storageUrlString = extras.getString("storageUrlString");
+
 
         commentTextView= findViewById(R.id.comment_textView);
         locationTextView = findViewById(R.id.location_textView);
@@ -188,13 +198,19 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                 System.out.println("------------+++++++++++++++++++++++++++++"+image_uri);
                 Toast.makeText(EditHabitEventActivity.this, "Nothing changed!", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                overridePendingTransition(0, 0);
                 //onBackPressed();
             }
         });
+
+
+
+
+        final Handler handler = new Handler();
         saveImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //contentLoadingProgressBar.show();
 
                 String location_ = locationTextView.getText().toString();
                 String comment_ = commentTextView.getText().toString();
@@ -254,12 +270,38 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
                         }
                     });
-                    finish();
-                    System.out.println("--------path is null!"+image_uri);
-                    //Intent intent = new Intent(EditHabitEventActivity.this, HabitEventListActivity.class);
-                    System.out.println("------------+++++++++++++++++++++++++++++"+image_uri);
-                    //startActivity(intent);
-                    onBackPressed();
+
+                    Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
+                    contentLoadingProgressBar.show();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            /*
+                            System.out.println("-----------------------------------");
+                            Intent intent = new Intent(EditHabitEventActivity.this, HabitEventListActivity.class);
+                            Bundle extras = new Bundle();
+                            extras.putString("current_habit_id", current_habit_id);
+                            extras.putString("today", today);
+                            intent.putExtras(extras);
+                            //setResult(333, intent);
+                            EditHabitEventActivity.this.startActivity(intent);
+                            System.out.println("-----------------------t------------"+today);
+                            System.out.println("----------------------c-------------"+current_habit_id);
+                            EditHabitEventActivity.this.finish();
+                            System.out.println("------------------------t-----------"+today);
+                            System.out.println("------------------------c-----------"+current_habit_id);
+                            overridePendingTransition(0,0);
+
+                             */
+                            EditHabitEventActivity.super.onBackPressed();
+                            //saveImage.setEnabled(true);
+                            //Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }, 2000);
+
+
+
                 }else{
                     final FirebaseFirestore db;
                     db = FirebaseFirestore.getInstance();
@@ -278,11 +320,37 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                             }
                         });
 
-                        finish();
-                        //Intent intent = new Intent(EditHabitEventActivity.this, HabitEventListActivity.class);
-                        System.out.println("----+++--------+++++++++++++++++++++++++++++"+image_uri);
-                        //startActivity(intent);
-                        onBackPressed();
+                    Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
+                    contentLoadingProgressBar.show();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //saveImage.setEnabled(true);
+                                /*
+                                System.out.println("-----------------------------------");
+                                Intent intent = new Intent(EditHabitEventActivity.this, HabitEventListActivity.class);
+                                Bundle extras = new Bundle();
+                                extras.putString("current_habit_id", current_habit_id);
+                                extras.putString("today", today);
+                                intent.putExtras(extras);
+                                //setResult(333, intent);
+                                EditHabitEventActivity.this.startActivity(intent);
+                                System.out.println("----------------------t-------------"+today);
+                                System.out.println("-----------------------c------------"+current_habit_id);
+                                EditHabitEventActivity.this.finish();
+                                System.out.println("------------------------t-----------"+today);
+                                System.out.println("------------------------c-----------"+current_habit_id);
+                                overridePendingTransition(0,0);
+
+                                 */
+                                EditHabitEventActivity.super.onBackPressed();
+                                //Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
+                            }
+                        }, 2000);
+
+
+                    //onBackPressed();
+
                 }
             }
         });
@@ -366,13 +434,10 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
             }
         });
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 
     }
-    /////////////////////////////////////////////////////////////////////
     private void openCamera() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE,"New Picture");
@@ -398,7 +463,6 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                 }
         }
     }
-    //////////////////////////////////////////////////////////////////////////
     //initial location image button
     //make the location button is valid
     private void init(){
@@ -521,22 +585,10 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
     }
     @Override
     public void onCancelPressed(){}
+
     @Override
-
     public void onBackPressed() {
-        /*
-        String location_ = locationTextView.getText().toString();
-        String comment_ = commentTextView.getText().toString();
 
-        Intent intent = new Intent();
-        Bundle extras = new Bundle();
-        extras.putString("location", location_);
-        extras.putString("storageUrlString", back_storageUrlString);
-        extras.putString("comment", comment_);
-        intent.putExtras(extras);
-        setResult(333, intent);
-
-         */
         finish();
 
         super.onBackPressed();

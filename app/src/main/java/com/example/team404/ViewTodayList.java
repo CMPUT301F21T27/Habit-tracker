@@ -83,7 +83,8 @@ public class ViewTodayList extends DialogFragment {
                 Intent intent = new Intent(getActivity(), HabitEventListActivity.class);
                 String current_habit_id= habit_selected.getId();
                 intent.putExtra("current_habit_id", current_habit_id);
-                intent.putExtra("Today", "today");
+                String today = "today";
+                intent.putExtra("today", today);
 
                 startActivity(intent);
 
