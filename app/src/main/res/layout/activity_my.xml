@@ -118,7 +118,7 @@
         android:layout_marginEnd="0dp"
         android:drawableLeft="@drawable/ic_baseline_today_24"
         android:text="TODAY"
-
+        android:background="@drawable/shape_edit"
         app:layout_constraintBottom_toTopOf="@+id/habit_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
