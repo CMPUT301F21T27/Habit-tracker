@@ -95,7 +95,7 @@
                 android:maxLines="1"
                 android:paddingRight="15dp"
                 android:paddingLeft="15dp"
-                android:hint="Passward"
+                android:hint="Password"
                 android:layout_marginTop="10dp"
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
@@ -109,7 +109,7 @@
                 android:inputType="textPassword"
                 android:paddingRight="15dp"
                 android:paddingLeft="15dp"
-                android:hint="Re-passward"
+                android:hint="Re-password"
                 android:layout_marginTop="10dp"
 
                 android:layout_width="match_parent"
