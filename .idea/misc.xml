@@ -3,6 +3,42 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.17407407407407408" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.17407407407407408" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/ic_baseline_my_24.xml" value="0.17407407407407408" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/ic_baseline_notifications_24.xml" value="0.17407407407407408" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/ic_baseline_today_24.xml" value="0.17407407407407408" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/ic_launcher_background.xml" value="0.17407407407407408" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.17407407407407408" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/ic_placeholder.xml" value="0.17407407407407408" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/my.xml" value="0.3153846153846154" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/my_button.xml" value="0.3153846153846154" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/my_edit_text.xml" value="0.1" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/selector.xml" value="0.17407407407407408" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/drawable/shape_gradient.xml" value="0.17407407407407408" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_account.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_add_habit_event.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_change_account.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_change_account_pwd.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_edit_habit_event.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_habit_event.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_habit_event_list.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_location.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_login.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_main.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_maps.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_my.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_notification.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_register.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_subscribe.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/activity_today.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/add_comment_fragment_layout.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/follow_request_layout.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/fragment_account.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/fragment_add_habit.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/habit_content.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/habit_event_content.xml" value="0.24230072463768115" />
+        <entry key="..\:/CMPUT404/404ass4/TEAM404/app/src/main/res/layout/main_show_list.xml" value="0.24230072463768115" />
         <entry key="..\:/Cmput 301/TEAM404/app/src/main/res/layout/activity_habit_event.xml" value="0.14420893262679788" />
         <entry key="..\:/Cmput 301/TEAM404/app/src/main/res/layout/activity_location.xml" value="0.34193840579710144" />
         <entry key="..\:/Cmput 301/TEAM404/app/src/main/res/layout/activity_main.xml" value="0.2015625" />
