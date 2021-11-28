@@ -46,25 +46,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HabitEventActivity extends AppCompatActivity {
-    private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
-    private Button LocationButton;
-    private Button PhotoButton;
+    //--------------------------------
+    //display information of current habit event
+    //view optional photo, optional location, optional comment
+    //Back to previous: HabitEventListActivity.java
+    //Go to next: EditHabitEventActivity.java
+    //--------------------------------
     private ImageView backImage;
-    private ImageView LocationImage;
     private ImageView imageView;
     private ImageView editImage;
 
     private TextView commentTextView;
     private TextView locationTextView;
-    int position;
-    private String storageUrlString;
 
 
-    private TextView locationvIEW;
-    private TextView photo;
-    private static final String TAG = "HabitEventActivity";
-
-    private static final int ERROR_DIALOG_REQUEST = 9001;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getSupportActionBar().hide();
@@ -79,108 +74,41 @@ public class HabitEventActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         String id = extras.getString("id");
-        DocumentReference habitEventDoc = FirebaseFirestore.getInstance().collection("Habit Event List").document(id);
-        System.out.println("------------------aaaa-----------"+habitEventDoc);
 
         String location = extras.getString("location");
         String comment = extras.getString("comment");
         String storageUrlString = extras.getString("storageUrlString");
         if (storageUrlString!=null){
             Uri storageURL = Uri.parse(storageUrlString);
-            System.out.println("------------------------dceefrfre---- Image file p!"+storageURL.toString());
             Glide.with(getApplicationContext()).load(storageURL).into(imageView);
         }
 
 
-        System.out.println("------------------------dceefrfre--"+storageUrlString);
         commentTextView.setText(comment);
         locationTextView.setText(location);
-        /*
-        habitEventDoc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        String storageUrlString = document.getData().get("Uri").toString();
-                        if (storageUrlString!=null){
-                            Uri storageURL = Uri.parse(storageUrlString);
-                            System.out.println("------------------------dceefrfre---- Image file p!"+storageURL.toString());
-                            Glide.with(getApplicationContext()).load(storageURL).into(imageView);
-                        }
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-
-         */
 
 
 
         backImage = findViewById(R.id.backImage);
-        backImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*
-                Intent intent = new Intent();
-                String current_location= locationTextView.getText().toString();
-                String current_comment= commentTextView.getText().toString();
+        backImage.setOnClickListener(v -> onBackPressed());
 
-                Bundle extras = new Bundle();
-                extras.putString("editTitle",current_location);
-                extras.putString("editId", id);
-                extras.putString("editDate", date);
-                extras.putString("editComment", current_comment);
-                intent.putExtras(extras);
-                setResult(111, intent);
 
-                 */
+        editImage.setOnClickListener(v -> {
 
-                onBackPressed();
-            }
+            String comment1 = commentTextView.getText().toString();
+            String location1 = locationTextView.getText().toString();
+
+            HabitEventActivity.this.finish();
+            Intent intent = new Intent(HabitEventActivity.this, EditHabitEventActivity.class);
+            Bundle extras1 = new Bundle();
+            extras1.putString("id", id);
+            extras1.putString("location", location1);
+            extras1.putString("comment", comment1);
+            extras1.putString("storageUrlString", storageUrlString);
+            intent.putExtras(extras1);
+
+            startActivity(intent);
         });
-        //save habitevent after press save button
-
-        editImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // do it later
-                String comment = commentTextView.getText().toString();
-                String  location = locationTextView.getText().toString();
-                /*
-                Intent intent = new Intent(HabitEventActivity.this, EditHabitEventActivity.class);
-                Bundle extras = new Bundle();
-                extras.putString("id", id);
-                extras.putString("location", location);
-                extras.putString("comment", comment);
-                extras.putString("storageUrlString", storageUrlString);
-                intent.putExtras(extras);
-                startActivityForResult(intent, 333);
-
-                 */
-                HabitEventActivity.this.finish();
-                Intent intent = new Intent(HabitEventActivity.this, EditHabitEventActivity.class);
-                Bundle extras = new Bundle();
-                extras.putString("id", id);
-                extras.putString("location", location);
-                extras.putString("comment", comment);
-                extras.putString("storageUrlString", storageUrlString);
-                intent.putExtras(extras);
-
-                startActivity(intent);
-            }
-        });
-
-
-        // to call Camera to get a photo
-
-
-
 
 
     }
@@ -194,20 +122,15 @@ public class HabitEventActivity extends AppCompatActivity {
 
 
         if (requestCode == 333) {
-            // Get String data from Intent
+            // Get String data from later Intent (get data back from EditHabitEventActivity.java)
             String locationString = data.getStringExtra("location");
             String commentString = data.getStringExtra("comment");
             String storageUrlString = data.getStringExtra("storageUrlString");
-            System.out.println("-----------------------444444---- Image file path is null!"+storageUrlString);
-            //imageView=findViewById(R.id.imageView_delete);
-            //imageView.setVisibility(ImageView.VISIBLE);
             if (storageUrlString!=null){
                 imageView.setImageResource(android.R.color.transparent);
                 imageView = findViewById(R.id.imageView);
-
                 Uri storageURL = Uri.parse(storageUrlString);
                 Glide.with(getApplicationContext()).load(storageURL).into(imageView);
-                System.out.println("----------------------5555555555--- Image file path is null!"+storageURL.toString());
             }else {
                 imageView.setImageResource(android.R.color.transparent);
                 imageView=findViewById(R.id.imageView_delete);
@@ -215,53 +138,12 @@ public class HabitEventActivity extends AppCompatActivity {
             }
 
             // Set text view with string
-            TextView textView = (TextView) findViewById(R.id.locationTextView);
+            TextView textView = findViewById(R.id.locationTextView);
             textView.setText(locationString);
-            TextView textView1 = (TextView) findViewById(R.id.comment_textView);
+            TextView textView1 = findViewById(R.id.comment_textView);
             textView1.setText(commentString);
 
         }
     }
-    //initial location image button
-    //make the location button is valid
-    private void init(){
-        LocationImage = findViewById(R.id.locationImage);
-
-
-
-    }
-
-    //https://www.youtube.com/watch?v=fPFr0So1LmI&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt&index=6
-    //Author: CodingWithMitch
-    //date: 2017-10-6
-    //the follow 2 method is cited from CodingWithMitch
-    //private void moveCamera
-    //public boolean isServicesOK()
-
-    //check permission is valid or gps is valid.
-    public boolean isServicesOK(){
-        Log.d(TAG, "isServicesOK: checking google services version");
-
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
-
-        if(available == ConnectionResult.SUCCESS){
-            //everything is fine and the user can make map requests
-            Log.d(TAG, "isServicesOK: Google Play Services is working");
-            return true;
-        }
-        else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
-            //an error occured but we can resolve it
-            Log.d(TAG, "isServicesOK: an error occured but we can fix it");
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(this, available, ERROR_DIALOG_REQUEST);
-            dialog.show();
-        }else{
-            Toast.makeText(this, "You can't make map requests", Toast.LENGTH_SHORT).show();
-        }
-        return false;
-
-    }
-
-
-
 
 }

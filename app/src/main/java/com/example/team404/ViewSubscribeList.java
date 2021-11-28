@@ -23,6 +23,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class ViewSubscribeList extends DialogFragment {
+    //--------------------------------
+    //Display fragment to view details
+    //this will show the information of habit of the following doer
+    //--------------------------------
     private TextView title;
     private TextView date_start;
 
@@ -43,10 +47,8 @@ public class ViewSubscribeList extends DialogFragment {
     private Button followButton;
     private FirebaseFirestore db;
     private DocumentReference habitDocRef;
-    private DocumentReference habitOwnerDocRef;
     private DocumentReference userDocRef;
     private String habitOwnerEmail;
-    private String test;
 
 
     public ViewSubscribeList(Habit habit_selected) {

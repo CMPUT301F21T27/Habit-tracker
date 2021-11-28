@@ -12,6 +12,10 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 
 public class HabitEventContent extends ArrayAdapter<HabitEvent> {
+    //--------------------------------
+    //Create content to display each item of the habit event list
+    //In each content of habit event, only date and location display in the list,
+    //--------------------------------
     private ArrayList<HabitEvent> habitEevents;
     private Context context;
 

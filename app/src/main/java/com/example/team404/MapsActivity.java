@@ -50,6 +50,11 @@ import java.util.List;
 import java.util.Locale;
 
 public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallback{
+    //--------------------------------
+    //get location and return to previous activity
+    //previous activity: EditHabitEventActivity.java
+    //                   AddHabitEventActivity.java
+    //--------------------------------
     private static final String TAG = "MapsActivity";
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -306,7 +311,7 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
     }
 
 
-    // press check image button to back last activty
+    // press check image button to back last activity
     // save information
 
     public  void buttonOnClick(){

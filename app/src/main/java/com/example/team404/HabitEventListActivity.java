@@ -2,6 +2,7 @@ package com.example.team404;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,39 +41,43 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class HabitEventListActivity extends AppCompatActivity {
+    //--------------------------------
+    //Display habit event list
+    // If today is on the plan, we can add new habit event to habit
+    //--------------------------------
     ListView habitEventList;
     ArrayAdapter<HabitEvent> habitEventArrayAdapter;
     ArrayList<HabitEvent> habitEventDataList;
     private ImageView backImage;
     private ImageView addImage;
-    private int position ;
+    private int position;
     private String current_habit_id;
     private  String today;
     private String Cloud_location;
     private String Cloud_comment;
     private  String Cloud_photo;
-    private String currentUri;
-    //--------------------------------------------------------------------//
-    //I will do later after add firesbase database.
-    // Once I get habit id and I will create habit event Id, I can pass all varable to the another activty after firebase
-    // --------------------------------------------------------------------//
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         final FirebaseFirestore db;
         setContentView(R.layout.activity_habit_event_list);
-        habitEventList=(ListView) findViewById(R.id.habit_event_list);
+        ContentLoadingProgressBar contentLoadingProgressBar = findViewById(R.id.progress_bar);
+        contentLoadingProgressBar.show();
+        habitEventList= findViewById(R.id.habit_event_list);
         habitEventDataList=new ArrayList<>();
         habitEventArrayAdapter = new HabitEventContent(this,habitEventDataList);
-        //-----------
-        // read habit id and create habit event id here
+
         Intent current_habit_intent = getIntent();
         current_habit_id = current_habit_intent.getStringExtra("current_habit_id");
         today =current_habit_intent.getStringExtra("Today");
-        ImageView addImage = findViewById(R.id.addImage);
 
-        addImage.setVisibility(today.equals("today")? ImageView.VISIBLE: ImageView.INVISIBLE );
+
+
+
+        ImageView addImage = findViewById(R.id.addImage);
+        //addImage.setVisibility(today.equals("today")? ImageView.VISIBLE: ImageView.INVISIBLE );
 
 
         db = FirebaseFirestore.getInstance();
@@ -83,13 +89,13 @@ public class HabitEventListActivity extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
-                            Toast.makeText(getApplicationContext(), "listen faild", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "listen failed", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
                         Log.d(TAG, "Current habit event: " + habitDoc);
 
-
+                        contentLoadingProgressBar.show();
                         habitEventDataList.clear();
                         for (QueryDocumentSnapshot doc : value) {
                             if ( doc.get("Location") == null){
@@ -116,40 +122,30 @@ public class HabitEventListActivity extends AppCompatActivity {
 
 
                         }
+                        contentLoadingProgressBar.hide();
+                        System.out.println("--++++++--");
+                        if (habitEventDataList.size()== 0 && today.equals("today") ){
+                                addImage.setVisibility(ImageView.VISIBLE);
 
-                            if (habitEventDataList.size()== 0 && today.equals("today") ){
-                                    addImage.setVisibility(ImageView.VISIBLE);
+                        }else{
+                            if(today.equals("today")) {
+                                String valid_until = habitEventDataList.get(habitEventDataList.size() - 1).getDate();
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                String valid_now = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+                                Date strDate = null;
+                                Date current_Date = null;
 
-                            }else{
-                                if(today.equals("today")) {
+                                try {
 
-
-                                    System.out.println("--------1111-----------2222--------" + habitEventDataList.size());
-
-                                    String valid_until = habitEventDataList.get(habitEventDataList.size() - 1).getDate();
-                                    System.out.println("--------1111-----------2222--------" + valid_until);
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                                    String valid_now = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                                    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-                                    System.out.println("--------1111-----------2222--444------" + valid_now);
-                                    Date strDate = null;
-                                    Date current_Date = null;
-
-                                    try {
-
-                                        strDate = sdf.parse(valid_until);
-                                        current_Date = sdf2.parse(valid_now);
-                                        System.out.println("--------1111-----------2222--------" + strDate);
-                                        System.out.println("--------1111-----------2222--------" + current_Date);
-                                    } catch (Exception pe) {
-                                        pe.printStackTrace();
-                                    }
-                                    System.out.println("--------1111-----------2222--------" + strDate);
-                                    System.out.println("--------1111-----------2222--------" + current_Date);
-                                    addImage.setVisibility(current_Date.after(strDate) ? ImageView.VISIBLE : ImageView.INVISIBLE);
-                                    //addImage.setVisibility(current_Date.after(strDate) ? System.out.println("111") ;: System.out.println("222"););
+                                    strDate = sdf.parse(valid_until);
+                                    current_Date = sdf2.parse(valid_now);
+                                } catch (Exception pe) {
+                                    pe.printStackTrace();
                                 }
+                                addImage.setVisibility(current_Date.after(strDate) ? ImageView.VISIBLE : ImageView.INVISIBLE);
                             }
+                        }
 
 
 
@@ -157,15 +153,9 @@ public class HabitEventListActivity extends AppCompatActivity {
                         Log.d(TAG, "Current habit event: " + habitDoc);
                     }
                 });
-        //System.out.println("--------1111--------------------"+habitEventDataList.size());
-        //System.out.println("--------1111--------------------"+habitEventDataList.get(-1));
-
-
-
-        //-------------
-        //habitEventArrayAdapter = new HabitEventContent(this,habitEventDataList);
-        //habitEventList.setAdapter(habitEventArrayAdapter);
-        //String currentUri =Cloud_photo;
+        System.out.println("----");
+        //addImage.setVisibility(today.equals("today")? ImageView.VISIBLE: ImageView.INVISIBLE );
+        System.out.println("--++++--");
         habitEventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -209,6 +199,10 @@ public class HabitEventListActivity extends AppCompatActivity {
                                 String current_habit_event_id = currentHabitevent.getId();
                                 habitEventDataList.remove(selected_item);
                                 habitEventArrayAdapter.notifyDataSetChanged();
+                                if (habitEventDataList.size()== 0 && today.equals("today") ){
+                                    addImage.setVisibility(ImageView.VISIBLE);
+
+                                }
                                 db.collection("Habit Event List").document(current_habit_event_id)
                                         .delete()
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -254,6 +248,22 @@ public class HabitEventListActivity extends AppCompatActivity {
                 startActivityForResult(intent, 000);
             }
         });
+    }
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
+        if (requestCode == 000) {
+            if (resultCode == RESULT_OK) {
+                String returnString = data.getStringExtra("Disappear add button");
+                System.out.println("--++++=====--");
+                ContentLoadingProgressBar contentLoadingProgressBar = findViewById(R.id.progress_bar);
+                contentLoadingProgressBar.show();
+                addImage.setVisibility(returnString.equals("true")? ImageView.INVISIBLE: ImageView.VISIBLE );
+                contentLoadingProgressBar.hide();
+
+
+            }
+        }
     }
 
 }

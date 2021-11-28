@@ -16,9 +16,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 public class EditCommentFragment extends DialogFragment {
+    //--------------------------------
+    //Display fragment to edit comment
+    //--------------------------------
     private EditText commentName;
     private onFragmentInteractionListener listener;
-    Toast toast;
 
 
 
@@ -44,7 +46,6 @@ public class EditCommentFragment extends DialogFragment {
         Bundle bundle = getArguments();
         String c = ( String) bundle.getSerializable("comment");
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.add_comment_fragment_layout, null);
-        //account_photoName = view.findViewById(R.id.account_photo_name_editText);
         commentName = view.findViewById((R.id.comment_editText));
         commentName.setText(c);
 
@@ -56,7 +57,6 @@ public class EditCommentFragment extends DialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //String photo = account_photoName.getText().toString();
                         String comment = commentName.getText().toString();
                         if (comment.length()==0){
                             Toast.makeText(getActivity(), "Please input valid words", Toast.LENGTH_LONG).show();

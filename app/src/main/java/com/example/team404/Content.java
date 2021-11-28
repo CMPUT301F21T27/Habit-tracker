@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +40,7 @@ import java.util.Map;
 public class Content extends ArrayAdapter<Habit> {
 private ArrayList<Habit> habits;
 private Context context;
+DonutProgress donutProgress;
 
 
 private ArrayList<String> habit_refers;
@@ -82,40 +84,27 @@ private ArrayList<String> habit_refers;
     TextView habitTitle = view.findViewById(R.id.titleTextView);
     TextView habitReason = view.findViewById(R.id.reasonTextView);
     TextView habitDate = view.findViewById(R.id.dateTextView);
-    ImageView green = view.findViewById(R.id.green);
-    ImageView red =view.findViewById(R.id.red);
-    ImageView yellow = view.findViewById(R.id.yellow);
-    ImageView cyan = view.findViewById(R.id.cyan);
+
+    donutProgress =(DonutProgress) view.findViewById(R.id.donut_progress);
 
 
 
 
+        System.out.println("result-------------"+habit.getTotal_habit_day());
+        System.out.println("result-------------"+habit.getTotal_did());
+        float result = (float) (habit.getTotal_did()*1.0/ habit.getTotal_habit_day());
 
-    double result = (double)(habit.getTotal_did()*1.0/ habit.getTotal_habit_day());
-    if ((result>0.75)){
-        green.setVisibility(View.VISIBLE);
-        red.setVisibility(View.INVISIBLE);
-        yellow.setVisibility(View.INVISIBLE);
-        cyan.setVisibility(View.INVISIBLE);
-        }
-    else if (result>0.5){
-            green.setVisibility(View.INVISIBLE);
-            red.setVisibility(View.INVISIBLE);
-            yellow.setVisibility(View.INVISIBLE);
-            cyan.setVisibility(View.VISIBLE);
-        }
-    else if (result>0.25){
-        green.setVisibility(View.INVISIBLE);
-        red.setVisibility(View.INVISIBLE);
-        yellow.setVisibility(View.VISIBLE);
-        cyan.setVisibility(View.INVISIBLE);
+    if(habit.getTotal_did()<=habit.getTotal_habit_day()){
+        System.out.println("result-------------"+result);
+        int result_int = (int) (result*100);
+        System.out.println("result_int---"+result_int);
+        donutProgress.setProgress(result_int);
+
     }
-    else if (result>-1){
-        green.setVisibility(View.INVISIBLE);
-        red.setVisibility(View.VISIBLE);
-        yellow.setVisibility(View.INVISIBLE);
-        cyan.setVisibility(View.INVISIBLE);
-    }
+
+
+
+
 
 
     habitTitle.setText(habit.getTitle());

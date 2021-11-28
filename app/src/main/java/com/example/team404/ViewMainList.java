@@ -122,7 +122,6 @@ public class ViewMainList extends DialogFragment {
                             }
                         });
                         }
-
                 }
             }
         });

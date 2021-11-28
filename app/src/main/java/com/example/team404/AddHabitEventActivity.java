@@ -2,6 +2,7 @@ package com.example.team404;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -51,6 +53,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddHabitEventActivity extends AppCompatActivity implements AddCommentFragment.onFragmentInteractionListener, EditCommentFragment.onFragmentInteractionListener  {
+    //--------------------------------
+    //add new habit event if today is on the plan
+    //add optional photo, optional location, optional comment
+    //previous activity: HabitEventListActivity.java
+    //--------------------------------
     private static final int SECOND_ACTIVITY_REQUEST_CODE = 0;
     private ImageView backImage;
     private ImageView LocationImage;
@@ -70,8 +77,6 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
     StorageReference eventsHabbitRef = storageRef.child("/image/"+userEmail+timeStamp+".png");
 
     private int total_did;
-    private TextView locationvIEW;
-    private TextView photo;
     private static final String TAG = "AddHabitEventActivity";
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
@@ -87,8 +92,6 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
 
         commentTextView= findViewById(R.id.comment_textView);
         locationTextView = findViewById(R.id.location_textView);
-        //commentTextView.setText(comment);
-        //locationTextView.setText(location);
 
 
         commentTextView.setOnClickListener(new View.OnClickListener() {
@@ -110,17 +113,17 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
             @Override
             public boolean onLongClick(View view) {
                 new AlertDialog.Builder(AddHabitEventActivity.this).
-                        setIcon(android.R.drawable.ic_delete)
-                        .setTitle("Are you sure?")
-                        .setMessage("Do you want to delete the String?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which)
-                            {
-                                commentTextView.setText("");
-                            }
-                        })
-                        .setNegativeButton("No" , null).show();
+                    setIcon(android.R.drawable.ic_delete)
+                    .setTitle("Are you sure?")
+                    .setMessage("Do you want to delete the String?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            commentTextView.setText("");
+                        }
+                    })
+                    .setNegativeButton("No" , null).show();
 
                 return true;
             }
@@ -156,6 +159,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
 
                 extras.putString("editDate", "");
                 extras.putString("editComment", "");
+                extras.putString("Disappear add button", "false");
                 intent.putExtras(extras);
                 setResult(000, intent);
                 onBackPressed();
@@ -168,45 +172,32 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
             public void onClick(View v) {
                 final FirebaseFirestore db;
                 db = FirebaseFirestore.getInstance();
-                System.out.println("---------2222-----------11--------"+habitId+"---------");
 
                 db.collection("Habit").document(habitId).
                         get()
                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                System.out.println("---------2222----------3---------"+total_did+"---------");
 
                                 total_did=Integer.valueOf(documentSnapshot.getData().get("Total Did").toString());
                                 total_did=total_did+1;
-                                System.out.println("---------2222----------33---------"+total_did+"---------");
+                                db.collection("Habit").document(habitId).
+                                        update("Total Did",total_did);
 
 
                             }
 
                         });
-                System.out.println("---------2222-------------------"+total_did+"---6------");
 
 
-                System.out.println("---------2222-------------------"+total_did+"------7---");
 
-                db.collection("Habit").document(habitId).
-                        update("Total Did",total_did);
-                System.out.println("---------2222-------------------"+total_did+"------7--8-");
-                Intent intent = new Intent();
                 String current_location= locationTextView.getText().toString();
                 String current_comment= commentTextView.getText().toString();
-
-                Bundle extras = new Bundle();
                 Date date = new Date();
-                String habit_event_id = String.valueOf(date);;
-                extras.putString("addId", habit_event_id);
-                extras.putString("addTitle",current_location);
+                String habit_event_id = String.valueOf(date);
                 String date_ = new SimpleDateFormat("yyyy-MM-dd").format(date);
-                extras.putString("addDate", date_);
-                extras.putString("addComment", current_comment);
-                intent.putExtras(extras);
-                setResult(000, intent);
+
+
                 if (image_uri!=null) {
 
                     eventsHabbitRef.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -215,7 +206,6 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                             eventsHabbitRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    System.out.println("-----------------> Get photo url success! URL: " + uri.toString());
                                     uri_string = uri.toString();
                                     Map<String, Object> event = new HashMap<>();
                                     event.put("Id", habit_event_id);
@@ -226,6 +216,15 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                     event.put("url", image_uri.toString());
                                     event.put("Uri", uri_string);
                                     event.put("Habit Id", habitId);
+                                    Intent intent = new Intent();
+                                    Bundle extras = new Bundle();
+                                    extras.putString("addId", habit_event_id);
+                                    extras.putString("addTitle",current_location);
+                                    extras.putString("addDate", date_);
+                                    extras.putString("addComment", current_comment);
+                                    extras.putString("Disappear add button", "true");
+                                    intent.putExtras(extras);
+                                    setResult(000, intent);
 
 
                                     db.collection("Habit Event List").document(habit_event_id)
@@ -234,20 +233,16 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                                 @Override
                                                 public void onSuccess(Void unused) {
                                                     Log.w(TAG, "success add to fireBase");
+
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    Log.w(TAG, "faild add to fireBase", e);
+                                                    Log.w(TAG, "failed add to fireBase", e);
                                                 }
                                             });
 
-
-
-                                    // shift back to list activity
-                                    //Intent intentReturn = new Intent(getApplicationContext(), HabitEventListActivity.class); // Return to the habit event list page
-                                    //intentReturn.putExtra("uri", uri.toString());
 
                                     AddHabitEventActivity.this.finish(); // finish current activity
                                 }
@@ -277,6 +272,15 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                     event.put("url","");
                     event.put("Uri", "");
                     event.put("Habit Id", habitId);
+                    Intent intent = new Intent();
+                    Bundle extras = new Bundle();
+                    extras.putString("addId", habit_event_id);
+                    extras.putString("addTitle",current_location);
+                    extras.putString("addDate", date_);
+                    extras.putString("addComment", current_comment);
+                    extras.putString("Disappear add button", "true");
+                    intent.putExtras(extras);
+                    setResult(000, intent);
 
 
                     db.collection("Habit Event List").document(habit_event_id)
@@ -285,21 +289,18 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                 @Override
                                 public void onSuccess(Void unused) {
                                     Log.w(TAG, "success add to fireBase");
+
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "faild add to fireBase", e);
+                                    Log.w(TAG, "failed add to fireBase", e);
                                 }
                             });
 
-                    // shift back to list activity
-                    //Intent intentReturn = new Intent(getApplicationContext(), HabitEventListActivity.class); // Return to the habit event list page
-                    //intentReturn.putExtra("uri", uri.toString());
                     AddHabitEventActivity.this.finish(); // finish current activity
                 }
-
 
                 onBackPressed();
             }
@@ -307,28 +308,42 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
         // to call Camera to get a photo
         imageView = findViewById(R.id.imageView);
         imageView.setOnClickListener(v -> {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+            AlertDialog.Builder builder = new AlertDialog.Builder(AddHabitEventActivity.this);
+            builder.setTitle("Add Photo!");
+            builder.setItems(options, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int item) {
+                    if (options[item].equals("Take Photo")) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
+                                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                                String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                                requestPermissions(permission, 1000);
+                            } else {
+                                openCamera();
+                            }
+                        } else {
+                            openCamera();
+                        }
+                    } else if (options[item].equals("Choose from Gallery")) {
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M){
-            if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
-                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                String [] permission = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                requestPermissions(permission,1000);
-            }
-            else {
-                openCamera();
-            }
-        }
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+
+                        startActivityForResult(intent, 222);
+
+                    } else if (options[item].equals("Cancel")) {
+
+                        dialog.dismiss();
+
+                    }
+                }
+            });
+            builder.show();
         });
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 
     }
-    /////////////////////////////////////////////////////////////////////
     private void openCamera() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE,"New Picture");
@@ -338,7 +353,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
         //Camera intent
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,image_uri);
-        startActivityForResult(takePictureIntent, 1);
+        startActivityForResult(takePictureIntent, 111);
 
     }
     @Override
@@ -349,12 +364,11 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
                 } else {
-                    //permisiion from pop up was denied.
+                    //permission from pop up was denied.
                     Toast.makeText(AddHabitEventActivity.this, "Permission Denied...", Toast.LENGTH_LONG).show();
                 }
         }
     }
-    //////////////////////////////////////////////////////////////////////////
     //initial location image button
     //make the location button is valid
     private void init(){
@@ -369,54 +383,74 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
 
     }
     //Waiting for next activity to pass string back in to the current activity
+    @SuppressLint("MissingSuperCall")
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
+    protected void onActivityResult(int requestCode, int resultCode,@Nullable Intent data) {
         if (requestCode == SECOND_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 String returnString = data.getStringExtra("keyName");
 
-                //locationTextView = (TextView) findViewById(R.id.location_textView);
                 locationTextView.setText(returnString);
             }
         }
+        if (requestCode==111){
+            if (resultCode == Activity.RESULT_OK) {
+                imageView.setImageURI(image_uri);
+                try {
+                    Bitmap captureImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    byte[] imageData = baos.toByteArray();
+                    UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
+                    Toast.makeText(AddHabitEventActivity.this, "Connecting internet...", Toast.LENGTH_LONG).show();
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(AddHabitEventActivity.this, "Upload Failure", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(AddHabitEventActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else if(requestCode==222){
+            if (resultCode == Activity.RESULT_OK) {
 
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case 1:
+                try {
+                    image_uri = data.getData();
                     imageView.setImageURI(image_uri);
-                    try {
-                        Bitmap captureImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                        byte[] imageData = baos.toByteArray();
-                        UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
-                        uploadTask.addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                // Handle unsuccessful uploads
-                                Toast.makeText(AddHabitEventActivity.this, "Upload Failure", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                                // ...
-                                Toast.makeText(AddHabitEventActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Bitmap captureImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    byte[] imageData = baos.toByteArray();
+                    UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
+                    Toast.makeText(AddHabitEventActivity.this, "Connecting internet...", Toast.LENGTH_LONG).show();
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(AddHabitEventActivity.this, "Upload Failure", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(AddHabitEventActivity.this, "Upload Success", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                    break;
 
             }
         }
-        //////////////////////////////////////////////////////////////////////////
+
+
+
     }
     //https://www.youtube.com/watch?v=fPFr0So1LmI&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt&index=6
     //Author: CodingWithMitch
@@ -438,7 +472,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
         }
         else if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
             //an error occured but we can resolve it
-            Log.d(TAG, "isServicesOK: an error occured but we can fix it");
+            Log.d(TAG, "isServicesOK: an error occurred but we can fix it");
             Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(this, available, ERROR_DIALOG_REQUEST);
             dialog.show();
         }else{
@@ -459,8 +493,5 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
     }
     @Override
     public void onCancelPressed(){}
-
-
-
 
 }

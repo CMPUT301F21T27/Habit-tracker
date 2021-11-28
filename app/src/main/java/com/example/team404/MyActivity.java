@@ -1,66 +1,13 @@
 
 
-        package com.example.team404;
-
-        import static android.content.ContentValues.TAG;
-        import static java.lang.String.valueOf;
-
-        import android.app.AlertDialog;
-        import android.content.DialogInterface;
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.AdapterView;
-        import android.widget.ArrayAdapter;
-        import android.widget.Button;
-        import android.widget.ImageView;
-        import android.widget.ListView;
-
-        import androidx.annotation.NonNull;
-        import androidx.annotation.Nullable;
-        import androidx.appcompat.app.AppCompatActivity;
-
-        import com.google.android.gms.tasks.OnCompleteListener;
-        import com.google.android.gms.tasks.OnFailureListener;
-        import com.google.android.gms.tasks.OnSuccessListener;
-        import com.google.android.gms.tasks.Task;
-        import com.google.android.material.bottomnavigation.BottomNavigationView;
-        import com.google.android.material.floatingactionbutton.FloatingActionButton;
-        import com.google.android.material.navigation.NavigationBarView;
-        import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.auth.FirebaseUser;
-        import com.google.firebase.firestore.CollectionReference;
-        import com.google.firebase.firestore.DocumentReference;
-        import com.google.firebase.firestore.DocumentSnapshot;
-        import com.google.firebase.firestore.FirebaseFirestore;
-        import com.google.firebase.firestore.QueryDocumentSnapshot;
-        import com.google.firebase.firestore.QuerySnapshot;
-
-        import java.lang.reflect.Array;
-        import java.text.SimpleDateFormat;
-        import java.util.ArrayList;
-        import java.util.Arrays;
-        import java.util.Calendar;
-        import java.util.Collection;
-        import java.util.Collections;
-        import java.util.Comparator;
-        import java.util.Date;
-        import java.util.HashMap;
-        import java.util.List;
-        import java.util.Map;
-
-        /**
-=======
 package com.example.team404;
 
 import static android.content.ContentValues.TAG;
-import static java.lang.String.valueOf;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -68,35 +15,92 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
->>>>>>> b4a88cddd663b33ca9d4eff51db9efd335942727
+ =======
+ package com.example.team404;
+
+ import static android.content.ContentValues.TAG;
+ import static java.lang.String.valueOf;
+
+ import android.app.AlertDialog;
+ import android.content.DialogInterface;
+ import android.content.Intent;
+ import android.os.Bundle;
+ import android.util.Log;
+ import android.view.MenuItem;
+ import android.view.View;
+ import android.widget.AdapterView;
+ import android.widget.ArrayAdapter;
+ import android.widget.Button;
+ import android.widget.ListView;
+
+ import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
+ import androidx.appcompat.app.AppCompatActivity;
+
+ import com.google.android.gms.tasks.OnCompleteListener;
+ import com.google.android.gms.tasks.Task;
+ import com.google.android.material.bottomnavigation.BottomNavigationView;
+ import com.google.android.material.floatingactionbutton.FloatingActionButton;
+ import com.google.android.material.navigation.NavigationBarView;
+ import com.google.firebase.auth.FirebaseAuth;
+ import com.google.firebase.auth.FirebaseUser;
+ import com.google.firebase.firestore.CollectionReference;
+ import com.google.firebase.firestore.DocumentReference;
+ import com.google.firebase.firestore.DocumentSnapshot;
+ import com.google.firebase.firestore.FirebaseFirestore;
+ import com.google.firebase.firestore.QueryDocumentSnapshot;
+ import com.google.firebase.firestore.QuerySnapshot;
+
+ import java.text.SimpleDateFormat;
+ import java.util.ArrayList;
+ import java.util.Calendar;
+ import java.util.Collection;
+ import java.util.Date;
+ import java.util.List;
+
+ /**
+ >>>>>>> b4a88cddd663b33ca9d4eff51db9efd335942727
  * This activity is use to display user's Habits. That user can view, edit, delete habits through here. User can also
  * access the habits to do today through here
  */
@@ -141,24 +145,16 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         bottomNav.setOnItemSelectedListener(navListener);
         reorder=(ImageView)findViewById(R.id.reorder_button);
         habitList=(ListView) findViewById(R.id.habit_list);
-        /**prefill habit for testing */
-        // String year ="2021";
-        // String month ="11";
-        //String day1 = "05";
-        //Habit habit = new Habit("play the video game","Because no homework",year,month,day1);
 
 
         habitDataList=new ArrayList<>();
         habitArrayAdapter = new Content(this,habitDataList);
 
-        //habitDataList.add(habit);
-        /** using Content class as adpter**/
-
-        //habitList.setAdapter(habitArrayAdapter);
         db.collection("Habit")
                 .whereEqualTo("OwnerReference",userDoc)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -252,21 +248,65 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                         break;
 
                                 }
-                                if (!last.equals(formatter.format(date_now))&&(is_habit_today==true)){
+
+                                    total=0;
+
+
+                                    LocalDate today = LocalDate.now();
+                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+                                    LocalDate startDate = LocalDate.of(Integer.valueOf(habit.getYear())
+                                            ,Integer.valueOf(habit.getMonth()),Integer.valueOf(habit.getDay()));
+                                    long noOfDaysBetween = ChronoUnit.DAYS.between(startDate, today);
+
+                                        total= (int)(noOfDaysBetween)+1;
+                                        int total_days=0;
+                                        for(int i=0; i<total;i++){
+                                            LocalDate everyDay =startDate.plusDays(i);
+                                            if((everyDay.getDayOfWeek()== DayOfWeek.MONDAY)&&(habit.getMonday())){
+                                                total_days++;
+                                            }else if((everyDay.getDayOfWeek()== DayOfWeek.TUESDAY)&&(habit.getTuesday())){
+                                                total_days++;
+                                            }else if((everyDay.getDayOfWeek()== DayOfWeek.WEDNESDAY)&&(habit.getWednesday())){
+                                                total_days++;
+                                            }
+                                            else if((everyDay.getDayOfWeek()== DayOfWeek.THURSDAY)&&(habit.getThursday())){
+                                                total_days++;
+                                            }
+                                            else if((everyDay.getDayOfWeek()== DayOfWeek.FRIDAY)&&(habit.getFriday())){
+                                                total_days++;
+                                            }
+                                            else if((everyDay.getDayOfWeek()== DayOfWeek.SATURDAY)&&(habit.getSaturday())){
+                                                total_days++;
+                                            }
+                                            else if((everyDay.getDayOfWeek()== DayOfWeek.SUNDAY)&&(habit.getSunday())){
+                                                total_days++;
+                                            }
+
+
+                                        }
+                                        
+
+
+                                    //http://www.java2s.com/Tutorials/Java/Data_Type_How_to/Date/Get_all_Monday_dates_in_given_month.htm
+
+
+
+
 
                                     total = total+1;
+
                                     last=formatter.format(date_now);
                                     Map<String,Object> h = new HashMap<>();
-                                    h.put("Total",total);
+                                    h.put("Total",total_days);
                                     h.put("Last",last);
                                     db.collection("Habit").document(id)
                                             .update("Total",total,
                                                     "Last",last);
-                                }
+
 
 
                                 habit.setLastDay(last);
-                                habit.setTotal_habit_day(total);
+                                habit.setTotal_habit_day(total_days);
                                 habit.setTotal_did(total_did);
 
 
@@ -396,116 +436,119 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
      */
     @Override
     public void OnOKPressed(Habit newHabit, Habit habit) {
-        final FirebaseFirestore db;
-        FirebaseAuth mAuth;
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        String userEmail = user.getEmail();
-        db=FirebaseFirestore.getInstance();
-        DocumentReference userDoc = FirebaseFirestore.getInstance().collection("User").document(userEmail);
-        String day = "";
-        if(newHabit.getMonday()){
-            day=day+"Monday";
-        }
-        if(newHabit.getTuesday()){
-            day=day+"Tuesday";
-        }
-        if(newHabit.getWednesday()){
-            day=day+"Wednesday";
-        }
-        if(newHabit.getThursday()){
-            day=day+"Thursday";
-        }
-        if(newHabit.getFriday()){
-            day=day+"Friday";
-        }
-        if(newHabit.getSaturday()){
-            day=day+"Saturday";
-        }
-        if(newHabit.getSunday()){
-            day=day+"Sunday";
-        }
-        String pub = "";
-        if(newHabit.getPub()){
-            pub="True";
-        }
-        else pub="False";
+        if (newHabit.getTitle().equals("") || newHabit.getReason().equals("") || newHabit.getDay().equals("0")) {
+            Toast.makeText(MyActivity.this, "The title, reason and date cannot be empty", Toast.LENGTH_SHORT).show();
 
 
-
-        /** if no previous habit selected, it will add a new habit onto the list**/
-        if (habit == null) {
-            Map<String,Object> h = new HashMap<>();
-            h.put("Day",newHabit.getDay());
-            h.put("Month",newHabit.getMonth());
-            h.put("OwnerReference",userDoc);
-            h.put("OwnerEmail", userEmail);
-            h.put("Reason",newHabit.getReason());
-            h.put("Title",newHabit.getTitle());
-            h.put("Year",newHabit.getYear());
-            h.put("id",newHabit.getId());
-            h.put("Last", newHabit.getLastDay());
-            h.put("Total",newHabit.getTotal_habit_day());
-            h.put("Total Did",newHabit.getTotal_did());
-
-            h.put("Public",pub);
-
-            h.put("Plan",day);
-            db.collection("Habit").document(newHabit.getId())
-                    .set(h)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "DocumentSnapshot successfully written!");
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Error writing document", e);
-                        }
-                    });
-            habitArrayAdapter.add(newHabit);
-        }
-        /** otherwise, it will edit a existing habit**/
-        else {
-
-            db.collection("Habit").document(habit.getId())
-                    .update("Day",newHabit.getDay(),
-                            "Month",newHabit.getMonth(),
-                            "Reason",newHabit.getReason(),
-                            "Title",newHabit.getTitle(),
-                            "Year",newHabit.getYear(),
-                            "Public",pub,
-                            "Plan",day);
-
-            int index = habitDataList.indexOf(habit);
-            habitDataList.get(index).setTitle(newHabit.getTitle());
-            habitDataList.get(index).setMonday(newHabit.getMonday());
-            habitDataList.get(index).setTuesday(newHabit.getTuesday());
-            habitDataList.get(index).setWednesday(newHabit.getWednesday());
-            habitDataList.get(index).setThursday(newHabit.getThursday());
-            habitDataList.get(index).setFriday(newHabit.getFriday());
-            habitDataList.get(index).setSaturday(newHabit.getSaturday());
-            habitDataList.get(index).setSunday(newHabit.getSunday());
-            habitDataList.get(index).setPub(newHabit.getPub());
-
-            if((Integer.valueOf(newHabit.getMonth())>0)){
-                habitDataList.get(index).setYear(newHabit.getYear());
-                habitDataList.get(index).setMonth(newHabit.getMonth());
-                habitDataList.get(index).setDay(newHabit.getDay());}
-            else{
-                habitDataList.get(index).setYear(habit.getYear());
-                habitDataList.get(index).setMonth(habit.getMonth());
-                habitDataList.get(index).setDay(habit.getDay());
+        } else {
+            final FirebaseFirestore db;
+            FirebaseAuth mAuth;
+            mAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = mAuth.getCurrentUser();
+            String userEmail = user.getEmail();
+            db = FirebaseFirestore.getInstance();
+            DocumentReference userDoc = FirebaseFirestore.getInstance().collection("User").document(userEmail);
+            String day = "";
+            if (newHabit.getMonday()) {
+                day = day + "Monday";
             }
-            habitDataList.get(index).setReason(newHabit.getReason());
+            if (newHabit.getTuesday()) {
+                day = day + "Tuesday";
+            }
+            if (newHabit.getWednesday()) {
+                day = day + "Wednesday";
+            }
+            if (newHabit.getThursday()) {
+                day = day + "Thursday";
+            }
+            if (newHabit.getFriday()) {
+                day = day + "Friday";
+            }
+            if (newHabit.getSaturday()) {
+                day = day + "Saturday";
+            }
+            if (newHabit.getSunday()) {
+                day = day + "Sunday";
+            }
+            String pub = "";
+            if (newHabit.getPub()) {
+                pub = "True";
+            } else pub = "False";
+
+
+            /** if no previous habit selected, it will add a new habit onto the list**/
+            if (habit == null) {
+                Map<String, Object> h = new HashMap<>();
+                h.put("Day", newHabit.getDay());
+                h.put("Month", newHabit.getMonth());
+                h.put("OwnerReference", userDoc);
+                h.put("OwnerEmail", userEmail);
+                h.put("Reason", newHabit.getReason());
+                h.put("Title", newHabit.getTitle());
+                h.put("Year", newHabit.getYear());
+                h.put("id", newHabit.getId());
+                h.put("Last", newHabit.getLastDay());
+                h.put("Total", newHabit.getTotal_habit_day());
+                h.put("Total Did", newHabit.getTotal_did());
+
+                h.put("Public", pub);
+
+                h.put("Plan", day);
+                db.collection("Habit").document(newHabit.getId())
+                        .set(h)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully written!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error writing document", e);
+                            }
+                        });
+                habitArrayAdapter.add(newHabit);
+            }
+            /** otherwise, it will edit a existing habit**/
+            else {
+
+                db.collection("Habit").document(habit.getId())
+                        .update("Day", newHabit.getDay(),
+                                "Month", newHabit.getMonth(),
+                                "Reason", newHabit.getReason(),
+                                "Title", newHabit.getTitle(),
+                                "Year", newHabit.getYear(),
+                                "Public", pub,
+                                "Plan", day);
+
+                int index = habitDataList.indexOf(habit);
+                habitDataList.get(index).setTitle(newHabit.getTitle());
+                habitDataList.get(index).setMonday(newHabit.getMonday());
+                habitDataList.get(index).setTuesday(newHabit.getTuesday());
+                habitDataList.get(index).setWednesday(newHabit.getWednesday());
+                habitDataList.get(index).setThursday(newHabit.getThursday());
+                habitDataList.get(index).setFriday(newHabit.getFriday());
+                habitDataList.get(index).setSaturday(newHabit.getSaturday());
+                habitDataList.get(index).setSunday(newHabit.getSunday());
+                habitDataList.get(index).setPub(newHabit.getPub());
+
+                if ((Integer.valueOf(newHabit.getMonth()) > 0)) {
+                    habitDataList.get(index).setYear(newHabit.getYear());
+                    habitDataList.get(index).setMonth(newHabit.getMonth());
+                    habitDataList.get(index).setDay(newHabit.getDay());
+                } else {
+                    habitDataList.get(index).setYear(habit.getYear());
+                    habitDataList.get(index).setMonth(habit.getMonth());
+                    habitDataList.get(index).setDay(habit.getDay());
+                }
+                habitDataList.get(index).setReason(newHabit.getReason());
+            }
+
+
+            habitList.setAdapter(habitArrayAdapter);
         }
-
-
-        habitList.setAdapter(habitArrayAdapter);
     }
-
     /**
      * Delete a habit from the list by pressing the negative button on the dialog
      * @param habit
@@ -560,7 +603,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                             //startActivity(intent);
                             //overridePendingTransition(0, 0);
                             return true;
-                            //break;
+                        //break;
 
                         case R.id.nav_subscribe:
                             intent = new Intent(getApplicationContext(), SubscribeActivity.class);
@@ -598,11 +641,11 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         }
 
     }
-            @Override
-            public void onRestart(){
-                super.onRestart();
-                habitList.setAdapter(habitArrayAdapter);
-            }
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        habitList.setAdapter(habitArrayAdapter);
+    }
 
 
-        }
+}

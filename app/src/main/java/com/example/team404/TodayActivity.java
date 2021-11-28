@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -48,7 +46,7 @@ public class TodayActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Habit habit_selected = (Habit) adapterView.getItemAtPosition(i);
-                new ViewMainListt(habit_selected).show(getSupportFragmentManager(), "View_Today_Habit");
+                new ViewTodayList(habit_selected).show(getSupportFragmentManager(), "View_Today_Habit");
             }
         });
         today_habit.setAdapter(habitArrayAdapter);

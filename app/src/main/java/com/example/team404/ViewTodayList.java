@@ -14,7 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class ViewMainListt extends DialogFragment {
+public class ViewTodayList extends DialogFragment {
+    //--------------------------------
+    //Open fragment to view detail of current habit
+    //add habit event if it is valid
+    //--------------------------------
     private TextView title;
     private TextView date_start;
 
@@ -35,7 +39,7 @@ public class ViewMainListt extends DialogFragment {
 
 
 
-    public ViewMainListt(Habit habit_selected) {
+    public ViewTodayList(Habit habit_selected) {
         this.habit_selected = habit_selected;
     }
     @NonNull
