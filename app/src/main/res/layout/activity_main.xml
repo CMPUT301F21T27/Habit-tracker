@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="#CFE2F8 "
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         android:visibility="visible"
@@ -22,7 +22,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#CFE2F8 ">
 
 
             <TextView
@@ -38,7 +39,8 @@
                 android:layout_marginEnd="126dp"
                 android:layout_marginRight="126dp"
                 android:text="Home Menu"
-                android:textColor="@color/white"
+                android:textColor="#5B9CEA "
+                android:textStyle="bold|italic"
                 android:textSize="30sp" />
 
         </RelativeLayout>
