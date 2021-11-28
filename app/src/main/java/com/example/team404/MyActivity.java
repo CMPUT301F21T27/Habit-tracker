@@ -293,7 +293,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
 
 
-                                    total = total+1;
+
 
                                     last=formatter.format(date_now);
                                     Map<String,Object> h = new HashMap<>();
