@@ -26,21 +26,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.FirebaseAppCheck;
-import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 public class AccountActivity extends AppCompatActivity {
     //--------------------------------
@@ -219,29 +209,22 @@ public class AccountActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.nav_home:
                             intent = new Intent(getApplicationContext(), MainActivity.class);
-                            //startActivity(intent);
-                            //overridePendingTransition(0, 0);
-                            //return true;
+
                             break;
 
                         case R.id.nav_account:
                             intent = new Intent(getApplicationContext(), AccountActivity.class);
-                            //startActivity(intent);
-                            //overridePendingTransition(0, 0);
+
                             return true;
                             //;
                         case R.id.nav_my:
                             intent = new Intent(getApplicationContext(), MyActivity.class);
-                            //startActivity(intent);
-                            //overridePendingTransition(0, 0);
-                            //return true;
+
                             break;
 
                         case R.id.nav_subscribe:
                             intent = new Intent(getApplicationContext(), SubscribeActivity.class);
-                            //startActivity(intent);
-                            //overridePendingTransition(0, 0);
-                            //return true;
+
                             break;
                     }
                     startActivity(intent);

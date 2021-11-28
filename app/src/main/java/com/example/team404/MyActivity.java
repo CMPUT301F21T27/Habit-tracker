@@ -587,29 +587,21 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                     switch (item.getItemId()) {
                         case R.id.nav_home:
                             intent = new Intent(getApplicationContext(), MainActivity.class);
-                            //startActivity(intent);
-                            //overridePendingTransition(0, 0);
-                            //return true;
+
                             break;
 
                         case R.id.nav_account:
                             intent = new Intent(getApplicationContext(), AccountActivity.class);
-                            //startActivity(intent);
-                            //overridePendingTransition(0, 0);
-                            //return true;
+
                             break;
                         case R.id.nav_my:
                             intent = new Intent(getApplicationContext(), MyActivity.class);
-                            //startActivity(intent);
-                            //overridePendingTransition(0, 0);
+
                             return true;
-                        //break;
 
                         case R.id.nav_subscribe:
                             intent = new Intent(getApplicationContext(), SubscribeActivity.class);
-                            //startActivity(intent);
-                            //overridePendingTransition(0, 0);
-                            //return true;
+
                             break;
                     }
 
