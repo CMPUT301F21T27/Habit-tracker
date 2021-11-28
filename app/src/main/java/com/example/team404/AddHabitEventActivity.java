@@ -270,7 +270,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
 
                         }
                     });
-                    AddHabitEventActivity.this.finish(); // finish current activity
+
                     //Toast.makeText(AddHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
                     contentLoadingProgressBar.show();
                     handler.postDelayed(new Runnable() {
@@ -305,7 +305,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                     extras.putString("Disappear add button", "true");
                     intent.putExtras(extras);
                     setResult(000, intent);
-
+                    contentLoadingProgressBar.show();
 
                     db.collection("Habit Event List").document(habit_event_id)
                             .set(event)
@@ -322,22 +322,20 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                     Log.w(TAG, "failed add to fireBase", e);
                                 }
                             });
+                    //Toast.makeText(AddHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
 
-                    AddHabitEventActivity.this.finish(); // finish current activity
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("-----------------------------------");
+                            AddHabitEventActivity.super.onBackPressed();
+                            //saveImage.setEnabled(true);
+                            //Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }, 2000);
                 }
 
-                //Toast.makeText(AddHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
-                contentLoadingProgressBar.show();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("-----------------------------------");
-                        AddHabitEventActivity.super.onBackPressed();
-                        //saveImage.setEnabled(true);
-                        //Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
-
-                    }
-                }, 2000);
             }
         });
         // to call Camera to get a photo
@@ -530,8 +528,12 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
     public void onCancelPressed(){}
     @Override
     public void onBackPressed() {
-     //super.onBackPressed();
+
         finish();
+
+        super.onBackPressed();
     }
+
+
 
 }
