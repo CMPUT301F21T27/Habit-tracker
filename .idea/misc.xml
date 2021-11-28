@@ -13,16 +13,6 @@
         <entry key="..\:/Cmput 301/TEAM404/app/src/main/res/layout/fragment_subscribe.xml" value="0.1757852077001013" />
         <entry key="..\:/Cmput 301/TEAM404/app/src/main/res/layout/habit_content.xml" value="0.2015625" />
         <entry key="..\:/Cmput 301/TEAM404/app/src/main/res/layout/habit_event_activity.xml" value="0.1381340579710145" />
-
-        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/activity_habit_event.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/activity_photo.xml" value="0.25" />
-        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/add_comment_fragment_layout.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/fragment_account.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/fragment_my.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/fragment_subscribe.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/habit_content.xml" value="0.36666666666666664" />
-
         <entry key="..\:/Users/40378/Documents/TEAM404/app/src/main/res/drawable-anydpi/ic_action_name.xml" value="0.1078125" />
         <entry key="..\:/Users/40378/Documents/TEAM404/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1078125" />
         <entry key="..\:/Users/40378/Documents/TEAM404/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1078125" />
@@ -41,7 +31,30 @@
         <entry key="..\:/Users/40378/Documents/TEAM404/app/src/main/res/layout/fragment_my.xml" value="0.2" />
         <entry key="..\:/Users/40378/Documents/TEAM404/app/src/main/res/layout/fragment_subscribe.xml" value="0.128125" />
         <entry key="..\:/Users/40378/Documents/TEAM404/app/src/main/res/layout/habit_content.xml" value="0.264" />
-
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/drawable/shape_gradient.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/activity_account.xml" value="0.28396739130434784" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/activity_add_habit_event.xml" value="0.28396739130434784" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/activity_change_account_pwd.xml" value="0.18478260869565216" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/activity_edit_habit_event.xml" value="0.28396739130434784" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/activity_habit_event.xml" value="0.28396739130434784" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/activity_habit_event_list.xml" value="0.18478260869565216" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/activity_location.xml" value="0.28396739130434784" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/activity_login.xml" value="0.28396739130434784" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/activity_my.xml" value="0.18478260869565216" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/activity_notification.xml" value="0.28396739130434784" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/fragment_add_habit.xml" value="0.18478260869565216" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/habit_content.xml" value="0.1" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/habit_event_content.xml" value="0.18478260869565216" />
+        <entry key="..\:/Users/wenta/Desktop/TEAM404-master/app/src/main/res/layout/main_show_list.xml" value="0.18478260869565216" />
+        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/activity_habit_event.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/activity_photo.xml" value="0.25" />
+        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/add_comment_fragment_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/fragment_account.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/fragment_my.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/fragment_subscribe.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/zhoul/TEAM404/app/src/main/res/layout/habit_content.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.2953703703703704" />
       </map>
     </option>

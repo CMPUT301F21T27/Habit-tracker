@@ -40,10 +40,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -246,21 +248,65 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                         break;
 
                                 }
-                                if (!last.equals(formatter.format(date_now))&&(is_habit_today==true)){
+
                                     total=0;
+
+
+                                    LocalDate today = LocalDate.now();
+                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+                                    LocalDate startDate = LocalDate.of(Integer.valueOf(habit.getYear())
+                                            ,Integer.valueOf(habit.getMonth()),Integer.valueOf(habit.getDay()));
+                                    long noOfDaysBetween = ChronoUnit.DAYS.between(startDate, today);
+
+                                        total= (int)(noOfDaysBetween)+1;
+                                        int total_days=0;
+                                        for(int i=0; i<total;i++){
+                                            LocalDate everyDay =startDate.plusDays(i);
+                                            if((everyDay.getDayOfWeek()== DayOfWeek.MONDAY)&&(habit.getMonday())){
+                                                total_days++;
+                                            }else if((everyDay.getDayOfWeek()== DayOfWeek.TUESDAY)&&(habit.getTuesday())){
+                                                total_days++;
+                                            }else if((everyDay.getDayOfWeek()== DayOfWeek.WEDNESDAY)&&(habit.getWednesday())){
+                                                total_days++;
+                                            }
+                                            else if((everyDay.getDayOfWeek()== DayOfWeek.THURSDAY)&&(habit.getThursday())){
+                                                total_days++;
+                                            }
+                                            else if((everyDay.getDayOfWeek()== DayOfWeek.FRIDAY)&&(habit.getFriday())){
+                                                total_days++;
+                                            }
+                                            else if((everyDay.getDayOfWeek()== DayOfWeek.SATURDAY)&&(habit.getSaturday())){
+                                                total_days++;
+                                            }
+                                            else if((everyDay.getDayOfWeek()== DayOfWeek.SUNDAY)&&(habit.getSunday())){
+                                                total_days++;
+                                            }
+
+
+                                        }
+                                        
+
+
+                                    //http://www.java2s.com/Tutorials/Java/Data_Type_How_to/Date/Get_all_Monday_dates_in_given_month.htm
+
+
+
+
+
                                     total = total+1;
+
                                     last=formatter.format(date_now);
                                     Map<String,Object> h = new HashMap<>();
-                                    h.put("Total",total);
+                                    h.put("Total",total_days);
                                     h.put("Last",last);
                                     db.collection("Habit").document(id)
                                             .update("Total",total,
                                                     "Last",last);
-                                }
+
 
 
                                 habit.setLastDay(last);
-                                habit.setTotal_habit_day(total);
+                                habit.setTotal_habit_day(total_days);
                                 habit.setTotal_did(total_did);
 
 
