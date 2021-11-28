@@ -437,7 +437,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                     captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
                     byte[] imageData = baos.toByteArray();
                     UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
-                    Toast.makeText(AddHabitEventActivity.this, "Connecting internet...", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(AddHabitEventActivity.this, "Connecting internet...", Toast.LENGTH_LONG).show();
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
@@ -464,7 +464,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                     captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
                     byte[] imageData = baos.toByteArray();
                     UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
-                    Toast.makeText(AddHabitEventActivity.this, "Connecting internet...", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(AddHabitEventActivity.this, "Connecting internet...", Toast.LENGTH_LONG).show();
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
