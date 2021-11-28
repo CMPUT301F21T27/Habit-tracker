@@ -251,6 +251,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
                                     total=0;
 
+
                                     LocalDate today = LocalDate.now();
                                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
                                     LocalDate startDate = LocalDate.of(Integer.valueOf(habit.getYear())
@@ -290,6 +291,9 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
 
 
+
+
+                                    total = total+1;
 
                                     last=formatter.format(date_now);
                                     Map<String,Object> h = new HashMap<>();
