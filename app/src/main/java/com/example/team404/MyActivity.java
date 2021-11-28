@@ -248,20 +248,20 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                 }
                                 if (!last.equals(formatter.format(date_now))&&(is_habit_today==true)){
                                     total=0;
+                                    LocalDate today = LocalDate.now();
+                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+                                    LocalDate startDate = LocalDate.of(Integer.valueOf(habit.getYear())
+                                            ,Integer.valueOf(habit.getMonth()),Integer.valueOf(habit.getDay()));
+                                    String inputString1=formatter.format(startDate);
+                                    String inputString2 = formatter.format(today);
 
-                                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("  yyyy-MM-dd");
-                                    String inputString1 = habit.getLastDay();
-                                    String inputString2 = formatter.format(date_now);
+                                        LocalDate date1 = LocalDate.parse(inputString1,dtf);
+                                        LocalDate date2 = LocalDate.parse(inputString2,dtf);
+                                        long daysBetween= Duration.between(date1,date2).toDays();
+                                        total= (int)(daysBetween);
+                                        
 
-                                    LocalDate date1 = LocalDate.parse(inputString1, dtf);
-                                    LocalDate date2 = LocalDate.parse(inputString2, dtf);
-                                    long daysBetween = Duration.between(date1, date2).toDays();
-                                    System.out.println ("Days: " + daysBetween);
-                                    Date startDate = new Date(Integer.valueOf(habit.getYear()),
-                                            Integer.valueOf(habit.getMonth()),Integer.valueOf(habit.getDay()));
-                                    Date endDate = date_now;
-                                    long diff = endDate.getTime() - startDate.getTime();
-                                    System.out.println("--------+++"+diff);
+
 
                                     total = total+1;
                                     last=formatter.format(date_now);
