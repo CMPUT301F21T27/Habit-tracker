@@ -1,7 +1,9 @@
 package com.example.team404;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import com.google.firebase.auth.AuthResult;
@@ -30,8 +33,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText user_email;
     private EditText user_pass;
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
     private FirebaseFirestore db;
     static protected DocumentReference currentUserRef = null;
+    String TAG =".LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +71,12 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                FirebaseUser real_user = mAuth.getCurrentUser();
-                                currentUserRef = db.collection("User").document(real_user.getEmail());
-                                String userEmail = mAuth.getCurrentUser().getEmail();
+                                user = mAuth.getCurrentUser();
+                                currentUserRef = db.collection("User").document(user.getEmail());
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(LoginActivity.this, "password/email is incorrect!", Toast.LENGTH_SHORT).show();
                                 return;
@@ -94,13 +99,6 @@ public class LoginActivity extends AppCompatActivity {
 
         });
     }
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            currentUser.reload();
-        }
-    }
+
+
 }

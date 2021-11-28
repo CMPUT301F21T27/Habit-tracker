@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +31,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -85,6 +87,8 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit_event);
+        ContentLoadingProgressBar contentLoadingProgressBar = findViewById(R.id.progress_bar);
+        contentLoadingProgressBar.hide();
         Bundle extras = getIntent().getExtras();
         String habitId = extras.getString("habitId");
         DocumentReference habitDoc = FirebaseFirestore.getInstance().collection("Habit").document(habitId);
@@ -154,18 +158,22 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                 Intent intent = new Intent();
 
                 Bundle extras = new Bundle();
+                /*
                 extras.putString("editId", "");
                 extras.putString("editTitle", "");
 
                 extras.putString("editDate", "");
                 extras.putString("editComment", "");
+
+                 */
                 extras.putString("Disappear add button", "false");
                 intent.putExtras(extras);
                 setResult(000, intent);
                 onBackPressed();
             }
         });
-        //save habitevent after press save button
+        //save habit event after press save button
+        final Handler handler = new Handler();
         saveImage = findViewById(R.id.saveImage);
         saveImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,9 +196,6 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                             }
 
                         });
-
-
-
                 String current_location= locationTextView.getText().toString();
                 String current_comment= commentTextView.getText().toString();
                 Date date = new Date();
@@ -218,10 +223,13 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                     event.put("Habit Id", habitId);
                                     Intent intent = new Intent();
                                     Bundle extras = new Bundle();
+                                    /*
                                     extras.putString("addId", habit_event_id);
                                     extras.putString("addTitle",current_location);
                                     extras.putString("addDate", date_);
                                     extras.putString("addComment", current_comment);
+
+                                     */
                                     extras.putString("Disappear add button", "true");
                                     intent.putExtras(extras);
                                     setResult(000, intent);
@@ -262,6 +270,19 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
 
                         }
                     });
+
+                    //Toast.makeText(AddHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
+                    contentLoadingProgressBar.show();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("-----------------------------------");
+                            AddHabitEventActivity.super.onBackPressed();
+                            //saveImage.setEnabled(true);
+                            //Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }, 2000);
                 }else{
                     Map<String, Object> event = new HashMap<>();
 
@@ -274,14 +295,17 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                     event.put("Habit Id", habitId);
                     Intent intent = new Intent();
                     Bundle extras = new Bundle();
+                    /*
                     extras.putString("addId", habit_event_id);
                     extras.putString("addTitle",current_location);
                     extras.putString("addDate", date_);
                     extras.putString("addComment", current_comment);
+
+                     */
                     extras.putString("Disappear add button", "true");
                     intent.putExtras(extras);
                     setResult(000, intent);
-
+                    contentLoadingProgressBar.show();
 
                     db.collection("Habit Event List").document(habit_event_id)
                             .set(event)
@@ -298,11 +322,20 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                     Log.w(TAG, "failed add to fireBase", e);
                                 }
                             });
+                    //Toast.makeText(AddHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
 
-                    AddHabitEventActivity.this.finish(); // finish current activity
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("-----------------------------------");
+                            AddHabitEventActivity.super.onBackPressed();
+                            //saveImage.setEnabled(true);
+                            //Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }, 2000);
                 }
 
-                onBackPressed();
             }
         });
         // to call Camera to get a photo
@@ -402,7 +435,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                     captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
                     byte[] imageData = baos.toByteArray();
                     UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
-                    Toast.makeText(AddHabitEventActivity.this, "Connecting internet...", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(AddHabitEventActivity.this, "Connecting internet...", Toast.LENGTH_LONG).show();
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
@@ -429,7 +462,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                     captureImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
                     byte[] imageData = baos.toByteArray();
                     UploadTask uploadTask = eventsHabbitRef.putBytes(imageData);
-                    Toast.makeText(AddHabitEventActivity.this, "Connecting internet...", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(AddHabitEventActivity.this, "Connecting internet...", Toast.LENGTH_LONG).show();
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
@@ -493,5 +526,14 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
     }
     @Override
     public void onCancelPressed(){}
+    @Override
+    public void onBackPressed() {
+
+        finish();
+
+        super.onBackPressed();
+    }
+
+
 
 }

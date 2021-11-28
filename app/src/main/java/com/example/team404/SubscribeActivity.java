@@ -32,8 +32,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class SubscribeActivity extends AppCompatActivity {
@@ -95,6 +98,9 @@ public class SubscribeActivity extends AppCompatActivity {
                                             String month = document.getData().get("Month").toString();
                                             String day = document.getData().get("Day").toString();
                                             String email = document.getData().get("OwnerEmail").toString();
+                                            int total = Integer.valueOf(document.getData().get("Total").toString());
+                                            int total_did = Integer.valueOf(document.getData().get("Total Did").toString());
+                                            String last = document.getData().get("Last").toString();
 
                                             Habit habit = new Habit(id, title, reason, year, month, day);
                                             habit.setPub(true);
@@ -121,6 +127,55 @@ public class SubscribeActivity extends AppCompatActivity {
                                             if (plan.contains("Sunday")) {
                                                 habit.setSunday(true);
                                             }
+                                            SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+                                            Date date_now = new Date(System.currentTimeMillis());
+                                            boolean is_habit_today= false;
+                                            Calendar c = Calendar.getInstance();
+                                            int day_habit = c.get(Calendar.DAY_OF_WEEK);
+                                            switch (day_habit) {
+                                                case Calendar.SUNDAY:
+                                                    if (habit.getSunday()) {
+                                                        is_habit_today= true;
+                                                    }
+                                                    break;
+                                                case Calendar.MONDAY:
+                                                    if (habit.getMonday()) {
+                                                        is_habit_today= true;
+                                                    }
+                                                    break;
+                                                case Calendar.TUESDAY:
+                                                    if (habit.getTuesday()) {
+                                                        is_habit_today= true;
+                                                    }
+                                                    break;
+                                                case Calendar.WEDNESDAY:
+                                                    if (habit.getWednesday()) {
+                                                        is_habit_today= true;
+                                                    }
+                                                    break;
+                                                case Calendar.THURSDAY:
+                                                    if (habit.getThursday()) {
+                                                        is_habit_today= true;
+                                                    }
+                                                    break;
+                                                case Calendar.FRIDAY:
+                                                    if (habit.getFriday()) {
+                                                        is_habit_today= true;
+                                                    }
+                                                    break;
+                                                case Calendar.SATURDAY:
+                                                    if (habit.getSaturday()) {
+                                                        is_habit_today= true;
+                                                    }
+                                                    break;
+
+                                            }
+
+
+                                            habit.setLastDay(last);
+                                            habit.setTotal_habit_day(total);
+                                            habit.setTotal_did(total_did);
+
                                             if (email.equals(following.get(currentA))){
                                                 habitDataList.add(habit);
                                                 habitList.setAdapter(habitArrayAdapter);}
@@ -157,33 +212,26 @@ public class SubscribeActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.nav_home:
                             intent = new Intent(getApplicationContext(), MainActivity.class);
-                            //startActivity(intent);
-                            //overridePendingTransition(0, 0);
-                            //return true;
+
                             break;
 
                         case R.id.nav_account:
                             intent = new Intent(getApplicationContext(), AccountActivity.class);
-                            //startActivity(intent);
-                            //overridePendingTransition(0, 0);
-                            //return true;
+
                             break;
                         case R.id.nav_my:
                             intent = new Intent(getApplicationContext(), MyActivity.class);
-                            //startActivity(intent);
-                            //overridePendingTransition(0, 0);
-                            //return true;
+
                             break;
 
                         case R.id.nav_subscribe:
                             intent = new Intent(getApplicationContext(), SubscribeActivity.class);
-                            //startActivity(intent);
-                            //overridePendingTransition(0, 0);
+
                             return true;
-                            //break;
                     }
                     startActivity(intent);
                     overridePendingTransition(0, 0);
+                    finish();
                     return true;
                 }
             };

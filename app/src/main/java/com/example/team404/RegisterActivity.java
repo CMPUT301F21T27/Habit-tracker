@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -41,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity{
     private EditText email;
     private EditText name;
     private FirebaseAuth mAuth;
+    private  FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,39 +79,7 @@ public class RegisterActivity extends AppCompatActivity{
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
-                                    FirebaseUser firebaseuser = mAuth.getCurrentUser();
-                                    Map<String, Object> city = new HashMap<>();
-                                    city.put("userPassword", userPassword);
-                                    city.put("emailAddress", emailAddress);
-                                    city.put("userName", userName);
-                                    city.put("phone",userphone);
-                                    city.put("requestedList", Collections.emptyList());
-                                    city.put("followingList", Collections.emptyList());
-
-                                    FirebaseFirestore db= FirebaseFirestore.getInstance();
-                                    final CollectionReference collectionReference = db.collection("User");
-
-                                    collectionReference
-                                        .document(emailAddress)
-                                        .set(city)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d(TAG, "DocumentSnapshot successfully written!");
-
-                                                //setContentView(R.layout.login);
-                                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                                startActivity(intent);
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.w(TAG, "Error writing document", e);
-                                                Toast.makeText(RegisterActivity.this, "Sign up failed!!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-
+                                    updatedUI();
                                 }else{
                                     //Toast.makeText(RegisterActivity.this, userPassword, Toast.LENGTH_SHORT).show();
                                     Toast.makeText(RegisterActivity.this, "email already exist!", Toast.LENGTH_SHORT).show();
@@ -123,6 +93,48 @@ public class RegisterActivity extends AppCompatActivity{
             }
         });
     }
+    private void updatedUI(){
+        user = mAuth.getCurrentUser();
+        if (user!=null) {
+
+
+            Map<String, Object> city = new HashMap<>();
+            city.put("userPassword", password.getText().toString());
+            city.put("emailAddress", email.getText().toString());
+            city.put("userName", name.getText().toString());
+            city.put("phone", phone.getText().toString());
+            city.put("requestedList", Collections.emptyList());
+            city.put("followingList", Collections.emptyList());
+
+            final FirebaseFirestore db = FirebaseFirestore.getInstance();
+            CollectionReference collectionReference = db.collection("User");
+
+            collectionReference
+                    .document(email.getText().toString())
+                    .set(city)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "DocumentSnapshot successfully written!");
+                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error writing document", e);
+                            Toast.makeText(RegisterActivity.this, "Sign up failed!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+        }
+
+
+    }
+
+
+
     //check input is valid
     public boolean check_valid(String emailAddress, String userPassword,String  userName, String userRepassword,String userphone ){
 

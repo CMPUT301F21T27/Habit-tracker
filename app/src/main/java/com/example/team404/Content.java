@@ -88,8 +88,6 @@ private ArrayList<String> habit_refers;
     donutProgress =(DonutProgress) view.findViewById(R.id.donut_progress);
 
 
-
-
         System.out.println("result-------------"+habit.getTotal_habit_day());
         System.out.println("result-------------"+habit.getTotal_did());
         float result = (float) (habit.getTotal_did()*1.0/ habit.getTotal_habit_day());
@@ -101,10 +99,6 @@ private ArrayList<String> habit_refers;
         donutProgress.setProgress(result_int);
 
     }
-
-
-
-
 
 
     habitTitle.setText(habit.getTitle());
