@@ -251,6 +251,7 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
                         if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                             mLocationPermissionsGranted = false;
                             Log.d(TAG, "onRequestPermissionsResult: permission failed");
+
                             return;
                         }
                     }
@@ -318,7 +319,7 @@ public class MapsActivity extends AppCompatActivity implements  OnMapReadyCallba
         TextView addressView = findViewById(R.id.address_textView);
         Button checkButton = findViewById((R.id.check_button));
         Button cancelButton = findViewById((R.id.cancel_button));
-        addressView.setText("GPS is closed");
+        //addressView.setText("GPS is closed");
 
 
         checkButton.setOnClickListener(new View.OnClickListener() {
