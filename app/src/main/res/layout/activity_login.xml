@@ -48,7 +48,6 @@
             android:inputType="textEmailAddress"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/my_edit_text"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
         <EditText
