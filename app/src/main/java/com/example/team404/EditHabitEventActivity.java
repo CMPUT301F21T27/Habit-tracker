@@ -303,6 +303,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
 
                 }else{
+                    contentLoadingProgressBar.show();
                     final FirebaseFirestore db;
                     db = FirebaseFirestore.getInstance();
                     db.collection("Habit Event List").document(habit_event_id)
@@ -321,7 +322,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                         });
 
                     Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
-                    contentLoadingProgressBar.show();
+
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -347,9 +348,6 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                                 //Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
                             }
                         }, 2000);
-
-
-                    //onBackPressed();
 
                 }
             }

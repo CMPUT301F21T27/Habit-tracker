@@ -40,8 +40,8 @@
                 android:layout_marginRight="126dp"
                 android:text="Home Menu"
                 android:textColor="#5B9CEA "
-                android:textStyle="bold|italic"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:textStyle="bold|italic" />
 
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>

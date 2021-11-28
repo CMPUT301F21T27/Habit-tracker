@@ -290,11 +290,10 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                     //http://www.java2s.com/Tutorials/Java/Data_Type_How_to/Date/Get_all_Monday_dates_in_given_month.htm
 
 
-                                    if(total>1){
-                                        total = total+1;
-                                    }
 
 
+
+                                    total = total+1;
 
                                     last=formatter.format(date_now);
                                     Map<String,Object> h = new HashMap<>();
