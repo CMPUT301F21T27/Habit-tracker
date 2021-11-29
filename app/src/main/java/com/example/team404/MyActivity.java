@@ -26,7 +26,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.team404.Account.AccountActivity;
 import com.example.team404.DialogFragment.AddHabitFragment;
-import com.example.team404.DialogFragment.TodayActivity;
 import com.example.team404.Habit.Content;
 import com.example.team404.Habit.Habit;
 import com.google.android.gms.tasks.OnCompleteListener;

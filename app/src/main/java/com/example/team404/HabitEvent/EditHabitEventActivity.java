@@ -31,7 +31,6 @@ import androidx.core.widget.ContentLoadingProgressBar;
 import com.bumptech.glide.Glide;
 import com.example.team404.DialogFragment.AddCommentFragment;
 import com.example.team404.DialogFragment.EditCommentFragment;
-import com.example.team404.HabitEventActivity;
 import com.example.team404.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;

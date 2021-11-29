@@ -45,7 +45,7 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".Login.RegisterActivity"></activity>
 
-        <activity android:name=".DialogFragment.TodayActivity"></activity>
+        <activity android:name=".TodayActivity"></activity>
         <activity android:name=".SubscribeActivity"></activity>
         <activity android:name=".Account.AccountActivity"></activity>
         <activity android:name=".MyActivity"></activity>
@@ -53,7 +53,7 @@
         <activity android:name=".Account.NotificationActivity"></activity>
         <activity android:name=".Account.AccountEditActivity"></activity>
         <activity android:name=".HabitEvent.HabitEventListActivity"></activity>
-        <activity android:name=".HabitEventActivity"></activity>
+        <activity android:name=".HabitEvent.HabitEventActivity"></activity>
         <activity android:name=".HabitEvent.EditHabitEventActivity"></activity>
         <activity android:name=".HabitEvent.AddHabitEventActivity"></activity>
         <activity android:name=".Account.AccountPwdEditActivity"></activity>

@@ -6,7 +6,7 @@
     android:background="@drawable/image6"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DialogFragment.TodayActivity">
+    tools:context=".TodayActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

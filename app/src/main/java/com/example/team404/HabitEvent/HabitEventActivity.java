@@ -1,4 +1,4 @@
-package com.example.team404;
+package com.example.team404.HabitEvent;
 
 
 import android.content.Intent;
@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.bumptech.glide.Glide;
-import com.example.team404.HabitEvent.EditHabitEventActivity;
+import com.example.team404.R;
 
 public class HabitEventActivity extends AppCompatActivity {
     //--------------------------------
