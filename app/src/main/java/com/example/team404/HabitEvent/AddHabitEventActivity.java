@@ -155,14 +155,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                 Intent intent = new Intent();
 
                 Bundle extras = new Bundle();
-                /*
-                extras.putString("editId", "");
-                extras.putString("editTitle", "");
 
-                extras.putString("editDate", "");
-                extras.putString("editComment", "");
-
-                 */
                 extras.putString("Disappear add button", "false");
                 intent.putExtras(extras);
                 setResult(000, intent);
