@@ -115,7 +115,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
         commentTextView.setText(back_comment);
         locationTextView.setText(back_location);
         System.out.println("---------------------------- Image file path is null!"+back_storageUrlString);
-        if (back_storageUrlString!=null){
+        if (back_storageUrlString!=null && back_storageUrlString.length()>=1){
             Uri storageURL = Uri.parse(back_storageUrlString);
             Glide.with(getApplicationContext()).load(storageURL).into(imageView);
             System.out.println("----------------------------storage url:"+storageURL);

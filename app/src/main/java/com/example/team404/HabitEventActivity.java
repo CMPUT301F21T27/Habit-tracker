@@ -86,7 +86,7 @@ public class HabitEventActivity extends AppCompatActivity {
 
         String storageUrlString = extras.getString("storageUrlString");
 
-        if (storageUrlString!=null){
+        if (storageUrlString!=null && storageUrlString.length()>=1){
             System.out.println("_----------------------------------hea");
             contentLoadingProgressBar.show();
             Uri storageURL = Uri.parse(storageUrlString);

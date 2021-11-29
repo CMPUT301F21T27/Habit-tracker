@@ -290,8 +290,8 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                     event.put("Comment", current_comment);
                     event.put("Date", date_);
                     event.put("OwnerReference", habitDoc);
-                    event.put("url","");
-                    event.put("Uri", "");
+                    event.put("url",null);
+                    event.put("Uri", null);
                     event.put("Habit Id", habitId);
                     Intent intent = new Intent();
                     Bundle extras = new Bundle();
