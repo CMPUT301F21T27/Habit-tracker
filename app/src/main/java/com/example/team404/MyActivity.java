@@ -420,55 +420,61 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
         today.setOnClickListener(new View.OnClickListener(){
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 ArrayList<Habit> habitsToday = new ArrayList<Habit>();
-                for(Habit i :habitDataList){
-                    if (!(habitDataList.contains(i.getTitle()))) {
-                        switch (day) {
-                            case Calendar.SUNDAY:
-                                if (i.getSunday()) {
-                                    habitsToday.add(i);
-                                }
-                                break;
-                            case Calendar.MONDAY:
-                                if (i.getMonday()) {
-                                    habitsToday.add(i);
-                                }
-                                break;
-                            case Calendar.TUESDAY:
-                                if (i.getTuesday()) {
-                                    habitsToday.add(i);
-                                }
-                                break;
-                            case Calendar.WEDNESDAY:
-                                if (i.getWednesday()) {
-                                    habitsToday.add(i);
-                                }
-                                break;
-                            case Calendar.THURSDAY:
-                                if (i.getThursday()) {
-                                    habitsToday.add(i);
-                                }
-                                break;
-                            case Calendar.FRIDAY:
-                                if (i.getFriday()) {
-                                    habitsToday.add(i);
-                                }
-                                break;
-                            case Calendar.SATURDAY:
-                                if (i.getSaturday()) {
-                                    habitsToday.add(i);
-                                }
-                                break;
+                for (Habit i : habitDataList) {
+                    LocalDate currentDate = LocalDate.now();
+                    LocalDate setD = LocalDate.of(Integer.valueOf(i.getYear()), Integer.valueOf(i.getMonth()), Integer.valueOf(i.getDay()));
+                    if (!currentDate.isBefore(setD)) {
+                        if (!(habitDataList.contains(i.getTitle()))) {
+                            switch (day) {
+                                case Calendar.SUNDAY:
+                                    if (i.getSunday()) {
+                                        habitsToday.add(i);
+                                    }
+                                    break;
+                                case Calendar.MONDAY:
+                                    if (i.getMonday()) {
+                                        habitsToday.add(i);
+                                    }
+                                    break;
+                                case Calendar.TUESDAY:
+                                    if (i.getTuesday()) {
+                                        habitsToday.add(i);
+                                    }
+                                    break;
+                                case Calendar.WEDNESDAY:
+                                    if (i.getWednesday()) {
+                                        habitsToday.add(i);
+                                    }
+                                    break;
+                                case Calendar.THURSDAY:
+                                    if (i.getThursday()) {
+                                        habitsToday.add(i);
+                                    }
+                                    break;
+                                case Calendar.FRIDAY:
+                                    if (i.getFriday()) {
+                                        habitsToday.add(i);
+                                    }
+                                    break;
+                                case Calendar.SATURDAY:
+                                    if (i.getSaturday()) {
+                                        habitsToday.add(i);
+                                    }
+                                    break;
 
+                            }
                         }
                     }
                 }
-                intent.putExtra("habitsToday",habitsToday);
-                startActivity(intent);
-            }
+                    intent.putExtra("habitsToday", habitsToday);
+                    startActivity(intent);
 
+
+            }
         });
 
 

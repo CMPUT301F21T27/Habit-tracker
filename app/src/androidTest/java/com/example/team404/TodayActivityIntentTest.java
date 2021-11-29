@@ -116,10 +116,77 @@ public class TodayActivityIntentTest {
         solo.clickOnButton("Confirm");
         solo.clickOnButton("TODAY");
         assertTrue(solo.searchText("play"));
+        //delete
+        solo.clickOnView(solo.getView(R.id.backImage));
+        solo.clickOnText("play");
+        solo.clickOnButton("Delete");
+    }
+    @Test
+    public void testAddAndDeleteEvent() throws Exception{
+        //go to my activity
+        solo.getCurrentActivity();
+        System.out.println("---"+solo.getCurrentActivity());
+        EditText password = (EditText) solo.getView(R.id.user_pass);
+        EditText email = (EditText) solo.getView(R.id.user_email);
+        solo.enterText(email, "test@test.com");
+        solo.enterText(password, "123123");
+        solo.clickOnButton("Sign In");
+        solo.waitForActivity(MainActivity.class, 3000);
+        Thread.sleep(6000);
+        solo.clickOnScreen(800, 2000);
+        //add a habit
+        solo.clickOnView(solo.getView(R.id.add_habit_button));
+        solo.enterText((EditText) solo.getView(R.id.title_editText),"play");
+        solo.enterText((EditText) solo.getView(R.id.reason_editText),"no homework");
+        solo.clickOnView(solo.getView(R.id.date_Start_Text));
+        solo.setDatePicker(0,2021,10,29);
+        solo.clickOnText("OK");
+        //get the current day of the week
+        Calendar c = Calendar.getInstance();
+        int day = c.get(Calendar.DAY_OF_WEEK);
 
+        switch (day) {
+            case Calendar.SUNDAY:
+                solo.clickOnView(solo.getView(R.id.sunday_check));
 
+                break;
+            case Calendar.MONDAY:
+                solo.clickOnView(solo.getView(R.id.monday_check));
 
+                break;
+            case Calendar.TUESDAY:
+                solo.clickOnView(solo.getView(R.id.tuesday_check));
+                break;
+            case Calendar.WEDNESDAY:
+                solo.clickOnView(solo.getView(R.id.wednesday_check));
+                break;
+            case Calendar.THURSDAY:
+                solo.clickOnView(solo.getView(R.id.thursday_check));
+                break;
+            case Calendar.FRIDAY:
+                solo.clickOnView(solo.getView(R.id.friday_check));
+                break;
+            case Calendar.SATURDAY:
+                solo.clickOnView(solo.getView(R.id.saturday_check));
+                break;
 
+        }
+        solo.clickOnButton("Confirm");
+        solo.clickOnButton("TODAY");
+        assertTrue(solo.searchText("play"));
+        solo.clickOnText("play");
+        solo.clickOnView(solo.getView(R.id.add_event_button));
+        solo.clickOnView(solo.getView(R.id.addImage));
+        //if it stop working, please comment out next line
+        solo.clickOnText("OK");
+
+        solo.clickOnView(solo.getView(R.id.saveImage));
+
+        assertTrue(solo.searchText("No address record"));
+
+        solo.clickLongInList(0);
+        solo.clickOnText("Yes");
+        assertFalse(solo.searchText("No address record"));
 
 
     }
