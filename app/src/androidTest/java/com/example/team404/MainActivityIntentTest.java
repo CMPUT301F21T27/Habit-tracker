@@ -55,7 +55,7 @@ public class MainActivityIntentTest {
         //it needs some times to reload the list of habit from Firebase
         // if it is not pass, you just need to extends the time, until the list of habit is show in the list
         ListView habit_list_in_home_page = solo.getCurrentActivity().findViewById(R.id.main_list);
-        Thread.sleep(3000);
+        Thread.sleep(6000);
         Habit habit = (Habit) habit_list_in_home_page.getItemAtPosition(0);
 
         if (habit!=null){
@@ -67,14 +67,6 @@ public class MainActivityIntentTest {
         Thread.sleep(3000);
         Habit habit_my = (Habit) habit_list_in_home_page.getItemAtPosition(0);
         if (habit_my!=null){
-
-        }else{
-            throw  new AssertionError();
-        }
-        ListView habit_list_in_subscribe_page = solo.getCurrentActivity().findViewById(R.id.subscribe_list);
-        Thread.sleep(3000);
-        Habit habit_subscribe = (Habit) habit_list_in_home_page.getItemAtPosition(0);
-        if (habit_subscribe!=null){
 
         }else{
             throw  new AssertionError();
