@@ -1,5 +1,6 @@
 package com.example.team404;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import android.app.Activity;
@@ -14,10 +15,11 @@ import com.example.team404.Habit.Habit;
 import com.example.team404.Login.LoginActivity;
 import com.robotium.solo.Solo;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.Calendar;
 
 public class MyHabitFirebaseIntentTest {
     // I use Pixel 4 API 29,
@@ -30,28 +32,16 @@ public class MyHabitFirebaseIntentTest {
     @Rule
     public ActivityTestRule<LoginActivity> rule = new ActivityTestRule<>(LoginActivity.class, true,true);
 
-    /**
-     * Runs before all tests and creates solo instance.
-     * @throws Exception
-     */
     @Before
     public void setUp() throws Exception{
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
 
     }
-    /**
-     * Gets the Activity
-     * @throws Exception
-     */
+
     @Test
     public void start() throws Exception{
         Activity activity = rule.getActivity();
     }
-
-    /**
-     * test if we can log in and successfully go to main activity
-     * @throws Exception
-     */
     @Test
     public void GoToMyHabitActivityTest() throws Exception{
         //solo.assertCurrentActivity("current Activity", LoginActivity.class);
@@ -75,80 +65,133 @@ public class MyHabitFirebaseIntentTest {
 
         solo.assertCurrentActivity("Current Activity", MyActivity.class);
 
-        /**
-         * test if we can log in and successfully go to my activity
-         * @throws Exception
-         */
+
     }
+    /**
+     * Test add habit function
+     */
     @Test
-    public void checkUserList()throws Exception{
+    public void testAddHabit() throws Exception{
         solo.getCurrentActivity();
+        System.out.println("---"+solo.getCurrentActivity());
         EditText password = (EditText) solo.getView(R.id.user_pass);
         EditText email = (EditText) solo.getView(R.id.user_email);
         solo.enterText(email, "test@test.com");
         solo.enterText(password, "123123");
         solo.clickOnButton("Sign In");
         solo.waitForActivity(MainActivity.class, 3000);
-        Thread.sleep(3000);
+        Thread.sleep(6000);
         solo.clickOnScreen(800, 2000);
-        assertTrue(solo.searchText("play"));
-        assertTrue(solo.searchText("no homework"));
-        assertTrue(solo.searchText("2021-12-15"));
+// add a habit
+        solo.clickOnView(solo.getView(R.id.add_habit_button));
+        solo.enterText((EditText) solo.getView(R.id.title_editText),"test");
+        solo.enterText((EditText) solo.getView(R.id.reason_editText),"intent");
+        solo.clickOnView(solo.getView(R.id.date_Start_Text));
+        solo.setDatePicker(0,2022,11,12);
+        solo.clickOnText("OK");
+        solo.clickOnButton("Confirm");
 
-    }
-    
-    /**
-     * test if we can log in and successfully go to today activity
-     * @throws Exception
-     */
+        assertTrue(solo.searchText("test"));
+        assertTrue(solo.searchText("intent"));
+        assertTrue(solo.searchText("2022-12-12"));
 
-    @Test
-    public void checkTodayList()throws Exception{
-        solo.getCurrentActivity();
-        EditText password = (EditText) solo.getView(R.id.user_pass);
-        EditText email = (EditText) solo.getView(R.id.user_email);
-        solo.enterText(email, "bai@gmail.com");
-        solo.enterText(password, "123456");
-        solo.clickOnButton("Sign In");
-        solo.waitForActivity(MainActivity.class, 3000);
-        Thread.sleep(3000);
-        solo.clickOnScreen(800, 2000);
-        assertTrue(solo.searchText("test double click"));
-        assertTrue(solo.searchText("for testing double click two"));
-        assertTrue(solo.searchText("2021-11-29"));
-        solo.clickOnScreen(1000, 200);
-        assertTrue(solo.searchText("test double click"));
-        assertTrue(solo.searchText("for testing double click two"));
-        assertTrue(solo.searchText("2021-11-29"));
+        //delete what I added
+        solo.clickOnText("test");
+        solo.clickOnButton("Delete");
+
 
     }
     /**
-     * test if we can log in and successfully go to the subscribe activity
-     * @throws Exception
+     * Test delete habit function
      */
     @Test
-    public void checkSubscribeList()throws Exception{
+    public void testDeleteHabit() throws Exception{
+
+        //add
         solo.getCurrentActivity();
+        System.out.println("---"+solo.getCurrentActivity());
         EditText password = (EditText) solo.getView(R.id.user_pass);
         EditText email = (EditText) solo.getView(R.id.user_email);
-        solo.enterText(email, "bai@gmail.com");
-        solo.enterText(password, "123456");
+        solo.enterText(email, "test@test.com");
+        solo.enterText(password, "123123");
         solo.clickOnButton("Sign In");
         solo.waitForActivity(MainActivity.class, 3000);
-        Thread.sleep(3000);
-        solo.clickOnScreen(500, 2000);
-        assertTrue(solo.searchText("video games"));
-        assertTrue(solo.searchText("I like to play video games"));
-        assertTrue(solo.searchText("2021-10-28"));
+        Thread.sleep(6000);
+        solo.clickOnScreen(800, 2000);
+        //add a a habit for delete
+        solo.assertCurrentActivity("",MyActivity.class);
+        solo.clickOnView(solo.getView(R.id.add_habit_button));
+        solo.enterText((EditText) solo.getView(R.id.title_editText),"delete");
+        solo.enterText((EditText) solo.getView(R.id.reason_editText),"delete intent");
+        solo.clickOnView(solo.getView(R.id.date_Start_Text));
+        solo.setDatePicker(0,2022,11,13);
+        solo.clickOnText("OK");
+        solo.clickOnButton("Confirm");
+
+        //delete
+        solo.clickOnText("delete");
+        solo.clickOnButton("Delete");
+        assertFalse(solo.searchText("delete"));
+        assertFalse(solo.searchText("delete intent"));
+        assertFalse(solo.searchText("2022-12-13"));
+
+
+
+
 
     }
-
     /**
-     * Closes the activity after each test
-     * @throws Exception
+     * Test edit habit function
      */
-    @After
-    public void tearDown() throws Exception{
-        solo.finishOpenedActivities();
+    @Test
+    public void testEditHabit() throws Exception{
+        //add a habit for edit
+        solo.getCurrentActivity();
+        System.out.println("---"+solo.getCurrentActivity());
+        EditText password = (EditText) solo.getView(R.id.user_pass);
+        EditText email = (EditText) solo.getView(R.id.user_email);
+        solo.enterText(email, "test@test.com");
+        solo.enterText(password, "123123");
+        solo.clickOnButton("Sign In");
+        solo.waitForActivity(MainActivity.class, 3000);
+        Thread.sleep(6000);
+        solo.clickOnScreen(800, 2000);
+
+        solo.clickOnView(solo.getView(R.id.add_habit_button));
+        solo.enterText((EditText) solo.getView(R.id.title_editText),"edit");
+        solo.enterText((EditText) solo.getView(R.id.reason_editText),"edit intent");
+        solo.clickOnView(solo.getView(R.id.date_Start_Text));
+        solo.setDatePicker(0,2022,11,15);
+        solo.clickOnText("OK");
+        solo.clickOnButton("Confirm");
+
+        //edit
+        solo.clickOnText("edit");
+        solo.clearEditText((EditText) solo.getView(R.id.title_editText));
+        solo.clearEditText((EditText) solo.getView(R.id.reason_editText));
+        solo.enterText((EditText) solo.getView(R.id.title_editText),"csgo");
+        solo.enterText((EditText) solo.getView(R.id.reason_editText),"rush B");
+        solo.clickOnButton("Confirm");
+        assertTrue(solo.searchText("csgo"));
+        assertTrue(solo.searchText("rush B"));
+        assertTrue(solo.searchText("2022-12-15"));
+
+        //delete what I added
+        solo.clickOnText("csgo");
+        solo.clickOnButton("Delete");
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
 }
