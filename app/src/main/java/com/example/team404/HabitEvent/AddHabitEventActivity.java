@@ -220,7 +220,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                     event.put("Habit Id", habitId);
                                     Intent intent = new Intent();
                                     Bundle extras = new Bundle();
-                                    
+
                                     extras.putString("Disappear add button", "true");
                                     intent.putExtras(extras);
                                     setResult(000, intent);

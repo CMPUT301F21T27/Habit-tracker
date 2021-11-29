@@ -266,26 +266,11 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
                     Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
                     contentLoadingProgressBar.show();
+                    saveImage.setEnabled(false);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            /*
-                            System.out.println("-----------------------------------");
-                            Intent intent = new Intent(EditHabitEventActivity.this, HabitEventListActivity.class);
-                            Bundle extras = new Bundle();
-                            extras.putString("current_habit_id", current_habit_id);
-                            extras.putString("today", today);
-                            intent.putExtras(extras);
-                            //setResult(333, intent);
-                            EditHabitEventActivity.this.startActivity(intent);
-                            System.out.println("-----------------------t------------"+today);
-                            System.out.println("----------------------c-------------"+current_habit_id);
-                            EditHabitEventActivity.this.finish();
-                            System.out.println("------------------------t-----------"+today);
-                            System.out.println("------------------------c-----------"+current_habit_id);
-                            overridePendingTransition(0,0);
 
-                             */
                             EditHabitEventActivity.super.onBackPressed();
                             //saveImage.setEnabled(true);
                             //Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
@@ -297,6 +282,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
 
                 }else{
                     contentLoadingProgressBar.show();
+                    saveImage.setEnabled(false);
                     final FirebaseFirestore db;
                     db = FirebaseFirestore.getInstance();
                     db.collection("Habit Event List").document(habit_event_id)
@@ -319,24 +305,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                //saveImage.setEnabled(true);
-                                /*
-                                System.out.println("-----------------------------------");
-                                Intent intent = new Intent(EditHabitEventActivity.this, HabitEventListActivity.class);
-                                Bundle extras = new Bundle();
-                                extras.putString("current_habit_id", current_habit_id);
-                                extras.putString("today", today);
-                                intent.putExtras(extras);
-                                //setResult(333, intent);
-                                EditHabitEventActivity.this.startActivity(intent);
-                                System.out.println("----------------------t-------------"+today);
-                                System.out.println("-----------------------c------------"+current_habit_id);
-                                EditHabitEventActivity.this.finish();
-                                System.out.println("------------------------t-----------"+today);
-                                System.out.println("------------------------c-----------"+current_habit_id);
-                                overridePendingTransition(0,0);
 
-                                 */
                                 EditHabitEventActivity.super.onBackPressed();
                                 //Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
                             }
