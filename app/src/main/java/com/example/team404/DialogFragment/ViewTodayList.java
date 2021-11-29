@@ -41,13 +41,18 @@ public class ViewTodayList extends DialogFragment {
     private Button followButton;
 
 
-
-
+    /**
+     * constructors
+     * @param habit_selected
+     */
     public ViewTodayList(Habit habit_selected) {
         this.habit_selected = habit_selected;
     }
     @NonNull
     @Override
+    /**
+     * main progress when View Today List has been created
+     */
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.main_show_list, null);
         title = view.findViewById(R.id.title_main_Text);
@@ -61,7 +66,9 @@ public class ViewTodayList extends DialogFragment {
         saturdayCheck = view.findViewById(R.id.saturday_check_main);
         sundayCheck = view.findViewById(R.id.sunday_check_main);
 
-
+        /*
+        read the habit that user selected
+         */
         title.setText(habit_selected.getTitle());
         date_start.setText(habit_selected.getYear() +"-"+habit_selected.getMonth()+"-"+habit_selected.getDay());
         reason.setText(habit_selected.getReason());
@@ -82,6 +89,10 @@ public class ViewTodayList extends DialogFragment {
         addEventButton= view.findViewById(R.id.add_event_button);
         addEventButton.setVisibility(Button.VISIBLE);
         addEventButton.setOnClickListener(new View.OnClickListener() {
+            /*
+            go to the habit event activity to let user to add a habit event
+            to this habit. That means the user complete the plan for that day.
+             */
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), HabitEventListActivity.class);
@@ -95,7 +106,9 @@ public class ViewTodayList extends DialogFragment {
             }
         });
 
-
+        /*
+        cancel button to go back to the today list activity
+         */
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
                 .setView(view)

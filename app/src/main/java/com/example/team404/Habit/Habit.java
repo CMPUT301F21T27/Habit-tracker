@@ -2,7 +2,16 @@ package com.example.team404.Habit;
 
 import java.util.Date;
 
+/**
+ * The Habit Class
+ * Which will create a object named Habit
+ * it will contains the attributes of the habits
+ * it has the setter and getters for the attributs
+ */
 public class Habit implements java.io.Serializable {
+    /*
+    global variables
+     */
     private String id;
     private String title;
     private String reason;
@@ -30,10 +39,15 @@ public class Habit implements java.io.Serializable {
     private int total_did;
 
 
-
-
-
-
+    /**
+     * Constructor for the habit class
+     * @param id
+     * @param t
+     * @param r
+     * @param year
+     * @param month
+     * @param day
+     */
 
     public Habit(String id, String t, String r, String year, String month, String day) {
         setId(id);
@@ -61,9 +75,19 @@ public class Habit implements java.io.Serializable {
 
 
     }
+
+    /**
+     * setter for total plan days
+     * @param i
+     */
     public void setTotal_habit_day(int i){
         this.total_habit_day=i;
     }
+
+    /**
+     * setter for the last day that user login
+     * @param i
+     */
     public void setLastDay(String i){
         this.lastDay=i;
     }
@@ -79,6 +103,10 @@ public class Habit implements java.io.Serializable {
 
     }
 
+    /**
+     * setters for total plan days that user finished their habit
+     * @param i
+     */
     public void setTotal_did(int i){
         this.total_did=i;
     }
@@ -134,13 +162,18 @@ public class Habit implements java.io.Serializable {
     }
 
     /**
-     * Sets habit title with a character limit of 20
+     * Sets the id of the habit
      * @param i
-     * Habit title
+     * Habit id
      */
     public void setId(String i) {
         this.id=i;
     }
+
+    /**
+     * set the public or private of a habit
+     * @param p
+     */
     public void setPub(boolean p){
         this.pub=p;
     }
@@ -193,11 +226,16 @@ public class Habit implements java.io.Serializable {
     public void setDay(String day){this.day = day;}
 
     /**
-     * Returns the title of the habit
-     * @return title
+     * Returns the total plan days that user complete the habit
+     * @return total_did
      */
 
     public int getTotal_did(){return total_did;}
+
+    /**
+     * Returns the Habit ID
+     * @return id
+     */
     public String getId(){return id;}
     /**
      * Returns the title of the habit
@@ -221,14 +259,22 @@ public class Habit implements java.io.Serializable {
      * @return Month
      */
     public String getMonth(){return month;}
+
+    /**
+     * Return the last day that user log in
+     * @return lastDay
+     */
+    public String getLastDay(){return lastDay;}
+
+    /**
+     * Return is the habit public or private
+     * @return pub
+     */
+    public Boolean getPub(){return pub;}
     /**
      * Returns the start Date of the habit
      * @return Day
      */
-
-    public String getLastDay(){return lastDay;}
-    public Boolean getPub(){return pub;}
-
     public String getDay(){return day;}
     /**
      * Returns is the habit occur on Monday
@@ -265,6 +311,11 @@ public class Habit implements java.io.Serializable {
      * @return sunday
      */
     public Boolean getSunday() {return sunday;}
+
+    /**
+     * Return the total days of habit plan
+     * @return total_habit_day
+     */
     public int getTotal_habit_day(){return total_habit_day;}
 
 

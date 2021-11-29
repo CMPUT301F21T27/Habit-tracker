@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 /**
  * This class is an adapter class
+ * that associate with the habit_content xml
+ * show what content of items in list will show
  */
 public class Content extends ArrayAdapter<Habit> {
 private ArrayList<Habit> habits;
@@ -66,7 +68,11 @@ private ArrayList<String> habit_refers;
 
     donutProgress =(DonutProgress) view.findViewById(R.id.donut_progress);
 
-
+/*
+indicators show how close that user follow the plan
+using total days that user follow the plan divide by total days of plan
+will get the percentage. That will show how close that user follow the plan
+ */
         System.out.println("result-------------"+habit.getTotal_habit_day());
         System.out.println("result-------------"+habit.getTotal_did());
         float result = (float) (habit.getTotal_did()*1.0/ habit.getTotal_habit_day());

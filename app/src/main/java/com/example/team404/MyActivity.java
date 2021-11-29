@@ -103,6 +103,7 @@ import java.util.Map;
  >>>>>>> b4a88cddd663b33ca9d4eff51db9efd335942727
  * This activity is use to display user's Habits. That user can view, edit, delete habits through here. User can also
  * access the habits to do today through here
+ * associate with activity_my xml
  */
 
 public class MyActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
@@ -121,7 +122,11 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getSupportActionBar().hide();
+
         super.onCreate(savedInstanceState);
+        /*connect to the database
+
+         */
         final FirebaseFirestore db;
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
@@ -149,7 +154,9 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
         habitDataList=new ArrayList<>();
         habitArrayAdapter = new Content(this,habitDataList);
-
+        /*
+        get the habits that belongs current user
+         */
         db.collection("Habit")
                 .whereEqualTo("OwnerReference",userDoc)
                 .get()
@@ -158,6 +165,10 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            /*
+                            read the details from database
+                            , create the habits and put into the list
+                             */
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
                                 String id =  document.getData().get("id").toString();
@@ -251,7 +262,23 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
                                     total=0;
 
-
+                                    /*calculate how many days between two dates
+                                    https://beginnersbook.com/2017/10/java-8-calculate-days-between-two-dates/
+                                    author： CHAITANYA SINGH
+                                     */
+                                    /* check if its monday, tuesday ,wednesday......
+                                    https://itqna.net/questions/2818/how-check-if-localdate-weekend
+                                     author: anonymous it_qna user.
+                                     date:22.12.2017
+                                     */
+                                    /* LocalDate plusDays method
+                                    https://www.geeksforgeeks.org/localdate-plusdays-method-in-java-with-examples/
+                                     author: geeksforgeeks
+                                     date: 2019.04.30
+                                     */
+                                    /*
+                                    using LocalDate to update the total days of the plans
+                                     */
                                     LocalDate today = LocalDate.now();
 
                                     LocalDate startDate = LocalDate.of(Integer.valueOf(habit.getYear())
@@ -259,11 +286,11 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                     long noOfDaysBetween = ChronoUnit.DAYS.between(startDate, today);
 
                                         total= (int)(noOfDaysBetween)+1;
+                                        //get how many days between star tdate and today
                                         int total_days=0;
                                         for(int i=0; i<total;i++){
                                             LocalDate everyDay =startDate.plusDays(i);
-
-
+                                            //get how many days that in plan.
                                             if((everyDay.getDayOfWeek()== DayOfWeek.MONDAY)&&(habit.getMonday()==true)){
 
                                                 System.out.println((habit.getMonday()));
@@ -303,7 +330,6 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                         
 
 
-                                    //http://www.java2s.com/Tutorials/Java/Data_Type_How_to/Date/Get_all_Monday_dates_in_given_month.htm
 
 
 
@@ -320,7 +346,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                                     "Last",last);
 
 
-
+                                    // update the details
                                 habit.setLastDay(last);
                                 habit.setTotal_habit_day(total_days);
                                 habit.setTotal_did(total_did);
@@ -339,11 +365,14 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                     }
 
                 });
-
+           /*
+        using the adapter to show the list
+         */
 
         habitArrayAdapter = new Content(this,habitDataList);
         habitList.setAdapter(habitArrayAdapter);
 
+        /* reorder the list by alphabetical by click the button*/
         reorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -357,6 +386,10 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                 habitList.setAdapter(habitArrayAdapter);
             }
         });
+        /*
+        when pressing the add button or click on an existing habit
+        it will show the add/edit habit fragment
+         */
         final FloatingActionButton addHabitButton = findViewById(R.id.add_habit_button);
         addHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
