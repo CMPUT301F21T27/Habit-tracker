@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.team404.Habit.Habit;
@@ -31,6 +33,7 @@ import com.example.team404.HabitEvent.HabitEventListActivity;
 import com.example.team404.R;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -181,12 +184,28 @@ public class AddHabitFragment extends DialogFragment {
         });
         /* using date picker to set up the Start date of the habit **/
         DateStartSetListener = new DatePickerDialog.OnDateSetListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDateSet(DatePicker datePicker, int y, int m, int d) {
-                year = y;
-                month = m+1;
-                day = d;
+                LocalDate currentDate = LocalDate.now();
+                LocalDate setD = LocalDate.of(y,m+1,d);
+                if(!setD.isBefore(currentDate)){
+                    year = y;
+                    month = m+1;
+                    day = d;
+
+                }
+                else{
+                    year =currentDate.getYear();
+                    month =currentDate.getMonthValue();
+                    day = currentDate.getDayOfMonth();
+                    Toast.makeText(getActivity(), "Date cannot be past", Toast.LENGTH_SHORT).show();
+
+
+                }
                 date_start.setText(year+"-"+month+"-"+day);
+
+
 
             }
         };
