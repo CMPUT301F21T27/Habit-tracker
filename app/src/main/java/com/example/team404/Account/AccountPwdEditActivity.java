@@ -100,6 +100,7 @@ public class AccountPwdEditActivity extends AppCompatActivity {
 
 
     }
+    //check input if valid
     public boolean checkInvalid(String newPwd, String oldPws, String userOldPwd) {
 
 

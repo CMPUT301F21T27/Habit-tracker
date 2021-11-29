@@ -58,9 +58,6 @@ public class RegisterActivity extends AppCompatActivity{
         repassword = findViewById(R.id.repassward);
         phone = findViewById(R.id.reg_phone);
         name = findViewById(R.id.reg_name);
-        //final FirebaseFirestore db;
-        //db = FirebaseFirestore.getInstance();
-        //final CollectionReference collectionReference = db.collection("User");
 
         reg_btn.setOnClickListener( new View.OnClickListener(){
         @Override
@@ -142,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity{
         //https://stackoverflow.com/questions/8204680/java-regex-email
         //Nov 20, 2011
         //author:Jason Buberel;
-        //check email form
+        //check email form in line 143
         if ( emailAddress != null && Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE).matcher(emailAddress).find()){
 
         }else{

@@ -45,7 +45,6 @@ public class HabitEventActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         String id = extras.getString("id");
-        System.out.println("_----------------------------------hea  0");
         String location = extras.getString("location");
         String comment = extras.getString("comment");
         today = extras.getString("today");
@@ -54,10 +53,8 @@ public class HabitEventActivity extends AppCompatActivity {
         String storageUrlString = extras.getString("storageUrlString");
 
         if (storageUrlString!=null && storageUrlString.length()>=1){
-            System.out.println("_----------------------------------hea");
             contentLoadingProgressBar.show();
             Uri storageURL = Uri.parse(storageUrlString);
-            System.out.println("_----------------------------------hea  1");
             Glide.with(getApplicationContext()).load(storageURL).into(imageView);
             contentLoadingProgressBar.hide();
         }else{
@@ -108,7 +105,6 @@ public class HabitEventActivity extends AppCompatActivity {
             String commentString = data.getStringExtra("comment");
             String storageUrlString = data.getStringExtra("storageUrlString");
             if (storageUrlString!=null){
-                System.out.println("_----------------------------------hea 33");
                 imageView.setImageResource(android.R.color.transparent);
                 imageView = findViewById(R.id.imageView);
                 Uri storageURL = Uri.parse(storageUrlString);

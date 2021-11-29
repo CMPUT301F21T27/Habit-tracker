@@ -314,7 +314,11 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                 }
             }
         });
-
+        //Author:Vijay-Tahelramani
+        //Date: 16 May 2019
+        //Link:https://github.com/Vijay-Tahelramani/Android_Firebase_Authentication
+        //cite builder: builder.setTitle("Add Photo!"); from line 325 - line 356
+        //cite method: private void openCamera(), public void onRequestPermissionsResult
         // to call Camera to get a photo
         imageView = findViewById(R.id.imageView);
         imageView.setOnClickListener(v -> {
@@ -418,7 +422,7 @@ public class EditHabitEventActivity extends AppCompatActivity implements AddComm
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
                 } else {
-                    //permisiion from pop up was denied.
+                    //permission from pop up was denied.
                     Toast.makeText(EditHabitEventActivity.this, "Permission Denied...", Toast.LENGTH_LONG).show();
                 }
         }

@@ -268,7 +268,6 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                System.out.println("-----------------------------------");
                                 AddHabitEventActivity.super.onBackPressed();
                             }
                         }, 2000);
@@ -316,7 +315,6 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                System.out.println("-----------------------------------");
                                 AddHabitEventActivity.super.onBackPressed();
                             }
                         }, 2000);
@@ -329,6 +327,11 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
 
             }
         });
+        //Author:Vijay-Tahelramani
+        //Date: 16 May 2019
+        //Link:https://github.com/Vijay-Tahelramani/Android_Firebase_Authentication
+        //cite builder: builder.setTitle("Add Photo!"); from line 339 - line 370
+        //cite method: private void openCamera(), public void onRequestPermissionsResult
         // to call Camera to get a photo
         imageView = findViewById(R.id.imageView);
         imageView.setOnClickListener(v -> {

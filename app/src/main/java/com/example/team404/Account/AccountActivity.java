@@ -64,7 +64,6 @@ public class AccountActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         userEmail = user.getEmail();
-        System.out.println("---------------------------uid:"+user.getUid());
         String userEmail = user.getEmail();
         setContentView(R.layout.activity_account);
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
@@ -80,6 +79,7 @@ public class AccountActivity extends AppCompatActivity {
         final FirebaseFirestore db;
         db= FirebaseFirestore.getInstance();
         DocumentReference userDocRef = db.collection("User").document(userEmail);
+        //get user's information
         userDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -94,8 +94,6 @@ public class AccountActivity extends AppCompatActivity {
                             profile_uri_string=document.get("profile_uri").toString();
                             Uri storageURL = Uri.parse(profile_uri_string);
                             Glide.with(getApplicationContext()).load(storageURL).into(profileView);
-                            System.out.println("------------*************************************---------------storage url:"+storageURL);
-                            System.out.println("---------------------------uid:"+user.getUid());
                             username.setText(userName);
                             phone.setText(userPhone);
 
@@ -121,7 +119,6 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-        System.out.println("------------******************1*******************--------------");
 
         notifcationImage = findViewById(R.id.notificationImage);
         notifcationImage.setOnClickListener(view -> {
@@ -135,7 +132,7 @@ public class AccountActivity extends AppCompatActivity {
             intent.putExtra("old_password", old_password);
             startActivity(intent);
         });
-
+        //go to next activity to edit user's information
         editImage = findViewById(R.id.EditImage);
         editImage.setOnClickListener(v -> {
 
@@ -151,7 +148,7 @@ public class AccountActivity extends AppCompatActivity {
             startActivityForResult(intent, 333);
         });
 
-
+        //logout by double click
         Button logoutButton = findViewById(R.id.log_out_button);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,16 +179,12 @@ public class AccountActivity extends AppCompatActivity {
 
             if (requestCode == 333) {
                 // Get String data from Intent
-                System.out.println("------------********************66*****************-----66------");
-                System.out.println("---------------------------uid:"+user.getUid());
                 String returnString = data.getStringExtra("editName");
                 String returnphone = data.getStringExtra("editPhone");
                 String  profile_uri_string=data.getStringExtra("uri_string");
                 if (profile_uri_string!=null){
                     Uri storageURL = Uri.parse(profile_uri_string);
                     Glide.with(getApplicationContext()).load(storageURL).into(profileView);
-                    System.out.println("------------*************************************---------------storage url:"+storageURL);
-                    System.out.println("---------------------------uid:"+user.getUid());
 
                 }
                 // Set text view with string
@@ -201,7 +194,7 @@ public class AccountActivity extends AppCompatActivity {
                 textView1.setText(returnphone);
             }
         }
-
+    //Navigation bar
     private NavigationBarView.OnItemSelectedListener navListener =
             new NavigationBarView.OnItemSelectedListener() {
                 @Override
@@ -234,7 +227,7 @@ public class AccountActivity extends AppCompatActivity {
                     return true;
                 }
             };
-
+    //log out/ exit safely
     private int count = 0;
     @Override
     public void onBackPressed() {
@@ -247,7 +240,7 @@ public class AccountActivity extends AppCompatActivity {
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
-                            AccountActivity.super.onBackPressed();
+                            FirebaseAuth.getInstance().signOut();
                             finishAffinity();
                         }
                     }).create().show();

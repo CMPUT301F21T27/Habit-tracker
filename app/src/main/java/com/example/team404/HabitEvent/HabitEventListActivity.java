@@ -68,17 +68,11 @@ public class HabitEventListActivity extends AppCompatActivity {
         Intent current_habit_intent = getIntent();
         current_habit_id = current_habit_intent.getStringExtra("current_habit_id");
         today =current_habit_intent.getStringExtra("today");
-        System.out.println("--------------------------------1---"+current_habit_id);
-        System.out.println("--------------------------------11---"+today);
 
 
 
         ImageView addImage = findViewById(R.id.addImage);
-        //addImage.setVisibility(today.equals("today")? ImageView.VISIBLE: ImageView.INVISIBLE );
 
-        System.out.println("----------------1111111111111111111-------------------");
-        System.out.println("--------------------------------1---"+current_habit_id);
-        System.out.println("--------------------------------11---"+today);
         db = FirebaseFirestore.getInstance();
         DocumentReference habitDoc = FirebaseFirestore.getInstance().collection("Habit").document(current_habit_id);
 
@@ -122,7 +116,6 @@ public class HabitEventListActivity extends AppCompatActivity {
 
                         }
                         contentLoadingProgressBar.hide();
-                        System.out.println("--++++++--");
                         if (habitEventDataList.size()== 0 && today.equals("today") ){
                                 addImage.setVisibility(ImageView.VISIBLE);
 
@@ -152,9 +145,7 @@ public class HabitEventListActivity extends AppCompatActivity {
                         Log.d(TAG, "Current habit event: " + habitDoc);
                     }
                 });
-        System.out.println("----");
-        //addImage.setVisibility(today.equals("today")? ImageView.VISIBLE: ImageView.INVISIBLE );
-        System.out.println("--++++--");
+        // view the detail of selected habit event and then edit
         habitEventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -165,7 +156,6 @@ public class HabitEventListActivity extends AppCompatActivity {
                 String id = currentHabitevent.getId();
                 String date = currentHabitevent.getDate();
                 String uri =  currentHabitevent.getUri();
-                System.out.println("--------1111--------------------"+uri);
 
                 Intent intent = new Intent(HabitEventListActivity.this, HabitEventActivity.class);
                 Bundle extras = new Bundle();
@@ -177,11 +167,11 @@ public class HabitEventListActivity extends AppCompatActivity {
                 extras.putString("today",today);
                 extras.putString("current_habit_id",current_habit_id);
                 intent.putExtras(extras);
-                System.out.println("---------2222-------------------"+uri+"---------");
 
                 startActivity(intent);
             }
         });
+        // delete habit event by long clicking
         habitEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int
@@ -271,7 +261,6 @@ public class HabitEventListActivity extends AppCompatActivity {
         if (requestCode == 000) {
             if (resultCode == RESULT_OK) {
                 String returnString = data.getStringExtra("Disappear add button");
-                System.out.println("--++++=====--");
                 ContentLoadingProgressBar contentLoadingProgressBar = findViewById(R.id.progress_bar);
                 contentLoadingProgressBar.show();
                 addImage.setVisibility(returnString.equals("true")? ImageView.INVISIBLE: ImageView.VISIBLE );

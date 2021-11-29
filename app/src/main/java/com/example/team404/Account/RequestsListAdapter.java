@@ -24,7 +24,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.List;
 
 public class RequestsListAdapter extends ArrayAdapter<String> {
-
+    //------------------------------------
+    //updated request list from cloud firebase
+    //------------------------------------
     private Context reqContext;
     private List<String> requestsList;
     private String requesterName;

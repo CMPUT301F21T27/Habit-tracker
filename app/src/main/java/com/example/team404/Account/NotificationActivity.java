@@ -14,6 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NotificationActivity extends AppCompatActivity {
+    //-------------------------------------
+    //get notification message from other doers
+    // other doers will send a follow request
+    //user can decide agree or disagree
+    //-------------------------------------
     private ImageView backImage;
     private ListView requestedListView;
     private List<String> requestsList;
