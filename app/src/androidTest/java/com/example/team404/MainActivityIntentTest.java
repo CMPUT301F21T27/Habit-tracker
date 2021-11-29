@@ -71,19 +71,13 @@ public class MainActivityIntentTest {
             throw  new AssertionError();
         }
         ListView habit_list_in_my_page = solo.getCurrentActivity().findViewById(R.id.habit_list);
-        Thread.sleep(3000);
+        Thread.sleep(6000);
         Habit habit_my = (Habit) habit_list_in_home_page.getItemAtPosition(0);
         if (habit_my!=null){
 
         }else{
             throw  new AssertionError();
         }
-        ListView habit_list_in_subscribe_page = solo.getCurrentActivity().findViewById(R.id.subscribe_list);
-        Thread.sleep(3000);
-        Habit habit_subscribe = (Habit) habit_list_in_home_page.getItemAtPosition(0);
-        if (habit_subscribe!=null){
-
-<<<<<<< HEAD
 
 
     }
@@ -118,11 +112,7 @@ public class MainActivityIntentTest {
         solo.assertCurrentActivity("Current Activity", MyActivity.class);
 
 
-=======
-        }else{
-            throw  new AssertionError();
-        }
->>>>>>> 1175f226332417f2e0f9a0732df5cdeaa63015c8
+
     }
     @Test
     public void GoToSubscribeActivityTest() throws Exception{
