@@ -290,7 +290,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                         int total_days= (int)(noOfDaysBetween);
                                         //get how many days between star tdate and today
 
-                                        for(int i=0; i<total_days;i++){
+                                        for(int i=1; i<=total_days;i++){
                                             LocalDate everyDay =last_date.plusDays(i);
                                             //get how many days that in plan.
                                             if((everyDay.getDayOfWeek()== DayOfWeek.MONDAY)&&(habit.getMonday()==true)){

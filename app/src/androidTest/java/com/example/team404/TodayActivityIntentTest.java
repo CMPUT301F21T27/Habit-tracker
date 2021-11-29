@@ -193,7 +193,10 @@ public class TodayActivityIntentTest {
         solo.clickOnView(solo.getView(R.id.add_event_button));
         solo.clickOnView(solo.getView(R.id.addImage));
         //if it stop working, please comment out next line
-        solo.clickOnText("OK");
+        if (solo.searchText("OK")) {
+            solo.clickOnText("OK");
+
+        }
 
         solo.clickOnView(solo.getView(R.id.saveImage));
 
@@ -202,6 +205,8 @@ public class TodayActivityIntentTest {
         solo.clickLongInList(0);
         solo.clickOnText("Yes");
         assertFalse(solo.searchText("No address record"));
+
+
 
 
     }
