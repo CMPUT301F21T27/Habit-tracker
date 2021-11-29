@@ -14,6 +14,7 @@ import com.example.team404.HabitEvent.HabitEventListActivity;
 import com.robotium.solo.Solo;
 import androidx.test.rule.ActivityTestRule;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,6 +45,13 @@ public class HabitEventListActivityIntentTest {
     @Test
     public void testHasHabitEvent() throws Exception{
         solo.assertCurrentActivity("",HabitEventListActivity.class);
+
+
+
+
+
+
+
         solo.clickOnView(solo.getView(R.id.add_event_button));
         solo.enterText((EditText) solo.getView(R.id.title_editText),"play");
         solo.enterText((EditText) solo.getView(R.id.reason_editText),"no homework");
@@ -57,5 +65,13 @@ public class HabitEventListActivityIntentTest {
         assertTrue(solo.searchText("2021-12-15"));
 
 
+    }
+    /**
+     * Closes the activity after each test
+     * @throws Exception
+     */
+    @After
+    public void tearDown() throws Exception{
+        solo.finishOpenedActivities();
     }
 }

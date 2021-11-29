@@ -163,7 +163,6 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-
     }
     //https://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android
     // author: Suragch (answered) GabrielBB(edited)
