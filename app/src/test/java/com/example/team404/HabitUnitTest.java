@@ -90,7 +90,7 @@ public class HabitUnitTest {
         habit.setFriday(true);
         habit.setSunday(true);
         habit.setSaturday(true);
-
+        habit.setPub(true);
 
         assertTrue(habit.getMonday());
         assertTrue(habit.getTuesday());
@@ -99,6 +99,7 @@ public class HabitUnitTest {
         assertTrue(habit.getFriday());
         assertTrue(habit.getSaturday());
         assertTrue(habit.getSunday());
+        assertTrue(habit.getPub());
     }
 
 
