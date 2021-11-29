@@ -6,12 +6,13 @@
     android:orientation="vertical">
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title_editText"
         android:ems="10"
         android:textSize="25sp"
         android:hint="title"
+        android:background="@drawable/shape_button"
         android:inputType="textPersonName"
         android:maxLength="20"/>
 
@@ -19,11 +20,11 @@
         android:id="@+id/date_Start_Text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:background="@drawable/shape_button"
         android:clickable="true"
         android:hint="Date_Start"
         android:inputType="date"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -31,6 +32,7 @@
         android:id="@+id/reason_editText"
         android:ems="10"
         android:hint="reason"
+        android:background="@drawable/shape_button"
         android:textSize="20sp"
         android:inputType="textPersonName"
         android:maxLength="30"/>
@@ -108,7 +110,8 @@
         android:id="@+id/pub_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:text="public" />
+        android:textSize="20sp"
+        android:text="public"
+        android:background="@drawable/shape_button"/>
 
 </LinearLayout>

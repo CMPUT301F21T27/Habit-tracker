@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:background="#D6EAF8"
+    android:background="@drawable/shape_gradient"
 
 
     android:layout_width="match_parent"
@@ -9,12 +9,13 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title_main_Text"
         android:ems="10"
         android:textSize="25sp"
         android:hint="title"
+        android:background="@drawable/shape_button"
         android:inputType="textPersonName"
         android:layout_marginLeft="10dp"
         android:maxLength="20"/>
@@ -24,11 +25,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:background="@drawable/shape_button"
         android:clickable="true"
         android:hint="Date_Start"
         android:inputType="date"
         android:layout_marginLeft="10dp"
-        android:textSize="24sp" />
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -36,6 +38,7 @@
         android:id="@+id/reason_main_Text"
         android:ems="10"
         android:textSize="20sp"
+        android:background="@drawable/shape_button"
         android:layout_marginLeft="10dp"
         android:hint="reason"
         android:inputType="textPersonName"
@@ -124,9 +127,10 @@
 
     <TextView
         android:id="@+id/ownerEmail"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
+        android:background="@drawable/shape_button"
         android:visibility="invisible"
         />
     <Button
