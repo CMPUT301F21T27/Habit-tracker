@@ -116,7 +116,7 @@ public class AccountEditActivity extends AppCompatActivity {
         //Date: 16 May 2019
         //Link:https://github.com/Vijay-Tahelramani/Android_Firebase_Authentication
         //cite builder: builder.setTitle("Add Photo!"); from line 123 - line 153
-        //cite method: private void openCamera(), public void onRequestPermissionsResult
+        //cite method: private void openCamera(), public void onRequestPermissionsResult()
         profileView.setOnClickListener(v -> {
             final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
             AlertDialog.Builder builder = new AlertDialog.Builder(AccountEditActivity.this);
