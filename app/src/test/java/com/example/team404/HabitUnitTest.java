@@ -35,28 +35,29 @@ public class HabitUnitTest {
         assertTrue(habit.getYear().equals("1999"));
         assertTrue(habit.getMonth().equals("11"));
         assertTrue(habit.getDay().equals("15"));
+
     }
     /**
-     * Test "days occur in a week" getter is working
+     * Test "days occur in a week & public" getter is working
      */
     @Test
     public void testGetDaysWeek(){
-       assertFalse(habit.getMonday());
+        assertFalse(habit.getMonday());
         assertFalse(habit.getTuesday());
         assertFalse(habit.getWednesday());
         assertFalse(habit.getThursday());
         assertFalse(habit.getFriday());
         assertFalse(habit.getSaturday());
         assertFalse(habit.getSunday());
-
+        assertFalse(habit.getPub());
     }
     /**
      * Test title setter is working
      */
     @Test
     public void testSetTitle(){
-      habit.setTitle("play");
-      assertTrue(habit.getTitle().equals("play"));
+        habit.setTitle("play");
+        assertTrue(habit.getTitle().equals("play"));
     }
     /**
      * Test reason setter is working
@@ -66,6 +67,7 @@ public class HabitUnitTest {
         habit.setReason("have time");
         assertTrue(habit.getReason().equals("have time"));
     }
+
     /**
      * Test date setter is working
      */
@@ -79,7 +81,7 @@ public class HabitUnitTest {
         assertTrue(habit.getDay().equals("02"));
     }
     /**
-     * Test "days of week" setter works
+     * Test "days of week and public" setter works
      */
     @Test
     public void testSetDaysWeek(){
@@ -91,6 +93,7 @@ public class HabitUnitTest {
         habit.setSunday(true);
         habit.setSaturday(true);
         habit.setPub(true);
+
 
         assertTrue(habit.getMonday());
         assertTrue(habit.getTuesday());
