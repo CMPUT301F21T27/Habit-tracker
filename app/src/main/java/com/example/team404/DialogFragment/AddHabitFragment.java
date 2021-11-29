@@ -38,7 +38,7 @@ import java.util.Date;
  * This class is use to set up the add, edit, and delete Habit from the list
  */
 public class AddHabitFragment extends DialogFragment {
-    /** declare variables **/
+    /* declare variables **/
     private EditText title;
     private TextView date_start;
     private Button edit_date_start;
@@ -86,6 +86,10 @@ public class AddHabitFragment extends DialogFragment {
         void OnDlPressed(Habit habit);
     }
 
+    /**
+     * associate the fragment to the Fragment Interaction Listener.
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
 
@@ -122,88 +126,13 @@ public class AddHabitFragment extends DialogFragment {
         saturdayCheck=view.findViewById(R.id.saturday_check);
         sundayCheck=view.findViewById(R.id.sunday_check);
         pubSwitch=view.findViewById(R.id.pub_switch);
-        /** User is editing an exist habit, then the editText will show the information of the previous habit **/
-        if (habit_selected!=null){
+        /* if its editing a habit, user will not allow to change the date**/
+
+
+        if (habit_selected!=null) {
             date_start.setClickable(false);
-            mondayCheck.setClickable(false);
-            tuesdayCheck.setClickable(false);
-            wednesdayCheck.setClickable(false);
-            thursdayCheck.setClickable(false);
-            fridayCheck.setClickable(false);
-            saturdayCheck.setClickable(false);
-            sundayCheck.setClickable(false);
         }
-        mondayCheck.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if(habit_selected!=null){
-                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
-                    mondayCheck.setChecked(habit_selected.getMonday());
-                }
-            }
-        });
-        tuesdayCheck.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if(habit_selected!=null){
-                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
-                    tuesdayCheck.setChecked(habit_selected.getTuesday());
-                }
-            }
-        });
-        wednesdayCheck.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if(habit_selected!=null){
-                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
-                    wednesdayCheck.setChecked(habit_selected.getWednesday());
-                }
-            }
-        });
-        thursdayCheck.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if(habit_selected!=null){
-                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
-                    thursdayCheck.setChecked(habit_selected.getThursday());
-                }
-            }
-        });
-        fridayCheck.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if(habit_selected!=null){
-                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
-                    fridayCheck.setChecked(habit_selected.getFriday());
-                }
-            }
-        });
-        saturdayCheck.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if(habit_selected!=null){
-                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
-                    saturdayCheck.setChecked(habit_selected.getSaturday());
-                }
-            }
-        });
-        sundayCheck.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if(habit_selected!=null){
-                    Toast.makeText(getActivity(), "days cannot get edit", Toast.LENGTH_SHORT).show();
-                    sundayCheck.setChecked(habit_selected.getSunday());
-                }
-            }
-        });
-
+        /* User is editing an exist habit, then the editText will show the information of the previous habit **/
         if (habit_selected != null) {
             title.setText(habit_selected.getTitle());
             date_start.setText(habit_selected.getYear() +"-"+habit_selected.getMonth()+"-"+habit_selected.getDay());
@@ -218,12 +147,25 @@ public class AddHabitFragment extends DialogFragment {
             pubSwitch.setChecked(habit_selected.getPub());
 
         }
+        /* set up the starting date by using DatePickerDialog**/
         date_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /* if its editing a habit, it will not allow to let user change
+                 * date and it will give a message that date cannot  get edit
+                 */
                 if(habit_selected!=null){
                     Toast.makeText(getActivity(), "Date cannot get edit", Toast.LENGTH_SHORT).show();
                 }
+                /* if its adding a new habit, it will set up the start date by
+                 * pick a date on the DatePicker dialog
+                 */
+                /* Reference
+                 * Date picker dialog
+                 * https://stackoverflow.com/questions/14933330/datepicker-how-to-popup-datepicker-when-click-on-edittext
+                 * author: stackoverflow user: Android_coder
+                 * date :2013-02-13
+                 */
                 else{
                 Calendar calendar = Calendar.getInstance();
                 year = calendar.get(Calendar.YEAR);
@@ -235,8 +177,9 @@ public class AddHabitFragment extends DialogFragment {
             }
 
 
+
         });
-        /** using date picker to set up the Start date of the habit **/
+        /* using date picker to set up the Start date of the habit **/
         DateStartSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int y, int m, int d) {
@@ -247,7 +190,9 @@ public class AddHabitFragment extends DialogFragment {
 
             }
         };
-
+        /* if its editing a habit, user can press the habit event button to
+         * see the list of habit event
+         */
         habitEventListButton = view.findViewById(R.id.habit_event_list_button);
         habitEventListButton.setVisibility(habit_selected!=null? ImageView.VISIBLE: ImageView.GONE );
         habitEventListButton.setOnClickListener(v -> {
@@ -258,7 +203,7 @@ public class AddHabitFragment extends DialogFragment {
 
             startActivity(intent);
         });
-        /** set up the Positive, neutral, Negative Button of the dialog for add, cancel, delete **/
+        /* set up the Positive, neutral, Negative Button of the dialog for add, cancel, delete **/
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
                 .setView(view)
@@ -267,6 +212,9 @@ public class AddHabitFragment extends DialogFragment {
                 .setNeutralButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        /* delete a habit if it exist
+                         *
+                         */
                         if (habit_selected != null) {
                             listener.OnDlPressed(habit_selected);
                         }
@@ -275,14 +223,19 @@ public class AddHabitFragment extends DialogFragment {
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        /*
+                         * by clicking confirm, it will add a new habit to
+                         * the list, or it will edit a exist habit in the list.
+                         */
                         Date date= new Date();
                         String habit_id = String.valueOf(date);
                         String habit_title = title.getText().toString();
                         String habit_year;
                         String habit_month;
                         String habit_day;
-
+                        /* make sure when editing a habit, it will not
+                         * automatically change the start date to 0-0-0
+                         */
                         if (habit_selected!=null && (day==0|| day==00)){
                             habit_year=habit_selected.getYear();
                             habit_month=habit_selected.getMonth();
@@ -292,8 +245,15 @@ public class AddHabitFragment extends DialogFragment {
                             habit_month = Integer.toString(month);
                             habit_day = Integer.toString(day);
                         }
+                        /*
+                         * gathering all the variables and create a habit
+                         * that will add to the list
+                         */
                         String habit_reason = reason.getText().toString();
                         Habit habit = new Habit(habit_id, habit_title, habit_reason, habit_year,habit_month,habit_day);
+                        /*
+                        check is the day passed one day
+                         */
                         if(habit_selected ==null){
                             SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
                             Date date_now = new Date(System.currentTimeMillis());
@@ -310,7 +270,9 @@ public class AddHabitFragment extends DialogFragment {
                         habit.setPub(pubSwitch.isChecked());
 
 
-
+                        /*
+                        add to the list
+                         */
                         listener.OnOKPressed(habit, habit_selected);
 
                     }

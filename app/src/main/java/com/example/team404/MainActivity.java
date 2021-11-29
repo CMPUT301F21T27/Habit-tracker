@@ -38,19 +38,32 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * MainActivity class
+ * associate with activity_main xml
+ * The home page of this app
+ * shows a list of all user's public habits
+
+ */
 public class MainActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
     ListView habitList;
     ArrayAdapter<Habit> habitArrayAdapter;
     ArrayList<Habit> habitDataList;
 
 
-
-
+    /**
+     * The main progress when Main Activity has been created.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
+        /*
+        connect to the firebase
+         */
         final FirebaseFirestore db;
+
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -65,8 +78,11 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
         habitDataList=new ArrayList<>();
         habitArrayAdapter = new Content(this,habitDataList);
         ContentLoadingProgressBar contentLoadingProgressBar = findViewById(R.id.progress_bar);
-        //
+
         contentLoadingProgressBar.show();
+        /*
+        Get all the habits that are set to public from Database
+         */
         db.collection("Habit")
                 .whereEqualTo("Public","True")
 
@@ -78,7 +94,10 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                             for (QueryDocumentSnapshot document : task.getResult()) {
 
 
-
+                                    /*
+                                    read the details of habit that get from database
+                                    and create the habit.
+                                     */
                                 String id = document.getData().get("id").toString();
                                 String title = document.getData().get("Title").toString();
                                 String reason = document.getData().get("Reason").toString();
@@ -115,49 +134,49 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
                                 if (plan.contains("Sunday")) {
                                     habit.setSunday(true);
                                 }
-                                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-                                Date date_now = new Date(System.currentTimeMillis());
-                                boolean is_habit_today= false;
-                                Calendar c = Calendar.getInstance();
-                                int day_habit = c.get(Calendar.DAY_OF_WEEK);
-                                switch (day_habit) {
-                                    case Calendar.SUNDAY:
-                                        if (habit.getSunday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-                                    case Calendar.MONDAY:
-                                        if (habit.getMonday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-                                    case Calendar.TUESDAY:
-                                        if (habit.getTuesday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-                                    case Calendar.WEDNESDAY:
-                                        if (habit.getWednesday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-                                    case Calendar.THURSDAY:
-                                        if (habit.getThursday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-                                    case Calendar.FRIDAY:
-                                        if (habit.getFriday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-                                    case Calendar.SATURDAY:
-                                        if (habit.getSaturday()) {
-                                            is_habit_today= true;
-                                        }
-                                        break;
-
-                                }
+//                                SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+//                                Date date_now = new Date(System.currentTimeMillis());
+//                                boolean is_habit_today= false;
+//                                Calendar c = Calendar.getInstance();
+//                                int day_habit = c.get(Calendar.DAY_OF_WEEK);
+//                                switch (day_habit) {
+//                                    case Calendar.SUNDAY:
+//                                        if (habit.getSunday()) {
+//                                            is_habit_today= true;
+//                                        }
+//                                        break;
+//                                    case Calendar.MONDAY:
+//                                        if (habit.getMonday()) {
+//                                            is_habit_today= true;
+//                                        }
+//                                        break;
+//                                    case Calendar.TUESDAY:
+//                                        if (habit.getTuesday()) {
+//                                            is_habit_today= true;
+//                                        }
+//                                        break;
+//                                    case Calendar.WEDNESDAY:
+//                                        if (habit.getWednesday()) {
+//                                            is_habit_today= true;
+//                                        }
+//                                        break;
+//                                    case Calendar.THURSDAY:
+//                                        if (habit.getThursday()) {
+//                                            is_habit_today= true;
+//                                        }
+//                                        break;
+//                                    case Calendar.FRIDAY:
+//                                        if (habit.getFriday()) {
+//                                            is_habit_today= true;
+//                                        }
+//                                        break;
+//                                    case Calendar.SATURDAY:
+//                                        if (habit.getSaturday()) {
+//                                            is_habit_today= true;
+//                                        }
+//                                        break;
+//
+//                                }
 
 
                                 habit.setLastDay(last);
@@ -182,9 +201,14 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
 
                 });
 
-
+        /*
+        using the adapter to show the list
+         */
         habitArrayAdapter = new Content(this,habitDataList);
         habitList.setAdapter(habitArrayAdapter);
+        /*
+        click the habit will view the habit details
+         */
         habitList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -199,6 +223,9 @@ public class MainActivity extends AppCompatActivity implements AddHabitFragment.
 
 
     }
+    /*switching activity
+
+     */
     private NavigationBarView.OnItemSelectedListener navListener =
             new NavigationBarView.OnItemSelectedListener() {
                 @Override
