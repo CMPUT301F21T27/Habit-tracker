@@ -15,17 +15,25 @@ public class HabitEventUnitTest {
     String date = "2021-11-28";
     private HabitEvent habitEvent = new HabitEvent("habit event 1","https://firebasestorage.googleapis.com/v0/b/team-404-5c9b1.appspot.com/o/image%2F666%40qq.com05-2021-11-28-08-53-39.png?alt=media&token=d80300e4-1734-4d66-ae86-0bb6baafef8b","114 Street & 87 Avenue, Edmonton, AB T6G 2S5, Canada","Great!","2021-11-28");
 
-
+    /**
+     * Test id getter is working
+     */
     @Test
     public void testGetId() {
 
         assertEquals("habit event 1", habitEvent.getId());
     }
+    /**
+     * Test id setter is working
+     */
     @Test
     public void testSetId() {
         habitEvent.setId("habit event 1");
         assertEquals(id, habitEvent.getId());
     }
+    /**
+     * Test uri getter is working
+     */
     @Test
     public void testGetUri() {
 
@@ -33,25 +41,40 @@ public class HabitEventUnitTest {
     }
 
    // No setUri method, it created by the other method
+    /**
+     * Test location getter is working
+     */
     @Test
     public void testGetLocation() {
         assertEquals("114 Street & 87 Avenue, Edmonton, AB T6G 2S5, Canada", habitEvent.getLocation());
     }
+    /**
+     * Test location setter is working
+     */
     @Test
     public void testSetLocation() {
         habitEvent.setLocation("114 Street & 80 Avenue, Edmonton, AB T6G 2S5, Canada");
         assertEquals("114 Street & 80 Avenue, Edmonton, AB T6G 2S5, Canada", habitEvent.getLocation());
     }
+    /**
+     * Test comment getter is working
+     */
     @Test
     public void testGetComments() {
         assertEquals("Great!", habitEvent.getComments());
     }
 
     //no setComments method, create comment by other smethod
+    /**
+     * Test date getter is working
+     */
     @Test
     public void testGetDate() {
         assertEquals("2021-11-28", habitEvent.getDate());
     }
+    /**
+     * Test date setter is working
+     */
     @Test
     public void testSetDate() {
         habitEvent.setDate("2021-12-12");
