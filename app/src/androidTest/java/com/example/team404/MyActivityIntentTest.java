@@ -47,7 +47,7 @@ public class MyActivityIntentTest {
         solo.clickOnView(solo.getView(R.id.add_habit_button));
         solo.enterText((EditText) solo.getView(R.id.title_editText),"play");
         solo.enterText((EditText) solo.getView(R.id.reason_editText),"no homework");
-        solo.clickOnView(solo.getView(R.id.date_Start_edit_button));
+        solo.clickOnView(solo.getView(R.id.date_Start_Text));
         solo.setDatePicker(0,2021,11,15);
         solo.clickOnText("OK");
         solo.clickOnButton("Confirm");
@@ -68,7 +68,7 @@ public class MyActivityIntentTest {
         solo.clickOnView(solo.getView(R.id.add_habit_button));
         solo.enterText((EditText) solo.getView(R.id.title_editText),"play");
         solo.enterText((EditText) solo.getView(R.id.reason_editText),"no homework");
-        solo.clickOnView(solo.getView(R.id.date_Start_edit_button));
+        solo.clickOnView(solo.getView(R.id.date_Start_Text));
         solo.setDatePicker(0,2021,11,15);
         solo.clickOnText("OK");
         solo.clickOnButton("Confirm");
@@ -95,7 +95,7 @@ public class MyActivityIntentTest {
         solo.clickOnView(solo.getView(R.id.add_habit_button));
         solo.enterText((EditText) solo.getView(R.id.title_editText),"play");
         solo.enterText((EditText) solo.getView(R.id.reason_editText),"no homework");
-        solo.clickOnView(solo.getView(R.id.date_Start_edit_button));
+        solo.clickOnView(solo.getView(R.id.date_Start_Text));
         solo.setDatePicker(0,2021,11,15);
         solo.clickOnText("OK");
         solo.clickOnButton("Confirm");
@@ -106,7 +106,7 @@ public class MyActivityIntentTest {
         solo.clearEditText((EditText) solo.getView(R.id.reason_editText));
         solo.enterText((EditText) solo.getView(R.id.title_editText),"csgo");
         solo.enterText((EditText) solo.getView(R.id.reason_editText),"rush B");
-        solo.clickOnView(solo.getView(R.id.date_Start_edit_button));
+        solo.clickOnView(solo.getView(R.id.date_Start_Text));
         solo.setDatePicker(0,2022,10,13);
         solo.clickOnText("OK");
         solo.clickOnButton("Confirm");
@@ -128,7 +128,7 @@ public class MyActivityIntentTest {
         solo.clickOnView(solo.getView(R.id.add_habit_button));
         solo.enterText((EditText) solo.getView(R.id.title_editText),"play");
         solo.enterText((EditText) solo.getView(R.id.reason_editText),"no homework");
-        solo.clickOnView(solo.getView(R.id.date_Start_edit_button));
+        solo.clickOnView(solo.getView(R.id.date_Start_Text));
         solo.setDatePicker(0,2021,11,15);
         solo.clickOnText("OK");
         //get the current day of the week
