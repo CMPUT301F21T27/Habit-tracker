@@ -63,14 +63,8 @@ public class MainActivityIntentTest {
         }else{
             throw  new AssertionError();
         }
-        ListView habit_list_in_my_page = solo.getCurrentActivity().findViewById(R.id.habit_list);
-        Thread.sleep(3000);
-        Habit habit_my = (Habit) habit_list_in_home_page.getItemAtPosition(0);
-        if (habit_my!=null){
 
-        }else{
-            throw  new AssertionError();
-        }
+
     }
 
 
