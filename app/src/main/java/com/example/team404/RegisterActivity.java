@@ -98,20 +98,20 @@ public class RegisterActivity extends AppCompatActivity{
         if (user!=null) {
 
 
-            Map<String, Object> city = new HashMap<>();
-            city.put("userPassword", password.getText().toString());
-            city.put("emailAddress", email.getText().toString());
-            city.put("userName", name.getText().toString());
-            city.put("phone", phone.getText().toString());
-            city.put("requestedList", Collections.emptyList());
-            city.put("followingList", Collections.emptyList());
+            Map<String, Object> user = new HashMap<>();
+            user.put("userPassword", password.getText().toString());
+            user.put("emailAddress", email.getText().toString());
+            user.put("userName", name.getText().toString());
+            user.put("phone", phone.getText().toString());
+            user.put("requestedList", Collections.emptyList());
+            user.put("followingList", Collections.emptyList());
 
             final FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference collectionReference = db.collection("User");
 
             collectionReference
                     .document(email.getText().toString())
-                    .set(city)
+                    .set(user)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
