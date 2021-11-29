@@ -220,13 +220,7 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                     event.put("Habit Id", habitId);
                                     Intent intent = new Intent();
                                     Bundle extras = new Bundle();
-                                    /*
-                                    extras.putString("addId", habit_event_id);
-                                    extras.putString("addTitle",current_location);
-                                    extras.putString("addDate", date_);
-                                    extras.putString("addComment", current_comment);
-
-                                     */
+                                    
                                     extras.putString("Disappear add button", "true");
                                     intent.putExtras(extras);
                                     setResult(000, intent);
@@ -268,8 +262,8 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                         }
                     });
 
-                    //Toast.makeText(AddHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
                     contentLoadingProgressBar.show();
+                    saveImage.setEnabled(false);
                     try{
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -295,17 +289,12 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                     event.put("Habit Id", habitId);
                     Intent intent = new Intent();
                     Bundle extras = new Bundle();
-                    /*
-                    extras.putString("addId", habit_event_id);
-                    extras.putString("addTitle",current_location);
-                    extras.putString("addDate", date_);
-                    extras.putString("addComment", current_comment);
 
-                     */
                     extras.putString("Disappear add button", "true");
                     intent.putExtras(extras);
                     setResult(000, intent);
                     contentLoadingProgressBar.show();
+                    saveImage.setEnabled(false);
 
                     db.collection("Habit Event List").document(habit_event_id)
                             .set(event)
@@ -322,7 +311,6 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                                     Log.w(TAG, "failed add to fireBase", e);
                                 }
                             });
-                    //Toast.makeText(AddHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
 
                     try{
                         handler.postDelayed(new Runnable() {
