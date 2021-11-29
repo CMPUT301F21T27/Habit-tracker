@@ -96,6 +96,32 @@ public class MyHabitFirebaseIntentTest {
         assertTrue(solo.searchText("2021-12-15"));
 
     }
+    
+    /**
+     * test if we can log in and successfully go to today activity
+     * @throws Exception
+     */
+
+    @Test
+    public void checkTodayList()throws Exception{
+        solo.getCurrentActivity();
+        EditText password = (EditText) solo.getView(R.id.user_pass);
+        EditText email = (EditText) solo.getView(R.id.user_email);
+        solo.enterText(email, "bai@gmail.com");
+        solo.enterText(password, "123456");
+        solo.clickOnButton("Sign In");
+        solo.waitForActivity(MainActivity.class, 3000);
+        Thread.sleep(3000);
+        solo.clickOnScreen(800, 2000);
+        assertTrue(solo.searchText("test double click"));
+        assertTrue(solo.searchText("for testing double click two"));
+        assertTrue(solo.searchText("2021-11-29"));
+        solo.clickOnScreen(1000, 200);
+        assertTrue(solo.searchText("test double click"));
+        assertTrue(solo.searchText("for testing double click two"));
+        assertTrue(solo.searchText("2021-11-29"));
+
+    }
     /**
      * test if we can log in and successfully go to the subscribe activity
      * @throws Exception
@@ -116,7 +142,7 @@ public class MyHabitFirebaseIntentTest {
         assertTrue(solo.searchText("2021-10-28"));
 
     }
-    
+
     /**
      * Closes the activity after each test
      * @throws Exception
