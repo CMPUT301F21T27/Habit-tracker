@@ -6,7 +6,7 @@
     android:background="@drawable/image1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccountActivity">
+    tools:context=".Account.AccountActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -62,15 +62,10 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="47dp"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="128dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="155dp"
-                android:layout_marginRight="155dp"
-                android:text="Account"
+                android:layout_centerHorizontal="true"
+                android:text="Account "
                 android:textColor="#5B9CEA "
                 android:textSize="30sp"
                 android:textStyle="bold|italic" />

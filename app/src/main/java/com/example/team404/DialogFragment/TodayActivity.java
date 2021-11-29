@@ -1,4 +1,4 @@
-package com.example.team404;
+package com.example.team404.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.team404.Habit.Content;
+import com.example.team404.Habit.Habit;
+import com.example.team404.R;
 
 import java.util.ArrayList;
 

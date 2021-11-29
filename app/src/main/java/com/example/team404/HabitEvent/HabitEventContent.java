@@ -1,4 +1,4 @@
-package com.example.team404;
+package com.example.team404.HabitEvent;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import com.example.team404.HabitEvent.HabitEvent;
+import com.example.team404.R;
 
 import java.util.ArrayList;
 

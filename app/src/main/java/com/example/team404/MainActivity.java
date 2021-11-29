@@ -17,6 +17,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.ContentLoadingProgressBar;
 
+import com.example.team404.Account.AccountActivity;
+import com.example.team404.DialogFragment.AddHabitFragment;
+import com.example.team404.DialogFragment.ViewMainList;
+import com.example.team404.Habit.Content;
+import com.example.team404.Habit.Habit;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,13 +33,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements AddHabitFragment.OnFragmentInteractionListener {
     ListView habitList;

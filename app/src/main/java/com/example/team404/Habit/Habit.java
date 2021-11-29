@@ -1,4 +1,4 @@
-package com.example.team404;
+package com.example.team404.Habit;
 
 import java.util.Date;
 
@@ -35,7 +35,7 @@ public class Habit implements java.io.Serializable {
 
 
 
-    Habit(String id, String t, String r,String year, String month, String day) {
+    public Habit(String id, String t, String r, String year, String month, String day) {
         setId(id);
         setTitle(t);
         setReason(r);

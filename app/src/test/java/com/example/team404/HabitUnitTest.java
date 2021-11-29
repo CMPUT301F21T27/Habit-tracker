@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import com.example.team404.Habit.Habit;
+
 import org.junit.Test;
 
 public class HabitUnitTest {

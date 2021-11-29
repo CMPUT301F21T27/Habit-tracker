@@ -6,7 +6,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditHabitEventActivity">
+    tools:context=".HabitEvent.EditHabitEventActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="44dp"
-                android:text="Edit Habit event"
+                android:text="Edit Habit event "
                 android:textColor="#5B9CEA "
                 android:textSize="30sp"
                 android:textStyle="bold|italic"
@@ -136,6 +136,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shape_button"
         android:orientation="vertical"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

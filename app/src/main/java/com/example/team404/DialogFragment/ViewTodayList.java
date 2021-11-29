@@ -1,4 +1,4 @@
-package com.example.team404;
+package com.example.team404.DialogFragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,6 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.example.team404.Habit.Habit;
+import com.example.team404.HabitEvent.HabitEventListActivity;
+import com.example.team404.R;
 
 public class ViewTodayList extends DialogFragment {
     //--------------------------------

@@ -24,6 +24,11 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.team404.Account.AccountActivity;
+import com.example.team404.DialogFragment.AddHabitFragment;
+import com.example.team404.DialogFragment.TodayActivity;
+import com.example.team404.Habit.Content;
+import com.example.team404.Habit.Habit;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,13 +43,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -383,7 +384,7 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
         int day = c.get(Calendar.DAY_OF_WEEK);
 
         /** go to Today Activity class (showing up the habits to do today) by using intent **/
-        Intent intent = new Intent (this,TodayActivity.class);
+        Intent intent = new Intent (this, TodayActivity.class);
 
         today.setOnClickListener(new View.OnClickListener(){
 

@@ -33,7 +33,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="0dp"
-                android:text="Home Menu"
+                android:text="Home Menu "
                 android:textColor="#5B9CEA "
                 android:textSize="30sp"
                 android:textStyle="bold|italic" />

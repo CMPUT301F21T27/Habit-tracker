@@ -1,4 +1,4 @@
-package com.example.team404;
+package com.example.team404.DialogFragment;
 
 
 import android.app.AlertDialog;
@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.example.team404.R;
 
 public class AddCommentFragment extends DialogFragment {
     //--------------------------------

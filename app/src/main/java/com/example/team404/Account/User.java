@@ -1,4 +1,4 @@
-package com.example.team404;
+package com.example.team404.Account;
 
 import java.util.ArrayList;
 

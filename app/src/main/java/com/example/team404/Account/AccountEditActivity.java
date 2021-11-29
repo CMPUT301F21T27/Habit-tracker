@@ -1,4 +1,4 @@
-package com.example.team404;
+package com.example.team404.Account;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.team404.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
