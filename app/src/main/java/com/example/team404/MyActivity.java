@@ -45,6 +45,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -260,7 +261,6 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
                                 }
 
-                                    total=0;
 
                                     /*calculate how many days between two dates
                                     https://beginnersbook.com/2017/10/java-8-calculate-days-between-two-dates/
@@ -279,50 +279,52 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
                                     /*
                                     using LocalDate to update the total days of the plans
                                      */
+                                    DateTimeFormatter date_last_f= DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                                    LocalDate last_date = LocalDate.parse(last,date_last_f);
                                     LocalDate today = LocalDate.now();
 
-                                    LocalDate startDate = LocalDate.of(Integer.valueOf(habit.getYear())
-                                            ,Integer.valueOf(habit.getMonth()),Integer.valueOf(habit.getDay()));
-                                    long noOfDaysBetween = ChronoUnit.DAYS.between(startDate, today);
+                                   // LocalDate startDate = LocalDate.of(Integer.valueOf(habit.getYear())
+                                     //       ,Integer.valueOf(habit.getMonth()),Integer.valueOf(habit.getDay()));
+                                    long noOfDaysBetween = ChronoUnit.DAYS.between(last_date, today);
 
-                                        total= (int)(noOfDaysBetween)+1;
+                                        int total_days= (int)(noOfDaysBetween);
                                         //get how many days between star tdate and today
-                                        int total_days=0;
-                                        for(int i=0; i<total;i++){
-                                            LocalDate everyDay =startDate.plusDays(i);
+
+                                        for(int i=0; i<total_days;i++){
+                                            LocalDate everyDay =last_date.plusDays(i);
                                             //get how many days that in plan.
                                             if((everyDay.getDayOfWeek()== DayOfWeek.MONDAY)&&(habit.getMonday()==true)){
 
                                                 System.out.println((habit.getMonday()));
-                                                total_days++;
+                                                total++;
                                             }else if((everyDay.getDayOfWeek()== DayOfWeek.TUESDAY)&&(habit.getTuesday()==true)){
 
                                                 System.out.println((habit.getTuesday()));
-                                                total_days++;
+                                                total++;
                                             }else if((everyDay.getDayOfWeek()== DayOfWeek.WEDNESDAY)&&(habit.getWednesday()==true)){
 
                                                 System.out.println((habit.getWednesday()));
-                                                total_days++;
+                                                total++;
                                             }
                                             else if((everyDay.getDayOfWeek()== DayOfWeek.THURSDAY)&&(habit.getThursday()==true)){
 
                                                 System.out.println((habit.getThursday()));
-                                                total_days++;
+                                                total++;
                                             }
                                             else if((everyDay.getDayOfWeek()== DayOfWeek.FRIDAY)&&(habit.getFriday()==true)){
 
                                                 System.out.println((habit.getFriday()));
-                                                total_days++;
+                                                total++;
                                             }
                                             else if((everyDay.getDayOfWeek()== DayOfWeek.SATURDAY)&&(habit.getSaturday()==true)){
 
                                                 System.out.println((habit.getSaturday()));
-                                                total_days++;
+                                                total++;
                                             }
                                             else if((everyDay.getDayOfWeek()== DayOfWeek.SUNDAY)&&(habit.getSunday()==true)){
 
                                                 System.out.println((habit.getSunday()));
-                                                total_days++;
+                                                total++;
                                             }
 
 
@@ -339,16 +341,16 @@ public class MyActivity extends AppCompatActivity implements AddHabitFragment.On
 
                                     last=formatter.format(date_now);
                                     Map<String,Object> h = new HashMap<>();
-                                    h.put("Total",total_days);
-                                    h.put("Last",last);
+                                    h.put("Total",total);
+                                    h.put("Last",today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
                                     db.collection("Habit").document(id)
-                                            .update("Total",total_days,
-                                                    "Last",last);
+                                            .update("Total",total,
+                                                    "Last",today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
 
                                     // update the details
-                                habit.setLastDay(last);
-                                habit.setTotal_habit_day(total_days);
+                                habit.setLastDay(today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                                habit.setTotal_habit_day(total);
                                 habit.setTotal_did(total_did);
 
 
