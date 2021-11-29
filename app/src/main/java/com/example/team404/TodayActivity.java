@@ -31,7 +31,7 @@ public class TodayActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        /** initialize vairables**/
+        /** initialize variables**/
         setContentView(R.layout.activity_today);
 
         today_habit=(ListView) findViewById(R.id.today_habit_list);
@@ -50,7 +50,7 @@ public class TodayActivity extends AppCompatActivity {
             }
         });
         today_habit.setAdapter(habitArrayAdapter);
-/**
+/*
  * after click the back button, it will take user back to the My Activity page
  */
         back.setOnClickListener(new View.OnClickListener() {
