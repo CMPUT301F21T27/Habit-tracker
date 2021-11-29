@@ -80,6 +80,37 @@ public class MyHabitFirebaseIntentTest {
         assertTrue(solo.searchText("2021-12-15"));
 
     }
+    @Test
+    public void checkSubscribeList()throws Exception{
+        solo.getCurrentActivity();
+        EditText password = (EditText) solo.getView(R.id.user_pass);
+        EditText email = (EditText) solo.getView(R.id.user_email);
+        solo.enterText(email, "bai@gmail.com");
+        solo.enterText(password, "123456");
+        solo.clickOnButton("Sign In");
+        solo.waitForActivity(MainActivity.class, 3000);
+        Thread.sleep(6000);
+        solo.clickOnScreen(500, 2000);
+        assertTrue(solo.searchText("video games"));
+        assertTrue(solo.searchText("I like to play video games"));
+        assertTrue(solo.searchText("2021-10-28"));
+
+    }
+    @Test
+    public void checkProfile()throws Exception {
+        solo.getCurrentActivity();
+        EditText password = (EditText) solo.getView(R.id.user_pass);
+        EditText email = (EditText) solo.getView(R.id.user_email);
+        solo.enterText(email, "test@test.com");
+        solo.enterText(password, "123123");
+        solo.clickOnButton("Sign In");
+        solo.waitForActivity(MainActivity.class, 3000);
+        Thread.sleep(2000);
+        solo.clickOnScreen(980, 2000);
+        assertTrue(solo.searchText("Doer 1"));
+        assertTrue(solo.searchText("780-123-1234"));
+        assertTrue(solo.searchText("test@test.com"));
 
 
+    }
 }
