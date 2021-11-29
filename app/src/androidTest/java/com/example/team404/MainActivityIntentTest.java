@@ -32,12 +32,19 @@ public class MainActivityIntentTest {
     @Rule
     public ActivityTestRule<LoginActivity> rule = new ActivityTestRule<>(LoginActivity.class, true,true);
 
+    /**
+     * Runs before all tests and creates solo instance.
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception{
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
 
     }
-
+    /**
+     * Gets the Activity
+     * @throws Exception
+     */
     @Test
     public void start() throws Exception{
         Activity activity = rule.getActivity();
@@ -73,7 +80,7 @@ public class MainActivityIntentTest {
         Thread.sleep(6000);
 
 
-
+        //Test if we can go to next activity after click navi button
     }
     @Test
     public void GoToMyHabitActivityTest() throws Exception{
@@ -101,6 +108,7 @@ public class MainActivityIntentTest {
 
 
     }
+    //Test if we can go to next activity after click navi button
     @Test
     public void GoToSubscribeActivityTest() throws Exception{
         //solo.assertCurrentActivity("current Activity", LoginActivity.class);
@@ -126,6 +134,7 @@ public class MainActivityIntentTest {
 
 
     }
+    //Test if we can go to next activity after click navi button
     @Test
     public void GoToAccountActivityTest() throws Exception{
         //solo.assertCurrentActivity("current Activity", LoginActivity.class);
