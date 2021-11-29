@@ -1,5 +1,7 @@
 package com.example.team404;
 
+import static org.junit.Assert.assertTrue;
+
 import android.app.Activity;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -62,4 +64,22 @@ public class MyHabitFirebaseIntentTest {
 
 
     }
+    @Test
+    public void checkUserList()throws Exception{
+        solo.getCurrentActivity();
+        EditText password = (EditText) solo.getView(R.id.user_pass);
+        EditText email = (EditText) solo.getView(R.id.user_email);
+        solo.enterText(email, "test@test.com");
+        solo.enterText(password, "123123");
+        solo.clickOnButton("Sign In");
+        solo.waitForActivity(MainActivity.class, 3000);
+        Thread.sleep(6000);
+        solo.clickOnScreen(800, 2000);
+        assertTrue(solo.searchText("play"));
+        assertTrue(solo.searchText("no homework"));
+        assertTrue(solo.searchText("2021-12-15"));
+
+    }
+
+
 }
