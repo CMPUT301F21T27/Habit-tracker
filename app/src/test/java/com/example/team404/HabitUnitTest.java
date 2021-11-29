@@ -26,13 +26,40 @@ public class HabitUnitTest {
        assertTrue(habit.getTitle().equals("title"));
 
     }
+
     /**
      * Test reason getter is working
      */
     @Test
     public void testGetReason(){
         assertTrue(habit.getReason().equals("reason"));
+
     }
+
+    /**
+     * Test last day getter is working
+     */
+    @Test
+    public void testGetLastDay(){
+        assertTrue(habit.getLastDay().equals(""));
+    }
+
+    /**
+     * Test total habit day getter is working
+     */
+    @Test
+    public void testGetTotalHabitDay(){
+        assertTrue(habit.getTotal_habit_day() == 1);
+    }
+
+    /**
+     * Test total did getter is working
+     */
+    @Test
+    public void testGetTotalDid(){
+        assertTrue(habit.getTotal_did() == 0);
+    }
+
     /**
      * Test date getter is working
      */
@@ -43,8 +70,9 @@ public class HabitUnitTest {
         assertTrue(habit.getDay().equals("15"));
 
     }
+
     /**
-     * Test "days occur in a week & public" getter is working
+     * Test "days occur in a week" getter is working
      */
     @Test
     public void testGetDaysWeek(){
@@ -55,6 +83,14 @@ public class HabitUnitTest {
         assertFalse(habit.getFriday());
         assertFalse(habit.getSaturday());
         assertFalse(habit.getSunday());
+
+    }
+
+    /**
+     * Test public getter is working
+     */
+    @Test
+    public void testGetPublic(){
         assertFalse(habit.getPub());
     }
 
@@ -63,10 +99,10 @@ public class HabitUnitTest {
      */
     @Test
     public void testSetId(){
-        habit.setId("IdId");
-        assertTrue(habit.getId().equals("IdId"));
+        habit.setId("idid");
+        assertTrue(habit.getId().equals("idid"));
     }
-    
+
     /**
      * Test title setter is working
      */
@@ -75,6 +111,7 @@ public class HabitUnitTest {
         habit.setTitle("play");
         assertTrue(habit.getTitle().equals("play"));
     }
+
     /**
      * Test reason setter is working
      */
@@ -102,8 +139,8 @@ public class HabitUnitTest {
      */
     @Test
     public void testSetTotalHabitDay(){
-        habit.setTotal_habit_day(1);
-        assertTrue(habit.getTotal_habit_day()==1);
+        habit.setTotal_habit_day(2);
+        assertTrue(habit.getTotal_habit_day()==2);
     }
 
     /**
@@ -114,6 +151,7 @@ public class HabitUnitTest {
         habit.setTotal_did(1);
         assertTrue(habit.getTotal_did()==1);
     }
+
     /**
      * Test total habit day did setter is working
      */
@@ -124,7 +162,7 @@ public class HabitUnitTest {
     }
 
     /**
-     * Test "days of week and public" setter works
+     * Test "days of week" setter works
      */
     @Test
     public void testSetDaysWeek(){
@@ -135,8 +173,6 @@ public class HabitUnitTest {
         habit.setFriday(true);
         habit.setSunday(true);
         habit.setSaturday(true);
-        habit.setPub(true);
-
 
         assertTrue(habit.getMonday());
         assertTrue(habit.getTuesday());
@@ -145,9 +181,17 @@ public class HabitUnitTest {
         assertTrue(habit.getFriday());
         assertTrue(habit.getSaturday());
         assertTrue(habit.getSunday());
-        assertTrue(habit.getPub());
+
     }
 
+    /**
+     * Test public setter is working
+     */
+    @Test
+    public void testPublic(){
+        habit.setPub(true);
+        assertTrue(habit.getPub());
+    }
 
 
 
