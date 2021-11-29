@@ -11,7 +11,13 @@ import org.junit.Test;
 
 public class HabitUnitTest {
     private Habit habit = new Habit("id","title","reason","1999","11","15");
-
+    /**
+     * Test id getter is working
+     */
+    @Test
+    public void testGetId(){
+        assertTrue(habit.getId().equals("id"));
+    }
     /**
      * Test title getter is working
      */
@@ -51,6 +57,16 @@ public class HabitUnitTest {
         assertFalse(habit.getSunday());
         assertFalse(habit.getPub());
     }
+
+    /**
+     * Test id setter is working
+     */
+    @Test
+    public void testSetId(){
+        habit.setId("IdId");
+        assertTrue(habit.getId().equals("IdId"));
+    }
+    
     /**
      * Test title setter is working
      */
@@ -80,6 +96,33 @@ public class HabitUnitTest {
         assertTrue(habit.getMonth().equals("10"));
         assertTrue(habit.getDay().equals("02"));
     }
+
+    /**
+     * Test total habit day setter is working
+     */
+    @Test
+    public void testSetTotalHabitDay(){
+        habit.setTotal_habit_day(1);
+        assertTrue(habit.getTotal_habit_day()==1);
+    }
+
+    /**
+     * Test total habit day did setter is working
+     */
+    @Test
+    public void testSetTotalHabitDayDid(){
+        habit.setTotal_did(1);
+        assertTrue(habit.getTotal_did()==1);
+    }
+    /**
+     * Test total habit day did setter is working
+     */
+    @Test
+    public void testSetLastDay(){
+        habit.setLastDay("LastDay");
+        assertTrue(habit.getLastDay().equals("LastDay"));
+    }
+
     /**
      * Test "days of week and public" setter works
      */
