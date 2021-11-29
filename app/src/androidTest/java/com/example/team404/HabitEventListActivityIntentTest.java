@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.team404.HabitEvent.HabitEventListActivity;
+import com.example.team404.Login.LoginActivity;
 import com.robotium.solo.Solo;
 import androidx.test.rule.ActivityTestRule;
 
@@ -19,9 +20,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.Calendar;
-
-import javax.xml.transform.SourceLocator;
 public class HabitEventListActivityIntentTest {
     private Solo solo;
     @Rule
@@ -32,37 +30,26 @@ public class HabitEventListActivityIntentTest {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
 
     }
-    /**
-     * Simple test case to verify if everything's ok
-     */
+
     @Test
     public void start() throws Exception{
         Activity activity = rule.getActivity();
     }
-    /**
-     * Test add habit function
-     */
+
     @Test
     public void testHasHabitEvent() throws Exception{
-        solo.assertCurrentActivity("",HabitEventListActivity.class);
+        solo.assertCurrentActivity("current Activity", LoginActivity.class);
+        solo.getCurrentActivity();
+        System.out.println("---"+solo.getCurrentActivity());
+        EditText password = (EditText) solo.getView(R.id.user_pass);
+        EditText email = (EditText) solo.getView(R.id.user_email);
+        solo.enterText(email, "test@test.com");
+        solo.enterText(password, "123123");
+        solo.clickOnButton("Sign In");
+
+        solo.assertCurrentActivity("",MainActivity.class);
 
 
-
-
-
-
-
-        solo.clickOnView(solo.getView(R.id.add_event_button));
-        solo.enterText((EditText) solo.getView(R.id.title_editText),"play");
-        solo.enterText((EditText) solo.getView(R.id.reason_editText),"no homework");
-        solo.clickOnView(solo.getView(R.id.date_Start_Text));
-        solo.setDatePicker(0,2021,11,15);
-        solo.clickOnText("OK");
-        solo.clickOnButton("Confirm");
-
-        assertTrue(solo.searchText("play"));
-        assertTrue(solo.searchText("no homework"));
-        assertTrue(solo.searchText("2021-12-15"));
 
 
     }
