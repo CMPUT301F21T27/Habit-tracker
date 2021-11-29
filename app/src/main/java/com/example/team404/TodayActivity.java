@@ -64,7 +64,6 @@ public class TodayActivity extends AppCompatActivity {
     public void onRestart(){
         super.onRestart();
 
-
         startActivity(getIntent());
         finish();
         overridePendingTransition(0, 0);
