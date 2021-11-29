@@ -273,16 +273,19 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
 
                     //Toast.makeText(AddHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
                     contentLoadingProgressBar.show();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            System.out.println("-----------------------------------");
-                            AddHabitEventActivity.super.onBackPressed();
-                            //saveImage.setEnabled(true);
-                            //Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
+                    try{
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                System.out.println("-----------------------------------");
+                                AddHabitEventActivity.super.onBackPressed();
+                            }
+                        }, 2000);
+                    }catch ( Exception e){
+                        Toast.makeText(AddHabitEventActivity.this, "Oops! please try again!", Toast.LENGTH_SHORT).show();
+                        return;
 
-                        }
-                    }, 2000);
+                    }
                 }else{
                     Map<String, Object> event = new HashMap<>();
 
@@ -324,16 +327,19 @@ public class AddHabitEventActivity extends AppCompatActivity implements AddComme
                             });
                     //Toast.makeText(AddHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
 
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            System.out.println("-----------------------------------");
-                            AddHabitEventActivity.super.onBackPressed();
-                            //saveImage.setEnabled(true);
-                            //Toast.makeText(EditHabitEventActivity.this, "Saving...", Toast.LENGTH_SHORT).show();
+                    try{
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                System.out.println("-----------------------------------");
+                                AddHabitEventActivity.super.onBackPressed();
+                            }
+                        }, 2000);
+                    }catch ( Exception e){
+                        Toast.makeText(AddHabitEventActivity.this, "Oops! please try again!", Toast.LENGTH_SHORT).show();
+                        return;
 
-                        }
-                    }, 2000);
+                    }
                 }
 
             }
