@@ -20,6 +20,7 @@ import com.robotium.solo.Solo;
 
 import junit.framework.AssertionFailedError;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,19 +36,28 @@ public class AccountActivityIntentTest {
     private Solo solo;
     @Rule
     public ActivityTestRule<LoginActivity> rule = new ActivityTestRule<>(LoginActivity.class, true,true);
-
+    /**
+     * Runs before all tests and creates solo instance.
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception{
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
 
     }
-
+    /**
+     * Gets the Activity
+     * @throws Exception
+     */
     @Test
     public void start() throws Exception{
         Activity activity = rule.getActivity();
     }
 
-
+    /**
+     * test if we can go to account activity
+     * @throws Exception
+     */
     @Test
     public void GoToAccountActivityTest() throws Exception{
         //solo.assertCurrentActivity("current Activity", LoginActivity.class);
@@ -60,7 +70,7 @@ public class AccountActivityIntentTest {
         solo.clickOnButton("Sign In");
 
         solo.assertCurrentActivity("current Activity",MainActivity.class);
-        solo.waitForActivity(MainActivity.class, 3000);
+        solo.waitForActivity(MainActivity.class, 6000);
         //I set the time is 6000, it really depend on the internet
         Thread.sleep(6000);
         //click account button
@@ -110,5 +120,12 @@ public class AccountActivityIntentTest {
         solo.assertCurrentActivity("current Activity", AccountActivity.class);
 
     }
-
+    /**
+     * Closes the activity after each test
+     * @throws Exception
+     */
+    @After
+    public void tearDown() throws Exception{
+        solo.finishOpenedActivities();
+    }
 }
