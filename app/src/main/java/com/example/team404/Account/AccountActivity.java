@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,7 +46,7 @@ public class AccountActivity extends AppCompatActivity {
     private TextView username;
     private TextView email;
     private TextView phone;
-    private int log_out_count=0;
+
     private String requestedListString;
     private String old_password;
     private String profile_uri_string;
@@ -150,23 +151,19 @@ public class AccountActivity extends AppCompatActivity {
 
         //logout by double click
         Button logoutButton = findViewById(R.id.log_out_button);
+
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //finishAffinity();
-                log_out_count++;
-                if (log_out_count >1){
                     FirebaseAuth.getInstance().signOut();
                     finish();
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     finish();
-
-                }else{
-                    Toast.makeText(AccountActivity.this, "Press again to exit!", Toast.LENGTH_SHORT).show();
-                }
             }
         });
+
+
     }
     //https://stackoverflow.com/questions/920306/sending-data-back-to-the-main-activity-in-android
     // author: Suragch (answered) GabrielBB(edited)
