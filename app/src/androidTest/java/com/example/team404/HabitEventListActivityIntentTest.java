@@ -4,12 +4,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.example.team404.HabitEvent.AddHabitEventActivity;
 import com.example.team404.HabitEvent.HabitEventListActivity;
 import com.example.team404.Login.LoginActivity;
 import com.robotium.solo.Solo;
@@ -35,19 +37,23 @@ public class HabitEventListActivityIntentTest {
     public void start() throws Exception{
         Activity activity = rule.getActivity();
     }
-
+    //
     @Test
-    public void testHasHabitEvent() throws Exception{
-        solo.assertCurrentActivity("current Activity", LoginActivity.class);
+    public void testAddHabitEvent() throws Exception{
+        solo.assertCurrentActivity("current Activity", HabitEventListActivity.class);
         solo.getCurrentActivity();
-        System.out.println("---"+solo.getCurrentActivity());
-        EditText password = (EditText) solo.getView(R.id.user_pass);
-        EditText email = (EditText) solo.getView(R.id.user_email);
-        solo.enterText(email, "test@test.com");
-        solo.enterText(password, "123123");
-        solo.clickOnButton("Sign In");
+        solo.clickOnView(solo.getView(R.id.add_event_button));
 
-        solo.assertCurrentActivity("",MainActivity.class);
+        Thread.sleep(3000);
+        solo.assertCurrentActivity("current Activity", AddHabitEventActivity.class);
+        solo.clickOnView(solo.getView(R.id.add_comment));
+        EditText comment = (EditText) solo.getView(R.id.comment_editText);
+        solo.enterText(comment, "Great!");
+        solo.getButton(AlertDialog.BUTTON_POSITIVE);
+        solo.waitForDialogToClose();
+        Thread.sleep(3000);
+        solo.clickOnView(solo.getView(R.id.saveImage));
+
 
 
 
