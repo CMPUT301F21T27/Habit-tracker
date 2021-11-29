@@ -27,17 +27,24 @@ public class HabitEventListActivityIntentTest {
     @Rule
     public ActivityTestRule<HabitEventListActivity> rule = new ActivityTestRule<>(HabitEventListActivity.class, true,true);
 
+    /**
+     * Runs before all tests and creates solo instance.
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception{
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
 
     }
-
+    /**
+     * Gets the Activity
+     * @throws Exception
+     */
     @Test
     public void start() throws Exception{
         Activity activity = rule.getActivity();
     }
-    //
+
     @Test
     public void testAddHabitEvent() throws Exception{
         solo.assertCurrentActivity("current Activity", HabitEventListActivity.class);

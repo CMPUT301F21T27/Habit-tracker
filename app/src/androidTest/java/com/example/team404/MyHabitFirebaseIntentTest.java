@@ -14,6 +14,7 @@ import com.example.team404.Habit.Habit;
 import com.example.team404.Login.LoginActivity;
 import com.robotium.solo.Solo;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,16 +30,28 @@ public class MyHabitFirebaseIntentTest {
     @Rule
     public ActivityTestRule<LoginActivity> rule = new ActivityTestRule<>(LoginActivity.class, true,true);
 
+    /**
+     * Runs before all tests and creates solo instance.
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception{
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
 
     }
-
+    /**
+     * Gets the Activity
+     * @throws Exception
+     */
     @Test
     public void start() throws Exception{
         Activity activity = rule.getActivity();
     }
+
+    /**
+     * test if we can log in and successfully go to main activity
+     * @throws Exception
+     */
     @Test
     public void GoToMyHabitActivityTest() throws Exception{
         //solo.assertCurrentActivity("current Activity", LoginActivity.class);
@@ -62,7 +75,10 @@ public class MyHabitFirebaseIntentTest {
 
         solo.assertCurrentActivity("Current Activity", MyActivity.class);
 
-
+        /**
+         * test if we can log in and successfully go to my activity
+         * @throws Exception
+         */
     }
     @Test
     public void checkUserList()throws Exception{
@@ -73,13 +89,17 @@ public class MyHabitFirebaseIntentTest {
         solo.enterText(password, "123123");
         solo.clickOnButton("Sign In");
         solo.waitForActivity(MainActivity.class, 3000);
-        Thread.sleep(6000);
+        Thread.sleep(3000);
         solo.clickOnScreen(800, 2000);
         assertTrue(solo.searchText("play"));
         assertTrue(solo.searchText("no homework"));
         assertTrue(solo.searchText("2021-12-15"));
 
     }
+    /**
+     * test if we can log in and successfully go to the subscribe activity
+     * @throws Exception
+     */
     @Test
     public void checkSubscribeList()throws Exception{
         solo.getCurrentActivity();
@@ -89,13 +109,17 @@ public class MyHabitFirebaseIntentTest {
         solo.enterText(password, "123456");
         solo.clickOnButton("Sign In");
         solo.waitForActivity(MainActivity.class, 3000);
-        Thread.sleep(6000);
+        Thread.sleep(3000);
         solo.clickOnScreen(500, 2000);
         assertTrue(solo.searchText("video games"));
         assertTrue(solo.searchText("I like to play video games"));
         assertTrue(solo.searchText("2021-10-28"));
 
     }
+    /**
+     * test if we can log in and successfully go to the profile activity
+     * @throws Exception
+     */
     @Test
     public void checkProfile()throws Exception {
         solo.getCurrentActivity();
@@ -105,12 +129,20 @@ public class MyHabitFirebaseIntentTest {
         solo.enterText(password, "123123");
         solo.clickOnButton("Sign In");
         solo.waitForActivity(MainActivity.class, 3000);
-        Thread.sleep(2000);
+        Thread.sleep(3000);
         solo.clickOnScreen(980, 2000);
         assertTrue(solo.searchText("Doer 1"));
         assertTrue(solo.searchText("780-123-1234"));
         assertTrue(solo.searchText("test@test.com"));
 
 
+    }
+    /**
+     * Closes the activity after each test
+     * @throws Exception
+     */
+    @After
+    public void tearDown() throws Exception{
+        solo.finishOpenedActivities();
     }
 }
